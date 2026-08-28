@@ -15,3 +15,9 @@ mobile/
 
 *.log
 sauvegarde-boutiq-*.sql
+
+# Le .env du poste de developpement contient les cles de paiement. Il ne doit
+# jamais entrer dans l'image : backend/Dockerfile en fabrique un reduit, et les
+# vraies valeurs viennent de l'environnement du conteneur.
+backend/.env
+backend/.env.local

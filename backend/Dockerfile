@@ -34,6 +34,18 @@ RUN composer install --no-dev --no-scripts --prefer-dist --no-progress --no-inte
 
 # Code applicatif
 COPY backend/ ./
+
+# Symfony/Dotenv exige un fichier .env, meme reduit : sans lui, bootEnv() leve
+# une PathException et le conteneur ne sert plus qu'une erreur 500.
+#
+# Celui du poste de developpement n'est PAS versionne (il contient les cles
+# KkiaPay et FedaPay) et le .dockerignore l'ecarte du contexte de build : aucun
+# secret n'entre donc dans l'image. On en pose un ici, limite a APP_ENV.
+#
+# Les vraies valeurs arrivent par l'environnement du conteneur, saisi dans
+# Dokploy. Dotenv ne surcharge jamais une variable deja definie : ce fichier ne
+# peut donc pas prendre le pas sur elles.
+RUN echo "APP_ENV=prod" > .env
 # Schéma + données de démonstration, importés au premier démarrage seulement.
 COPY boutiq.sql /app/install/boutiq.sql
 
