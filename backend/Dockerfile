@@ -66,16 +66,21 @@ RUN composer dump-autoload --no-dev --optimize --classmap-authoritative --no-int
 # Les valeurs ci-dessous ne servent qu'a cette commande et ne sont PAS inscrites
 # dans l'image : Symfony compile les %env(...)% en marqueurs resolus a
 # l'execution, les vraies valeurs viennent donc toujours de Dokploy.
-RUN APP_SECRET=build \
-    DEFAULT_URI=http://localhost \
-    CORS_ALLOW_ORIGIN=localhost \
-    DATABASE_URL="mysql://u:p@db:3306/d?serverVersion=10.11.11-MariaDB&charset=utf8mb4" \
-    JWT_PASSPHRASE=build \
-    KKIAPAY_PUBLIC_KEY=build KKIAPAY_PRIVATE_KEY=build KKIAPAY_WEBHOOK_SECRET=build \
-    KKIAPAY_SANDBOX=1 KKIAPAY_API_URL=http://localhost \
-    FEDAPAY_PUBLIC_KEY=build FEDAPAY_SECRET_KEY=build FEDAPAY_WEBHOOK_SECRET=build \
-    FEDAPAY_SANDBOX=1 \
-    php bin/console cache:warmup --no-interaction
+# `export` plutot qu'un prefixe de variables : un prefixe ne s'applique qu'a la
+# premiere commande, or les deux consoles ci-dessous ont besoin de ces valeurs.
+# Elles vivent le temps de ce RUN et ne sont pas inscrites dans l'image.
+RUN export APP_SECRET=build \
+           DEFAULT_URI=http://localhost \
+           CORS_ALLOW_ORIGIN=localhost \
+           DATABASE_URL="mysql://u:p@db:3306/d?serverVersion=10.11.11-MariaDB&charset=utf8mb4" \
+           JWT_PASSPHRASE=build \
+           KKIAPAY_PUBLIC_KEY=build KKIAPAY_PRIVATE_KEY=build KKIAPAY_WEBHOOK_SECRET=build \
+           KKIAPAY_SANDBOX=1 KKIAPAY_API_URL=http://localhost \
+           FEDAPAY_PUBLIC_KEY=build FEDAPAY_SECRET_KEY=build FEDAPAY_WEBHOOK_SECRET=build \
+           FEDAPAY_SANDBOX=1 \
+    && php bin/console cache:warmup --no-interaction \
+    && echo '--- routes compilees dans l image ---' \
+    && php bin/console debug:router --no-interaction
 
 RUN chmod -R 777 var config/jwt
 
