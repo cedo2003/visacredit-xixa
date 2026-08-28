@@ -1,0 +1,80 @@
+# ── Visacredit XIXA — production (Dokploy) ───────────────────────────────────
+#
+# Même montage que epargne-africaVR, déployé sur le MÊME serveur, mais
+# totalement séparé :
+#
+#   • application Dokploy distincte  → aucun conteneur partagé
+#   • base MySQL distincte           → créée à part dans l'interface Dokploy
+#   • sous-domaines distincts        → routés par Traefik vers ces conteneurs
+#   • aucun port hôte publié         → le 8082 d'epargne reste intact
+#
+# Le réseau `dokploy-network` est bien commun aux deux projets : c'est par lui
+# que Traefik atteint les conteneurs. Le partager ne donne aucun accès aux
+# données de l'autre application, qui vivent dans sa propre base.
+#
+# LE NAVIGATEUR NE VOIT QU'UNE ORIGINE : le frontend. Next relaie `/api` vers le
+# backend par le réseau interne (voir frontend/next.config.ts) → pas de CORS.
+# L'application mobile, elle, n'a pas de proxy : elle attaque le backend sur son
+# propre sous-domaine. N'envoyant pas d'en-tête Origin, elle non plus n'est pas
+# concernée par le CORS.
+#
+# Dans Dokploy : un service « Compose » pointant sur ce dépôt, puis un domaine
+# par service exposé :
+#
+#   frontend → visacredit.waofin.co       port conteneur **3000**   (web)
+#   backend  → api.visacredit.waofin.co   port conteneur **80**     (mobile)
+
+services:
+  backend:
+    build:
+      # Contexte à la racine : le Dockerfile a besoin de boutiq.sql, qui vit
+      # au-dessus de backend/. Voir le commentaire en tête du Dockerfile.
+      context: .
+      dockerfile: backend/Dockerfile
+    image: visacredit-backend:latest
+    restart: unless-stopped
+
+    # Dokploy écrit les variables saisies dans son interface vers un .env à la
+    # racine (non versionné). Les valeurs sensibles ne vivent donc jamais ici.
+    # Le gabarit complet à y coller est .env.example.
+    env_file:
+      - path: .env
+        required: false
+
+    environment:
+      APP_ENV: "prod"
+      APP_DEBUG: "0"
+      # FrankenPHP écoute en HTTP simple ; le TLS est terminé par Traefik.
+      SERVER_NAME: ":80"
+
+    networks: [dokploy-network]
+    mem_limit: 512m
+
+  frontend:
+    build:
+      # Contexte frontend/ — le build Next n'a besoin de rien au-dessus.
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # Figé dans le bundle au build : le modifier demande un *Deploy*, pas un
+        # simple redémarrage. Interpolé depuis le .env écrit par Dokploy.
+        NEXT_PUBLIC_LIEN_APK: ${NEXT_PUBLIC_LIEN_APK:-}
+    image: visacredit-frontend:latest
+    restart: unless-stopped
+
+    environment:
+      NODE_ENV: "production"
+      # server.js doit écouter sur toutes les interfaces pour que Traefik,
+      # depuis un autre conteneur, puisse l'atteindre.
+      HOSTNAME: "0.0.0.0"
+      PORT: "3000"
+
+    # Aucun `ports:` : contrairement à epargne qui publie 8082, ce frontend
+    # n'est joignable que par Traefik. Rien à ouvrir au pare-feu, et aucun
+    # risque de collision de port sur l'hôte.
+    networks: [dokploy-network]
+    mem_limit: 512m
+
+networks:
+  dokploy-network:
+    external: true

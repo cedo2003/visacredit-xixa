@@ -1,0 +1,16 @@
+# Le contexte de build est frontend/. Ces fichiers seraient soit inutiles, soit
+# nuisibles dans l'image.
+
+node_modules
+.next
+.git
+*.log
+
+# Artefacts régénérés par `next build`.
+tsconfig.tsbuildinfo
+next-env.d.ts
+
+# .env.local pointe sur l'API de développement (127.0.0.1:8000). Il n'a rien à
+# faire dans une image de production : les valeurs viennent des ARG du build.
+.env.local
+.env*.local

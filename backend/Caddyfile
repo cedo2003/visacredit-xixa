@@ -1,0 +1,13 @@
+# FrankenPHP — sert le contrôleur frontal Symfony en HTTP simple sur :80.
+# Le TLS est terminé par Traefik/Dokploy : auto_https est donc désactivé ici,
+# sinon Caddy tenterait d'obtenir son propre certificat et échouerait.
+{
+	frankenphp
+	auto_https off
+}
+
+:80 {
+	root * /app/public
+	encode gzip
+	php_server
+}

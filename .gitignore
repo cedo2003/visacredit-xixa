@@ -1,0 +1,49 @@
+# ── Secrets ──────────────────────────────────────────────────────────────────
+# Le .env du backend contient les clés privées KkiaPay et FedaPay : il ne doit
+# jamais partir sur le dépôt. En production, ces valeurs se saisissent dans
+# l'interface Dokploy.
+#
+# Le .env de la racine, lui, est écrit par Dokploy à partir de ce qu'on saisit
+# dans son interface. Seul le gabarit vide .env.example est versionné.
+/.env
+!/.env.example
+.env
+.env.local
+backend/.env
+backend/.env.local
+mobile/.env
+frontend/.env.local
+
+# Clés JWT : régénérées au démarrage du conteneur.
+backend/config/jwt/
+
+# ── Dépendances ──────────────────────────────────────────────────────────────
+**/node_modules/
+backend/vendor/
+
+# ── Artefacts de build et caches ─────────────────────────────────────────────
+backend/var/
+frontend/.next/
+frontend/tsconfig.tsbuildinfo
+frontend/next-env.d.ts
+mobile/.expo/
+# Cache Expo de la racine, ecrit par les lancements depuis demarrer-mobile.bat.
+/.expo/
+mobile/android/
+mobile/ios/
+
+# ── Sauvegardes de base horodatées ───────────────────────────────────────────
+# boutiq.sql est versionné (schéma + démo) ; les sauvegardes ne le sont pas.
+sauvegarde-boutiq-*.sql
+
+# ── Divers ───────────────────────────────────────────────────────────────────
+*.log
+.DS_Store
+Thumbs.db
+
+# ── Dépôts Git des générateurs, mis de côté ──────────────────────────────────
+# create-next-app et create-expo-app initialisent chacun un dépôt dans leur
+# dossier. Laissés en place, ils deviendraient des sous-modules vides côté
+# GitHub et le serveur clonerait des dossiers sans code. Renommés plutôt que
+# supprimés : ils ne contiennent que le commit initial du générateur.
+**/.git.generateur/

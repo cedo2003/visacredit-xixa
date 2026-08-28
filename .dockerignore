@@ -1,0 +1,17 @@
+# Le contexte de build est la racine du dépôt (voir backend/Dockerfile).
+# Sans ces exclusions, les node_modules du frontend et du mobile — plusieurs
+# centaines de mégaoctets — seraient envoyés au démon Docker à chaque build.
+
+**/node_modules
+**/.git
+**/.next
+**/.expo
+**/vendor
+**/var/cache
+**/var/log
+
+frontend/
+mobile/
+
+*.log
+sauvegarde-boutiq-*.sql
