@@ -1,30 +1,62 @@
 # ── Visacredit XIXA — production (Dokploy) ───────────────────────────────────
 #
-# Même montage que epargne-africaVR, déployé sur le MÊME serveur, mais
-# totalement séparé :
+# Déployé sur le MÊME serveur que epargne-africaVR, mais totalement séparé :
 #
 #   • application Dokploy distincte  → aucun conteneur partagé
-#   • base MySQL distincte           → créée à part dans l'interface Dokploy
-#   • sous-domaines distincts        → routés par Traefik vers ces conteneurs
-#   • aucun port hôte publié         → le 8082 d'epargne reste intact
+#   • base MariaDB embarquée ici     → rien à créer dans l'interface Dokploy
+#   • un seul port hôte publié       → 8090, le 8082 d'epargne reste intact
 #
-# Le réseau `dokploy-network` est bien commun aux deux projets : c'est par lui
-# que Traefik atteint les conteneurs. Le partager ne donne aucun accès aux
-# données de l'autre application, qui vivent dans sa propre base.
+# CE QUI EST EXPOSÉ : le frontend, et lui seul, sur http://<IP-DU-SERVEUR>:8090.
+# Le backend et la base ne sont joignables que depuis le réseau interne Docker.
+# C'est le montage d'epargne-africaVR (qui publie son frontend sur 8082), à ceci
+# près que la base vit ici plutôt que dans l'interface Dokploy.
 #
-# LE NAVIGATEUR NE VOIT QU'UNE ORIGINE : le frontend. Next relaie `/api` vers le
-# backend par le réseau interne (voir frontend/next.config.ts) → pas de CORS.
-# L'application mobile, elle, n'a pas de proxy : elle attaque le backend sur son
-# propre sous-domaine. N'envoyant pas d'en-tête Origin, elle non plus n'est pas
-# concernée par le CORS.
+# POURQUOI LE BACKEND N'EST PAS PUBLIÉ : le navigateur ne parle qu'au frontend,
+# qui relaie `/api` au backend par le réseau interne (frontend/next.config.ts).
+# Une seule origine, donc aucun CORS — et une surface d'attaque réduite d'autant.
+# L'application mobile, elle, est autonome : base SQLite embarquée, aucun appel
+# serveur (voir mobile/src/lib/api.ts). Elle n'a rien à joindre ici.
 #
-# Dans Dokploy : un service « Compose » pointant sur ce dépôt, puis un domaine
-# par service exposé :
-#
-#   frontend → visacredit.waofin.co       port conteneur **3000**   (web)
-#   backend  → api.visacredit.waofin.co   port conteneur **80**     (mobile)
+# Dans Dokploy : Applications → Create → Compose, pointant sur ce dépôt. Aucun
+# domaine à déclarer, aucune base à créer. Il suffit d'ouvrir le port 8090.
 
 services:
+  # ── Base de données ────────────────────────────────────────────────────────
+  # MariaDB et non MySQL : boutiq.sql est un dump MariaDB 10.4, et le client
+  # embarqué dans l'image du backend est `mariadb-client`. Face à un MySQL 8,
+  # son authentification par défaut (caching_sha2_password) ferait échouer
+  # l'import initial du schéma.
+  db:
+    image: mariadb:10.11
+    restart: unless-stopped
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+    environment:
+      MARIADB_DATABASE: visacredit
+      MARIADB_USER: visacredit
+      # `:?` fait échouer le déploiement si la variable manque, plutôt que de
+      # créer silencieusement un compte sans mot de passe.
+      MARIADB_PASSWORD: ${MYSQL_PASSWORD:?a saisir dans Dokploy}
+      MARIADB_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?a saisir dans Dokploy}
+
+    # Volume nommé : les données survivent aux redéploiements et aux
+    # reconstructions d'image. Les supprimer efface la base.
+    volumes:
+      - visacredit-db:/var/lib/mysql
+
+    # Le backend importe le schéma dès son démarrage : il doit trouver une base
+    # qui répond, pas seulement un conteneur lancé.
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 40s
+
+    networks: [dokploy-network]
+    mem_limit: 512m
+
+  # ── API Symfony ────────────────────────────────────────────────────────────
   backend:
     build:
       # Contexte à la racine : le Dockerfile a besoin de boutiq.sql, qui vit
@@ -33,6 +65,10 @@ services:
       dockerfile: backend/Dockerfile
     image: visacredit-backend:latest
     restart: unless-stopped
+
+    depends_on:
+      db:
+        condition: service_healthy
 
     # Dokploy écrit les variables saisies dans son interface vers un .env à la
     # racine (non versionné). Les valeurs sensibles ne vivent donc jamais ici.
@@ -44,12 +80,18 @@ services:
     environment:
       APP_ENV: "prod"
       APP_DEBUG: "0"
-      # FrankenPHP écoute en HTTP simple ; le TLS est terminé par Traefik.
+      # FrankenPHP écoute en HTTP simple, joint uniquement par le frontend.
       SERVER_NAME: ":80"
+      # Défini ici et non dans le .env : l'hôte est le service `db` ci-dessus,
+      # il n'y a rien à recopier à la main. `environment` prime sur `env_file`.
+      # Le mot de passe ne doit contenir ni @ ni : ni / — docker-entrypoint.sh
+      # découpe cette URL à la main.
+      DATABASE_URL: "mysql://visacredit:${MYSQL_PASSWORD:?a saisir dans Dokploy}@db:3306/visacredit?serverVersion=10.11.11-MariaDB&charset=utf8mb4"
 
     networks: [dokploy-network]
     mem_limit: 512m
 
+  # ── Interface web (Next.js) ────────────────────────────────────────────────
   frontend:
     build:
       # Contexte frontend/ — le build Next n'a besoin de rien au-dessus.
@@ -62,18 +104,26 @@ services:
     image: visacredit-frontend:latest
     restart: unless-stopped
 
+    depends_on: [backend]
+
     environment:
       NODE_ENV: "production"
-      # server.js doit écouter sur toutes les interfaces pour que Traefik,
-      # depuis un autre conteneur, puisse l'atteindre.
+      # server.js doit écouter sur toutes les interfaces pour être joignable
+      # depuis l'extérieur du conteneur.
       HOSTNAME: "0.0.0.0"
       PORT: "3000"
 
-    # Aucun `ports:` : contrairement à epargne qui publie 8082, ce frontend
-    # n'est joignable que par Traefik. Rien à ouvrir au pare-feu, et aucun
-    # risque de collision de port sur l'hôte.
+    # Publié directement sur l'hôte → http://<IP-DU-SERVEUR>:8090, sans passer
+    # par Traefik. 8090 évite le 3000 de Dokploy, le 8082 d'epargne et les
+    # 80/443 de Traefik. À ouvrir dans le pare-feu / groupe de sécurité.
+    ports:
+      - "8090:3000"
+
     networks: [dokploy-network]
     mem_limit: 512m
+
+volumes:
+  visacredit-db:
 
 networks:
   dokploy-network:
