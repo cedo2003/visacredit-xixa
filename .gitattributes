@@ -1,0 +1,15 @@
+# Fins de ligne — les fichiers ci-dessous partent sur un serveur Linux.
+#
+# Sans cette contrainte, un commit depuis un poste Windows peut y introduire des
+# CRLF. Un script shell en CRLF ne démarre pas : le noyau cherche l'interpréteur
+# « /bin/sh\r », qui n'existe pas, et le conteneur meurt sur un « no such file
+# or directory » parfaitement trompeur.
+*.sh            text eol=lf
+Dockerfile      text eol=lf
+*.yml           text eol=lf
+*.yaml          text eol=lf
+Caddyfile       text eol=lf
+.env.example    text eol=lf
+
+# Le dump est réinjecté tel quel dans MariaDB : on n'y touche pas.
+*.sql           -text
