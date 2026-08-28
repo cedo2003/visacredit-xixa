@@ -95,7 +95,10 @@ else
 fi
 
 # ── 3) Cache de production ───────────────────────────────────────────────────
-php bin/console cache:clear --no-interaction || true
+# Rien à faire : il est figé dans l'image, préparé par `cache:warmup` au build
+# (voir backend/Dockerfile). Le vider ici exposait à un cache à moitié
+# reconstruit si le conteneur redémarrait au mauvais moment — Symfony servait
+# alors un 404 sur toutes ses routes.
 
 echo "[entrypoint] démarrage de FrankenPHP…"
 exec "$@"
