@@ -59,7 +59,11 @@ services:
     # Le backend importe le schéma dès son démarrage : il doit trouver une base
     # qui répond, pas seulement un conteneur lancé.
     healthcheck:
-      test: ["CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized"]
+      # Le test reel est `healthcheck.sh`. Le compte de tables qui le precede
+      # ne sert qu'a le faire apparaitre dans la sortie du healthcheck, que
+      # `docker inspect` conserve : c'est le seul journal lisible par API sur
+      # cette version de Dokploy, et il dit si boutiq.sql a bien ete importe.
+      test: ["CMD-SHELL", "echo -n \"tables=\"; mariadb -u root -p$$MARIADB_ROOT_PASSWORD -N -B -e \"SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='visacredit'\" 2>&1 | head -c 120; echo; healthcheck.sh --su-mysql --connect --innodb_initialized"]
       interval: 10s
       timeout: 5s
       retries: 12
