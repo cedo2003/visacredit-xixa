@@ -109,7 +109,7 @@ services:
     # devient sain des que FrankenPHP repond, quel que soit le code HTTP -- un
     # 404 sur `/` est normal, l'API n'a pas de route racine.
     healthcheck:
-      test: ["CMD-SHELL", "echo -n \"doctrine: \"; php bin/console dbal:run-sql \"SELECT COUNT(*) FROM users\" 2>&1 | tr '\n' ' ' | tail -c 300; echo; curl -sS -o /dev/null http://localhost:80/ || exit 1"]
+      test: ["CMD-SHELL", "echo -n \"jwt: \"; ls -1 config/jwt 2>&1 | tr '\n' ' '; echo -n \"| check: \"; php bin/console lexik:jwt:check-config 2>&1 | tr '\n' ' ' | tail -c 260; echo; curl -sS -o /dev/null http://localhost:80/ || exit 1"]
       interval: 15s
       timeout: 10s
       retries: 3
