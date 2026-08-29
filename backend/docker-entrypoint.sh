@@ -5,6 +5,17 @@ set -e
 
 cd /app
 
+# Journal de preparation, duplique dans un fichier.
+#
+# Cette version de Dokploy n'expose aucun journal d'execution : ni route REST,
+# ni WebSocket exploitable. La sortie des healthchecks, elle, est conservee par
+# `docker inspect` et lisible par API -- le healthcheck du backend publie donc
+# la fin de ce fichier. C'est le seul moyen de savoir ou le demarrage bloque.
+# `tee` garde par ailleurs la sortie standard intacte pour l'interface Dokploy.
+JOURNAL=/tmp/entrypoint.log
+
+preparer() {
+
 # ── 1) Paire de clés JWT (Lexik) ─────────────────────────────────────────────
 if [ ! -f config/jwt/private.pem ]; then
   echo "[entrypoint] génération de la paire de clés JWT…"
@@ -99,6 +110,15 @@ echo "[entrypoint] schema present ($TABLES tables)."
 # (voir backend/Dockerfile). Le vider ici exposait à un cache à moitié
 # reconstruit si le conteneur redémarrait au mauvais moment — Symfony servait
 # alors un 404 sur toutes ses routes.
+
+echo "[entrypoint] préparation terminée."
+}
+
+# Le code de sortie se perd dans un pipeline : on le range a part. `exec` reste
+# en dehors, sans quoi FrankenPHP ne serait pas le processus principal du
+# conteneur et ne recevrait pas les signaux d'arret.
+{ preparer; echo $? > /tmp/entrypoint.status; } 2>&1 | tee "$JOURNAL"
+[ "$(cat /tmp/entrypoint.status 2>/dev/null)" = "0" ] || exit 1
 
 echo "[entrypoint] démarrage de FrankenPHP…"
 exec "$@"

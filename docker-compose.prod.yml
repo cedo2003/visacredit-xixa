@@ -63,7 +63,7 @@ services:
       # ne sert qu'a le faire apparaitre dans la sortie du healthcheck, que
       # `docker inspect` conserve : c'est le seul journal lisible par API sur
       # cette version de Dokploy, et il dit si boutiq.sql a bien ete importe.
-      test: ["CMD-SHELL", "echo -n \"tables=\"; mariadb -u root -p$$MARIADB_ROOT_PASSWORD -N -B -e \"SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='visacredit'\" 2>&1 | head -c 120; echo; healthcheck.sh --su-mysql --connect --innodb_initialized"]
+      test: ["CMD-SHELL", "echo -n \"visacredit voit tables=\"; mariadb -h 127.0.0.1 -u visacredit -p$$MARIADB_PASSWORD -N -B -e \"SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='visacredit'\" 2>&1 | head -c 120; echo; healthcheck.sh --su-mysql --connect --innodb_initialized"]
       interval: 10s
       timeout: 5s
       retries: 12
@@ -103,6 +103,17 @@ services:
       # Le mot de passe ne doit contenir ni @ ni : ni / — docker-entrypoint.sh
       # découpe cette URL à la main.
       DATABASE_URL: "mysql://visacredit:${MYSQL_PASSWORD:?a saisir dans Dokploy}@db:3306/visacredit?serverVersion=10.11.11-MariaDB&charset=utf8mb4"
+
+    # Publie la fin du journal de demarrage : `docker inspect` conserve la
+    # sortie des healthchecks, seul journal lisible par API ici. Le conteneur
+    # devient sain des que FrankenPHP repond, quel que soit le code HTTP -- un
+    # 404 sur `/` est normal, l'API n'a pas de route racine.
+    healthcheck:
+      test: ["CMD-SHELL", "tail -c 400 /tmp/entrypoint.log 2>&1; curl -sS -o /dev/null http://localhost:80/ || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 3
+      start_period: 90s
 
     networks: [visacredit]
     mem_limit: 512m
