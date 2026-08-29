@@ -119,20 +119,25 @@ de sécurité. Sans elle, le conteneur tournera sans que rien ne réponde.
 
 ## 3. Ce que fait le premier démarrage
 
-Le backend attend que MariaDB réponde (`healthcheck` + `depends_on`), puis
-`backend/docker-entrypoint.sh` s'exécute. Il est rejouable sans dommage :
+**MariaDB importe `boutiq.sql` elle-même.** Le fichier est monté dans
+`/docker-entrypoint-initdb.d/` : l'image l'exécute une seule fois, quand le
+volume est vide, et **avant d'accepter la moindre connexion**. Pas de course
+entre conteneurs, et un import qui échoue fait échouer la base — visible tout de
+suite, au lieu d'une application qui démarre sans schéma. L'import apporte le
+schéma complet **et** les deux comptes de démonstration (voir `readme.md`).
+
+`backend/docker-entrypoint.sh` prend ensuite le relais, et reste rejouable sans
+dommage :
 
 1. génère la paire de clés JWT si elle est absente ;
-2. **importe `boutiq.sql` uniquement si la table `users` n'existe pas** — donc
-   au tout premier démarrage. Un redémarrage ultérieur n'écrase jamais les
-   données ;
-3. vide le cache de production.
+2. attend que la base réponde, puis **vérifie que le schéma est là** — et refuse
+   de démarrer sinon, plutôt que de servir des 500 sans explication ;
+3. lance FrankenPHP. Le cache de production, lui, est figé dans l'image par
+   `cache:warmup` au build : rien à vider au démarrage.
 
-L'import apporte le schéma complet **et** les deux comptes de démonstration
-(voir `readme.md`).
-
-Les données vivent dans le volume nommé `visacredit-db`. Elles survivent aux
-redéploiements et aux reconstructions d'image ; supprimer le volume les efface.
+Les données vivent dans le volume nommé `visacredit-donnees`. Elles survivent aux
+redéploiements et aux reconstructions d'image ; supprimer le volume les efface —
+et provoque un nouvel import au démarrage suivant.
 
 ---
 

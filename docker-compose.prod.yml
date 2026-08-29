@@ -43,7 +43,18 @@ services:
     # Volume nommé : les données survivent aux redéploiements et aux
     # reconstructions d'image. Les supprimer efface la base.
     volumes:
-      - visacredit-db:/var/lib/mysql
+      # Volume nomme : les donnees survivent aux redeploiements et aux
+      # reconstructions d'image. Le supprimer efface la base.
+      - visacredit-donnees:/var/lib/mysql
+
+      # Import du schema et des donnees de demonstration, confie a MariaDB.
+      #
+      # L'image execute les fichiers .sql de ce dossier UNE SEULE FOIS, quand le
+      # repertoire de donnees est vide, et AVANT d'accepter la moindre connexion.
+      # C'est plus sur que de le faire depuis le backend : pas de course entre
+      # les deux conteneurs, et un import qui echoue fait echouer la base --
+      # visible tout de suite, au lieu d'une application qui demarre sans schema.
+      - ./boutiq.sql:/docker-entrypoint-initdb.d/01-boutiq.sql:ro
 
     # Le backend importe le schéma dès son démarrage : il doit trouver une base
     # qui répond, pas seulement un conteneur lancé.
@@ -124,7 +135,10 @@ services:
     mem_limit: 512m
 
 volumes:
-  visacredit-db:
+  # Renomme volontairement : l'ancien `visacredit-db` avait ete initialise sans
+  # le script d'import ci-dessus, et MariaDB ne rejoue jamais l'initialisation
+  # sur un volume deja peuple. Un nom neuf garantit un premier demarrage propre.
+  visacredit-donnees:
 
 networks:
   # Reseau PRIVE au projet, et c'est tout l'enjeu.

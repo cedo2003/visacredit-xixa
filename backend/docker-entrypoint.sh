@@ -77,22 +77,22 @@ if [ "$ESSAI" -gt 30 ]; then
   exit 1
 fi
 
-# La table users fait foi : si elle existe, la base est déjà provisionnée.
-DEJA_INSTALLE=$(interroger "SELECT COUNT(*) FROM information_schema.tables \
-                            WHERE table_schema='$DB_NOM' AND table_name='users';")
+# La table users fait foi. L'import lui-meme n'est plus fait ici : il est confie
+# a MariaDB, qui execute boutiq.sql depuis /docker-entrypoint-initdb.d avant
+# meme d'accepter les connexions (voir docker-compose.prod.yml). Il ne reste
+# qu'a verifier -- et a le dire franchement si le schema manque, plutot que de
+# laisser l'application repondre 500 sur chaque route sans explication.
+TABLES=$(interroger "SELECT COUNT(*) FROM information_schema.tables \
+                     WHERE table_schema='$DB_NOM';")
 
-if [ "$DEJA_INSTALLE" = "0" ]; then
-  echo "[entrypoint] base vide → import de boutiq.sql (schéma + démonstration)…"
-  if "$CLIENT" -h "$DB_HOTE" -P "$DB_PORT" -u "$DB_USER" -p"$DB_PASS" \
-       --default-character-set=utf8mb4 "$DB_NOM" < /app/install/boutiq.sql; then
-    echo "[entrypoint] import terminé."
-  else
-    echo "[entrypoint] ERREUR : import de boutiq.sql échoué." >&2
-    exit 1
-  fi
-else
-  echo "[entrypoint] base déjà provisionnée ($DEJA_INSTALLE table users), import ignoré."
+if [ "$TABLES" = "0" ]; then
+  echo "[entrypoint] ERREUR : la base $DB_NOM est vide." >&2
+  echo "[entrypoint] boutiq.sql n'a pas ete joue. Le volume avait-il deja ete" >&2
+  echo "[entrypoint] initialise ? MariaDB ne rejoue jamais l'initialisation." >&2
+  exit 1
 fi
+
+echo "[entrypoint] schema present ($TABLES tables)."
 
 # ── 3) Cache de production ───────────────────────────────────────────────────
 # Rien à faire : il est figé dans l'image, préparé par `cache:warmup` au build
