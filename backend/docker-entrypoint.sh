@@ -65,8 +65,18 @@ DB_NOM="${DB_NOM%%\?*}"
 
 echo "[entrypoint] client $CLIENT → base $DB_NOM sur $DB_HOTE:$DB_PORT"
 
+# --skip-ssl est indispensable ici. Le client MariaDB recent EXIGE TLS pour
+# toute connexion non locale et refuse de lui-meme, cote client, avec :
+#     ERROR 2026 (HY000): TLS/SSL error: SSL is required, but the server
+#     does not support it
+# Le serveur, joint par le reseau Docker prive, n'a pas de TLS configure -- et
+# n'en a pas besoin : le trafic ne quitte jamais l'hote. Sans cette option, le
+# backend bouclait sur « base pas encore prete » puis abandonnait, alors que la
+# base etait parfaitement saine.
+#
+# Cela ne concerne QUE ce script : PDO, qu'utilise Symfony, n'impose pas TLS.
 interroger() {
-  "$CLIENT" -h "$DB_HOTE" -P "$DB_PORT" -u "$DB_USER" -p"$DB_PASS" -N -B -e "$1"
+  "$CLIENT" --skip-ssl -h "$DB_HOTE" -P "$DB_PORT" -u "$DB_USER" -p"$DB_PASS" -N -B -e "$1"
 }
 
 # La dépendance `service_healthy` du compose couvre le cas normal, mais une base
