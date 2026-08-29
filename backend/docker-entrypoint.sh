@@ -24,9 +24,9 @@ if [ ! -f config/jwt/private.pem ]; then
 fi
 
 # ── 2) Schéma de base ────────────────────────────────────────────────────────
-# Ce projet n'utilise pas les migrations Doctrine : son schéma vit dans
-# boutiq.sql. L'import n'a donc lieu que si la base est vide, ce qui le rend
-# sûr à chaque redémarrage — jamais il n'écrase des données de production.
+# Le schéma de départ vit dans boutiq.sql, importé par MariaDB au premier
+# démarrage (voir docker-compose.prod.yml). Les évolutions postérieures, elles,
+# passent par les migrations Doctrine, jouées plus bas.
 #
 # Ce bloc échoue FRANCHEMENT (exit 1) si la base est inatteignable ou si
 # l'import rate. La version précédente se contentait d'un avertissement et
@@ -123,7 +123,20 @@ fi
 
 echo "[entrypoint] schema present ($TABLES tables)."
 
-# ── 3) Cache de production ───────────────────────────────────────────────────
+# ── 3) Migrations Doctrine ──────────────────────────────────────────
+# boutiq.sql est un instantané daté : il ne contient pas les évolutions
+# postérieures à son export. La migration du 19/08/2026 ajoute notamment
+# `users.registre_commerce`, que l'entité User mappe — sans elle, Doctrine
+# sélectionne une colonne inexistante et TOUTE lecture d'un utilisateur
+# échoue. La connexion renvoyait ainsi 500 pendant qu'un COUNT(*) passait :
+# ce dernier ne touche aucune colonne.
+#
+# `migrate` est idempotent, il note ce qu'il a joué ; `--allow-no-migration`
+# évite l'échec quand tout est déjà appliqué.
+echo "[entrypoint] application des migrations Doctrine..."
+php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+
+# ── 4) Cache de production ───────────────────────────────────────────────────
 # Rien à faire : il est figé dans l'image, préparé par `cache:warmup` au build
 # (voir backend/Dockerfile). Le vider ici exposait à un cache à moitié
 # reconstruit si le conteneur redémarrait au mauvais moment — Symfony servait

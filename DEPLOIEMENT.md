@@ -132,7 +132,12 @@ dommage :
 1. génère la paire de clés JWT si elle est absente ;
 2. attend que la base réponde, puis **vérifie que le schéma est là** — et refuse
    de démarrer sinon, plutôt que de servir des 500 sans explication ;
-3. lance FrankenPHP. Le cache de production, lui, est figé dans l'image par
+3. **applique les migrations Doctrine.** `boutiq.sql` est un instantané daté du
+   14/08/2026 : il ne contient pas les évolutions postérieures. La migration du
+   19/08 ajoute notamment `users.registre_commerce`, que l'entité `User` mappe —
+   sans elle, Doctrine sélectionne une colonne inexistante et **toute** lecture
+   d'un utilisateur échoue, donc toute connexion ;
+4. lance FrankenPHP. Le cache de production, lui, est figé dans l'image par
    `cache:warmup` au build : rien à vider au démarrage.
 
 Les données vivent dans le volume nommé `visacredit-donnees`. Elles survivent aux
