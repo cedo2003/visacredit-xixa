@@ -29,10 +29,20 @@ serveur. Le passage à un domaine se fera plus tard, en une étape (voir la fin)
 | Application Dokploy | la sienne | **une nouvelle** | aucun |
 | Base de données | `waofin`, gérée par Dokploy | **MariaDB embarquée dans le compose** | aucun — conteneur et volume distincts |
 | Port hôte publié | `8082` (frontend) | **`8090`** (frontend) | aucun |
-| Réseau Docker | `dokploy-network` | le même | aucun — c'est seulement le chemin vers les conteneurs |
+| Réseau Docker | `dokploy-network` | **un réseau privé** | aucun — et c'est nécessaire, voir ci-dessous |
 
-Le seul élément partagé est le réseau Docker. Il ne donne aucun accès aux
-données de l'autre application, qui vivent dans sa propre base.
+**Rien n'est partagé, réseau compris — et ce point n'est pas cosmétique.**
+
+Les deux projets ont un service nommé `backend`. Sur le `dokploy-network`
+commun, chaque service publie son nom comme alias DNS : l'alias `backend` y
+désignait donc deux conteneurs à la fois, et `http://backend` tombait sur l'un
+ou sur l'autre. Notre frontend a ainsi interrogé l'API d'epargne pendant tout un
+déploiement — elle répondait 404 sur nos routes, 401 sur les siennes, 500 à la
+connexion. Panne difficile à lire : les réponses avaient la bonne allure
+(FrankenPHP, PHP 8.3, JSON d'erreur Symfony), elles venaient simplement de la
+mauvaise application.
+
+Sur un réseau privé, `backend` et `db` ne désignent que nos conteneurs.
 
 ---
 
@@ -162,7 +172,9 @@ Le DNS est déjà prêt — `*.waofin.co` pointe sur le serveur, donc
 `visacredit.waofin.co` résout sans rien ajouter. Le jour venu :
 
 1. dans `docker-compose.prod.yml`, retirer le bloc `ports:` du service
-   `frontend` (Traefik le joint par le réseau interne, sans port hôte) ;
+   `frontend` et le rattacher à `dokploy-network` **en plus** du réseau privé,
+   pour que Traefik puisse l'atteindre — en lui donnant un alias explicite,
+   distinct de `frontend`, pour ne pas rejouer la collision de noms ;
 2. dans Dokploy, **Domains → Add** sur le service `frontend` :
    `visacredit.waofin.co`, **Container Port 3000**, HTTPS activé ;
 3. passer `DEFAULT_URI` à `https://visacredit.waofin.co` ;

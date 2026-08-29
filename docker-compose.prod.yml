@@ -5,6 +5,7 @@
 #   • application Dokploy distincte  → aucun conteneur partagé
 #   • base MariaDB embarquée ici     → rien à créer dans l'interface Dokploy
 #   • un seul port hôte publié       → 8090, le 8082 d'epargne reste intact
+#   • réseau Docker PRIVÉ            → aucun alias DNS en commun avec epargne
 #
 # CE QUI EST EXPOSÉ : le frontend, et lui seul, sur http://<IP-DU-SERVEUR>:8090.
 # Le backend et la base ne sont joignables que depuis le réseau interne Docker.
@@ -53,7 +54,7 @@ services:
       retries: 12
       start_period: 40s
 
-    networks: [dokploy-network]
+    networks: [visacredit]
     mem_limit: 512m
 
   # ── API Symfony ────────────────────────────────────────────────────────────
@@ -88,7 +89,7 @@ services:
       # découpe cette URL à la main.
       DATABASE_URL: "mysql://visacredit:${MYSQL_PASSWORD:?a saisir dans Dokploy}@db:3306/visacredit?serverVersion=10.11.11-MariaDB&charset=utf8mb4"
 
-    networks: [dokploy-network]
+    networks: [visacredit]
     mem_limit: 512m
 
   # ── Interface web (Next.js) ────────────────────────────────────────────────
@@ -119,12 +120,27 @@ services:
     ports:
       - "8090:3000"
 
-    networks: [dokploy-network]
+    networks: [visacredit]
     mem_limit: 512m
 
 volumes:
   visacredit-db:
 
 networks:
-  dokploy-network:
-    external: true
+  # Reseau PRIVE au projet, et c'est tout l'enjeu.
+  #
+  # Sur le `dokploy-network` partage, chaque service expose son nom comme alias
+  # DNS. epargne-africaVR ayant lui aussi un service nomme `backend`, l'alias
+  # etait porte par DEUX conteneurs : `http://backend` resolvait vers l'un ou
+  # l'autre, et notre frontend interrogeait l'API Symfony d'epargne -- qui
+  # repondait 404 sur nos routes, 401 sur les siennes, et 500 a la connexion.
+  # Une panne parfaitement deroutante : les reponses avaient la bonne allure
+  # (FrankenPHP, PHP 8.3, JSON d'erreur Symfony), elles venaient juste de la
+  # mauvaise application.
+  #
+  # Ici, `backend` et `db` ne designent que nos conteneurs. Le jour ou un
+  # domaine remplacera le port 8090, il faudra rattacher le service `frontend`
+  # a `dokploy-network` EN PLUS de celui-ci, pour que Traefik puisse l'atteindre
+  # -- et lui donner alors un alias explicite, distinct de `frontend`.
+  visacredit:
+    driver: bridge
