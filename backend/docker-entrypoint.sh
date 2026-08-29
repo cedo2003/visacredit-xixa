@@ -77,7 +77,15 @@ while [ "$ESSAI" -le 30 ]; do
   if interroger "SELECT 1;" >/dev/null 2>&1; then
     break
   fi
-  [ "$ESSAI" = 1 ] && echo "[entrypoint] base pas encore prête, attente…"
+  # Le test ci-dessus est muet volontairement (il echoue a chaque tour tant que
+  # la base demarre). Au PREMIER echec seulement, on montre le message reel :
+  # sans lui, « base injoignable » ne distingue pas un mot de passe refuse d'un
+  # nom d'hote introuvable ou d'un serveur qui refuse la connexion.
+  if [ "$ESSAI" = 1 ]; then
+    echo "[entrypoint] base pas encore prête, attente…"
+    echo "[entrypoint] message du client :"
+    interroger "SELECT 1;" 2>&1 | head -3 || true
+  fi
   ESSAI=$((ESSAI + 1))
   sleep 2
 done
