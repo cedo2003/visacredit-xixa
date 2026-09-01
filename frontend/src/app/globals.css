@@ -4,10 +4,13 @@
  * Couleurs de marque Visacredit XIXA, prélevées dans le logo : l'orange des
  * billets et le bleu de la loupe (#143747).
  *
- * L'orange est légèrement désaturé par rapport au fichier du logo (#FD3F02) :
- * à pleine vivacité, il brûlait les aplats — boutons, bandeaux, appels à
- * l'action — qui en couvrent de larges surfaces. Même teinte, saturation
- * ramenée de 98 % à 82 %.
+ * L'orange de la marque est #F08E00 : c'est `marque-500`, et toute la rampe en
+ * découle — même teinte (35,5°), luminosité échelonnée.
+ *
+ * Cet orange est clair : il ne porte PAS de texte blanc lisible (2,45:1, sous
+ * le seuil de 3:1). Les aplats pleins qui en portent utilisent donc du texte
+ * encre (8,57:1), et non du blanc. Les paliers 600 et au-delà, plus sombres,
+ * restent disponibles quand un fond doit accepter du blanc.
  *
  * Le vert d'origine n'est pas supprimé pour autant : il reste la couleur des
  * montants encaissés et des statuts « payé ». Sans lui, « Payé » et « Reste à
@@ -15,16 +18,16 @@
  * et la navigation, les couleurs d'état disent la situation d'un montant.
  */
 @theme {
-  --color-marque-50: #fff3ee;
-  --color-marque-100: #ffe3d7;
-  --color-marque-200: #ffcbb5;
-  --color-marque-300: #fbaa87;
-  --color-marque-400: #f4805a;
-  --color-marque-500: #ef6238;
-  --color-marque-600: #e84a17;
-  --color-marque-700: #bd3a11;
-  --color-marque-800: #932e10;
-  --color-marque-900: #762710;
+  --color-marque-50: #fff8ed;
+  --color-marque-100: #ffeacc;
+  --color-marque-200: #ffd599;
+  --color-marque-300: #ffb852;
+  --color-marque-400: #ffa31f;
+  --color-marque-500: #f08e00;
+  --color-marque-600: #cc7900;
+  --color-marque-700: #a76302;
+  --color-marque-800: #845006;
+  --color-marque-900: #694107;
 
   --color-encre-50: #e8eef2;
   --color-encre-100: #d1dee6;
@@ -57,8 +60,14 @@
   --color-faible: #6b7280;
   --color-estompe: #9ca3af;
 
-  /* L'orange, quand il sert de texte sur une surface. */
-  --color-accent: #e84a17;
+  /*
+   * L'orange, quand il sert de TEXTE sur une surface claire.
+   *
+   * Ce n'est pas #F08E00 mais son palier 700 : la teinte de marque à pleine
+   * clarté ne donne que 2,45:1 sur blanc, illisible pour du texte. Le 700
+   * atteint 4,74:1 et passe le seuil AA, en gardant la même teinte.
+   */
+  --color-accent: #a76302;
 
   /*
    * Boutons pleins « valider » et « refuser ». Ils portent du texte blanc et
@@ -129,7 +138,7 @@
     --color-faible: #90a6b2;
     --color-estompe: #6d848f;
 
-    --color-accent: #f5906b;
+    --color-accent: #ffb852;
 
     --color-action-encre: #2f6480;
     --color-action-encre-vif: #3b7a9b;
@@ -137,10 +146,10 @@
     --color-vitrine: #0c1c25;
 
     /* Surfaces teintées de marque : chips, bandeaux, bordures d'accent. */
-    --color-marque-50: #2a1408;
-    --color-marque-100: #3a1c0b;
-    --color-marque-200: #5a2b10;
-    --color-marque-300: #7d3d16;
+    --color-marque-50: #2c1d07;
+    --color-marque-100: #3d280a;
+    --color-marque-200: #5b3c10;
+    --color-marque-300: #7e5316;
 
     /*
      * Couleurs d'état. Les paliers 50/100/200 servent de fonds et de bordures,
@@ -230,17 +239,17 @@
   --color-faible: #90a6b2;
   --color-estompe: #6d848f;
 
-  --color-accent: #f5906b;
+  --color-accent: #ffb852;
 
   --color-action-encre: #2f6480;
   --color-action-encre-vif: #3b7a9b;
 
   --color-vitrine: #0c1c25;
 
-  --color-marque-50: #2a1408;
-  --color-marque-100: #3a1c0b;
-  --color-marque-200: #5a2b10;
-  --color-marque-300: #7d3d16;
+  --color-marque-50: #2c1d07;
+  --color-marque-100: #3d280a;
+  --color-marque-200: #5b3c10;
+  --color-marque-300: #7e5316;
 
   --color-emerald-50: #0d2f26;
   --color-emerald-100: #12463a;

@@ -95,7 +95,7 @@ function pageWidget(intention: IntentionPaiement, config: ConfigPasserelles): st
             phone: ${JSON.stringify(intention.telephone ?? "")},
             data: ${JSON.stringify(intention.reference)},
             position: 'center',
-            theme: '#E84A17'
+            theme: '#F08E00'
           });
         })();
       </script>

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth";
-import { Alerte, Bouton, Champ } from "@/components/ui";
+import { Alerte, Bouton, Champ, ChampMotDePasse } from "@/components/ui";
 
 /** Remplace login.php. */
 export default function Connexion() {
@@ -55,7 +55,7 @@ export default function Connexion() {
             width={200}
             height={145}
             priority
-            className="h-auto w-auto dark:rounded-2xl dark:bg-white dark:p-3"
+            className="mx-auto h-auto w-auto dark:rounded-2xl dark:bg-white dark:p-3"
           />
           <p className="mt-2 text-doux">{t("Votre boutique, simplifiée")}</p>
         </div>
@@ -72,9 +72,8 @@ export default function Connexion() {
             value={telephone}
             onChange={(e) => setTelephone(e.target.value)}
           />
-          <Champ
+          <ChampMotDePasse
             label={t("Mot de passe")}
-            type="password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}

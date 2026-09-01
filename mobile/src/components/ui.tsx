@@ -96,7 +96,17 @@ export function Bouton({
     neutre: couleurs.surface,
   }[variante];
 
-  const teinte = variante === "neutre" ? couleurs.texteDoux : "#ffffff";
+  // L'orange de la marque (#F08E00) est clair : du blanc n'y atteint que
+  // 2,45:1, illisible en plein soleil sur un téléphone. Le bouton primaire
+  // porte donc de l'encre (8,57:1) ; les trois autres aplats, plus sombres,
+  // gardent le blanc.
+  const teinte = {
+    primaire: "#071720",
+    secondaire: "#ffffff",
+    succes: "#ffffff",
+    danger: "#ffffff",
+    neutre: couleurs.texteDoux,
+  }[variante];
 
   return (
     <Pressable

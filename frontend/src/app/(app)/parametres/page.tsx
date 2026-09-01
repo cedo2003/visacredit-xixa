@@ -13,6 +13,7 @@ import {
   Bouton,
   Carte,
   Champ,
+  ChampMotDePasse,
   ChampSelect,
   Chargement,
   StatCarte,
@@ -393,25 +394,22 @@ function FormulaireMotDePasse() {
       {succes && <Alerte type="succes">{succes}</Alerte>}
 
       <form onSubmit={soumettre} className="space-y-4">
-        <Champ
+        <ChampMotDePasse
           label={t("Mot de passe actuel")}
-          type="password"
           required
           value={actuel}
           onChange={(e) => setActuel(e.target.value)}
         />
-        <Champ
+        <ChampMotDePasse
           label={t("Nouveau mot de passe")}
-          type="password"
           required
           minLength={6}
           aide={t("6 caractères minimum")}
           value={nouveau}
           onChange={(e) => setNouveau(e.target.value)}
         />
-        <Champ
+        <ChampMotDePasse
           label={t("Confirmer le nouveau mot de passe")}
-          type="password"
           required
           value={confirmation}
           onChange={(e) => setConfirmation(e.target.value)}

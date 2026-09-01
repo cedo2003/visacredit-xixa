@@ -19,14 +19,15 @@ export const PALETTE_CLAIRE = {
   /**
    * Orange du logo — actions principales, éléments actifs, accents.
    *
-   * Légèrement désaturé par rapport au fichier du logo (#FD3F02) : à pleine
-   * vivacité il brûlait les aplats — boutons, raccourcis, en-têtes — qui en
-   * couvrent de larges surfaces. Même teinte, saturation ramenée à 82 %.
+   * #F08E00. Cet orange est clair : il ne porte pas de texte blanc lisible
+   * (2,45:1). Les aplats qui en portent utilisent de l'encre — voir la teinte
+   * du bouton primaire dans components/ui.tsx. `primaireSombre` reste, lui,
+   * assez foncé pour du blanc (4,74:1).
    */
-  primaire: "#E84A17",
-  primaireSombre: "#BD3A11",
-  primaireClair: "#FFF3EE",
-  primaireBordure: "#FFCBB5",
+  primaire: "#F08E00",
+  primaireSombre: "#A76302",
+  primaireClair: "#FFF8ED",
+  primaireBordure: "#FFD599",
 
   /** Bleu du logo — en-têtes, actions secondaires, totaux neutres. */
   secondaire: "#143747",
@@ -75,8 +76,8 @@ export const PALETTE_CLAIRE = {
    * s'éclaircit, l'aplat ne bouge pas, sans quoi le libellé blanc passerait
    * sous le seuil de contraste. D'où ces quatre jetons distincts.
    */
-  actionPrimaire: "#E84A17",
-  actionPrimaireVif: "#BD3A11",
+  actionPrimaire: "#F08E00",
+  actionPrimaireVif: "#CC7900",
   actionSecondaire: "#143747",
   actionSecondaireVif: "#0B222D",
   actionSucces: "#059669",
@@ -105,7 +106,7 @@ export const PALETTE_CLAIRE = {
  * Forme partagée par les deux palettes.
  *
  * Pas de `as const` sur la palette claire : il figerait chaque valeur sur son
- * littéral (`"#FD3F02"` plutôt que `string`) et la palette sombre ne pourrait
+ * littéral (`"#F08E00"` plutôt que `string`) et la palette sombre ne pourrait
  * plus satisfaire le type.
  */
 export type Palette = typeof PALETTE_CLAIRE;
@@ -119,10 +120,10 @@ export type Palette = typeof PALETTE_CLAIRE;
  * `action*`, qui portent du texte blanc, gardent leur valeur.
  */
 export const PALETTE_SOMBRE: Palette = {
-  primaire: "#F5906B",
-  primaireSombre: "#F9A98A",
-  primaireClair: "#2A1408",
-  primaireBordure: "#5A2B10",
+  primaire: "#FFB852",
+  primaireSombre: "#FFD599",
+  primaireClair: "#2C1D07",
+  primaireBordure: "#5B3C10",
 
   secondaire: "#7FB3CC",
   secondaireSombre: "#A3CBDE",
@@ -155,8 +156,8 @@ export const PALETTE_SOMBRE: Palette = {
 
   indigo: "#A5B4FC",
 
-  actionPrimaire: "#E84A17",
-  actionPrimaireVif: "#CF4113",
+  actionPrimaire: "#F08E00",
+  actionPrimaireVif: "#CC7900",
   actionSecondaire: "#2F6480",
   actionSecondaireVif: "#3B7A9B",
   actionSucces: "#059669",

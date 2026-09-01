@@ -129,7 +129,7 @@ export default function PaiementMobile({
           phone: intention.telephone ?? "",
           data: intention.reference,
           position: "center",
-          theme: "#E84A17",
+          theme: "#F08E00",
         });
       } else {
         await chargerScript(

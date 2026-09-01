@@ -39,7 +39,7 @@ const PALETTE_CLAIRE = {
   surface: "#FFFFFF",
   surfaceDouce: "#F1F4F6",
   bordure: "#E3E8EC",
-  actionPrimaire: "#E84A17",
+  actionPrimaire: "#F08E00",
 };
 
 type PaletteApercu = typeof PALETTE_CLAIRE;
@@ -62,7 +62,7 @@ const PALETTE_SOMBRE: PaletteApercu = {
   surface: "#132934",
   surfaceDouce: "#18333F",
   bordure: "#27495A",
-  actionPrimaire: "#E84A17",
+  actionPrimaire: "#F08E00",
 };
 
 /** Les six tuiles de l'accueil mobile, dans l'ordre de l'écran. */
@@ -246,20 +246,20 @@ function Raccourci({
       <span
         className="flex h-8 w-8 items-center justify-center rounded-lg text-sm"
         style={{
-          backgroundColor: principal ? "rgba(255,255,255,0.22)" : palette.surfaceDouce,
+          backgroundColor: principal ? "rgba(7,23,32,0.14)" : palette.surfaceDouce,
         }}
       >
         {icone}
       </span>
       <span
         className="text-[0.6rem] font-bold leading-tight"
-        style={{ color: principal ? "#ffffff" : palette.texte }}
+        style={{ color: principal ? "#071720" : palette.texte }}
       >
         {t(titre)}
       </span>
       <span
         className="text-[0.52rem] leading-tight"
-        style={{ color: principal ? "#FFD9C7" : palette.texteFaible }}
+        style={{ color: principal ? "#5B3C10" : palette.texteFaible }}
       >
         {t(note)}
       </span>

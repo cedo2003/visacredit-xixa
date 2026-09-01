@@ -3,6 +3,7 @@
 /** Briques d'interface communes, dans l'esprit visuel de l'ancien assets/css/style.css. */
 
 import { useT } from "@/lib/i18n";
+import { useId, useState } from "react";
 import type {
   ButtonHTMLAttributes,
   InputHTMLAttributes,
@@ -55,7 +56,13 @@ type VarianteBouton = "primaire" | "secondaire" | "succes" | "danger" | "neutre"
  * refus en rouge — deux couleurs qu'on ne confond pas, même en plein soleil.
  */
 const VARIANTES: Record<VarianteBouton, string> = {
-  primaire: "bg-marque-600 text-white hover:bg-marque-700",
+  /*
+   * Texte encre et non blanc : l'orange de la marque (#F08E00) est clair, et
+   * le blanc n'y atteint que 2,45:1 — sous le seuil, illisible en plein jour
+   * sur un téléphone. En encre, le même aplat monte à 8,57:1, et la couleur
+   * de marque reste à pleine vivacité plutôt que d'être assombrie.
+   */
+  primaire: "bg-marque-500 text-encre-900 hover:bg-marque-400",
   secondaire: "bg-action-encre text-white hover:bg-action-encre-vif",
   succes: "bg-action-succes text-white hover:bg-action-succes-vif",
   danger: "bg-action-danger text-white hover:bg-action-danger-vif",
@@ -105,6 +112,80 @@ export function Champ({
       />
       {aide && <span className="mt-1 block text-xs text-faible">{aide}</span>}
     </label>
+  );
+}
+
+/**
+ * Champ de mot de passe avec bascule « afficher / masquer ».
+ *
+ * Sur un téléphone, saisir un mot de passe à l'aveugle est la première cause
+ * d'échec de connexion — d'où l'œil, devenu un standard des formulaires.
+ *
+ * L'association étiquette/champ passe ici par un identifiant explicite, et non
+ * par l'imbrication comme dans `Champ` : le bouton vit à l'intérieur de la
+ * zone du champ, et un bouton imbriqué dans un `<label>` entre en concurrence
+ * avec l'activation de celui-ci.
+ *
+ * Le bouton est `type="button"` : sans cela il soumettrait le formulaire.
+ */
+export function ChampMotDePasse({
+  label,
+  aide,
+  className = "",
+  ...props
+}: InputHTMLAttributes<HTMLInputElement> & { label?: string; aide?: string }) {
+  const t = useT();
+  const id = useId();
+  const [visible, setVisible] = useState(false);
+
+  return (
+    <div>
+      {label && (
+        <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-corps">
+          {label}
+        </label>
+      )}
+      <div className="relative">
+        <input
+          {...props}
+          id={id}
+          type={visible ? "text" : "password"}
+          className={`w-full rounded-xl border border-bordure-forte py-2.5 pl-4 pr-12 text-sm outline-none transition focus:border-marque-500 focus:ring-2 focus:ring-marque-100 ${className}`}
+        />
+        <button
+          type="button"
+          onClick={() => setVisible((v) => !v)}
+          aria-label={visible ? t("Masquer le mot de passe") : t("Afficher le mot de passe")}
+          aria-pressed={visible}
+          title={visible ? t("Masquer le mot de passe") : t("Afficher le mot de passe")}
+          className="absolute inset-y-0 right-0 flex w-11 items-center justify-center rounded-r-xl text-faible transition hover:text-corps"
+        >
+          <IconeOeil barre={visible} />
+        </button>
+      </div>
+      {aide && <span className="mt-1 block text-xs text-faible">{aide}</span>}
+    </div>
+  );
+}
+
+/** Œil ouvert, ou barré quand le mot de passe est visible. */
+function IconeOeil({ barre }: { barre: boolean }) {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z" />
+      <circle cx="12" cy="12" r="3" />
+      {barre && <path d="m3 3 18 18" />}
+    </svg>
   );
 }
 

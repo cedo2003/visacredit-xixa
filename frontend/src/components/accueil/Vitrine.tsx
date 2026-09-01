@@ -52,13 +52,13 @@ function Hero() {
     <section className="relative overflow-hidden px-5 pb-14 pt-14 sm:pt-20">
       {/* Halos de marque, purement décoratifs */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -left-32 -top-40 h-[32rem] w-[32rem] rounded-full bg-[radial-gradient(circle,rgba(232,74,23,0.16),transparent_62%)]" />
+        <div className="absolute -left-32 -top-40 h-[32rem] w-[32rem] rounded-full bg-[radial-gradient(circle,rgba(240,142,0,0.18),transparent_62%)]" />
         <div className="absolute -right-28 top-40 h-[28rem] w-[28rem] rounded-full bg-[radial-gradient(circle,rgba(20,55,71,0.14),transparent_62%)]" />
       </div>
 
       <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_.95fr]">
         <Reveal className="min-w-0">
-          <Eyebrow>{t("Plateforme B2B — grossistes & détaillants")}</Eyebrow>
+          <Eyebrow>{t("Plateforme de gestion — grossistes & détaillants")}</Eyebrow>
 
           {/*
             Le titre est coupé en deux : la seconde moitié porte l'orange. Deux
@@ -141,7 +141,7 @@ function Hero() {
 
 const PAIEMENTS = [
   { couleur: "#059669", libelle: "Espèces" },
-  { couleur: "#E84A17", libelle: "Mobile Money · KkiaPay" },
+  { couleur: "#F08E00", libelle: "Mobile Money · KkiaPay" },
   { couleur: "#143747", libelle: "Mobile Money & carte · Agrégateur" },
   { couleur: "#7C3AED", libelle: "Sur le solde" },
   { couleur: "#EA580C", libelle: "À crédit" },
@@ -442,7 +442,7 @@ function Confiance() {
   return (
     <Section id="confiance">
       <EnTeteSection
-        eyebrow={t("Confiance")}
+        eyebrow={t("Confiance & Confidentialité")}
         titre={t("Ce qu'il faut savoir avant d'ouvrir un compte.")}
         texte={t("Le solde affiché est une position de caisse calculée : les ventes encaissées, moins les dépenses et les retraits, plus les versements.")}
       />
@@ -467,7 +467,7 @@ function Confiance() {
 const METIERS = [
   {
     initiales: "CS",
-    fond: "#FFC7AD",
+    fond: "#FFD599",
     role: "Le grossiste",
     contexte: "Vend en gros aux détaillants",
     citation:
@@ -532,7 +532,6 @@ function Metiers() {
 
 const CHIFFRES = [
   { valeur: "2", libelle: "rôles : grossiste et détaillant" },
-  { valeur: "12", libelle: "écrans de gestion" },
   { valeur: "0 à 1,8 %", libelle: "de frais mobile money" },
   { valeur: "100 %", libelle: "hors ligne sur mobile" },
 ];
@@ -541,13 +540,13 @@ function Chiffres() {
   const t = useT();
   return (
     <section className="px-5 py-12">
-      <Reveal className="mx-auto grid max-w-6xl gap-8 text-center sm:grid-cols-2 lg:grid-cols-4">
+      <Reveal className="mx-auto grid max-w-6xl gap-8 text-center sm:grid-cols-3 sm:gap-6">
         {CHIFFRES.map((chiffre) => (
-          <div key={chiffre.libelle}>
-            <div className="text-4xl font-black tracking-tight text-accent sm:text-5xl">
+          <div key={chiffre.libelle} className="mx-auto max-w-[16rem]">
+            <div className="whitespace-nowrap text-3xl font-black tracking-tight text-accent sm:text-4xl lg:text-5xl">
               {t(chiffre.valeur)}
             </div>
-            <div className="mt-1.5 text-sm font-semibold text-faible">
+            <div className="mt-1.5 text-sm font-semibold text-balance text-faible">
               {t(chiffre.libelle)}
             </div>
           </div>
@@ -767,18 +766,18 @@ function PiedDePage() {
         <div className="max-w-sm">
           <MarqueXixa taille="sm" />
           <p className="mt-4 text-sm leading-relaxed text-faible">
-            {t("La plateforme de gestion des boutiques et magasins qui relie grossistes et détaillants. Votre boutique, tenue au clair.")}
+            {t("La plateforme de gestion des boutiques et magasins qui relie grossistes, détaillants et clients. Votre boutique, tenue au clair.")}
           </p>
         </div>
 
-        <div className="flex gap-14">
+        <div className="flex flex-wrap gap-10 sm:gap-14">
           <ColonnePied
             titre={t("Produit")}
             liens={[
               ["Comment ça marche", "#fonctionnement"],
-              ["Fonctions", "#fonctions"],
+              ["Fonctionnalités", "#fonctions"],
               ["Grossiste & détaillant", "#roles"],
-              ["Confiance", "#confiance"],
+              ["Confiance & Confidentialité", "#confiance"],
               ["Télécharger l'application", "#telecharger"],
             ]}
           />
@@ -790,14 +789,19 @@ function PiedDePage() {
               ["Questions fréquentes", "#questions"],
             ]}
           />
+          <ColonnePied
+            titre={t("Légal")}
+            liens={[
+              ["Politique de confidentialité", "/confidentialite"],
+              ["Politique de cookies", "/cookies"],
+            ]}
+          />
         </div>
       </div>
 
-      <div className="mx-auto mt-12 max-w-6xl border-t border-marque-100 pt-6 text-sm text-faible">
-        © {new Date().getFullYear()}{" "}
-        {t(
-          "Visacredit XIXA. Fonds détenus chez l'agrégateur de paiement — Visacredit XIXA ne conserve aucun fonds.",
-        )}
+      <div className="mx-auto mt-12 flex max-w-6xl flex-col gap-3 border-t border-marque-100 pt-6 text-sm text-faible sm:flex-row sm:items-center sm:justify-between">
+        <span>© {new Date().getFullYear()} {t("Visacredit Tech Inc")}</span>
+        <span>{t("Visacredit ne conserve aucun fonds.")}</span>
       </div>
     </footer>
   );
