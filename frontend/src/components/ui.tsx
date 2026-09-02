@@ -191,10 +191,11 @@ function IconeOeil({ barre }: { barre: boolean }) {
 
 export function ChampSelect({
   label,
+  aide,
   children,
   className = "",
   ...props
-}: SelectHTMLAttributes<HTMLSelectElement> & { label?: string }) {
+}: SelectHTMLAttributes<HTMLSelectElement> & { label?: string; aide?: string }) {
   return (
     <label className="block">
       {label && (
@@ -206,6 +207,7 @@ export function ChampSelect({
       >
         {children}
       </select>
+      {aide && <span className="mt-1 block text-xs text-faible">{aide}</span>}
     </label>
   );
 }

@@ -7,9 +7,12 @@ use App\Exception\BusinessException;
 use App\Repository\CreanceRepository;
 use App\Repository\VenteRepository;
 use App\Service\ApiPresenter;
+use App\Service\FactureService;
 use App\Service\VenteService;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/api/ventes')]
@@ -59,6 +62,32 @@ class VenteController extends AbstractApiController
                 $this->creances->findByVente($vente)
             ),
             'vendeur' => $this->presenter->user($this->utilisateur()),
+        ]);
+    }
+
+    /**
+     * Facture PDF de la vente.
+     *
+     * Le reçu imprimable du navigateur reste disponible ; celui-ci est un
+     * document autonome, avec les mentions légales de la boutique et la
+     * ventilation de la TVA quand elle s'applique.
+     *
+     * Le jeton JWT voyage dans un en-tête, qu'un simple lien de téléchargement
+     * ne peut pas poser : le frontend récupère donc le corps de la réponse puis
+     * déclenche l'enregistrement lui-même.
+     */
+    #[Route('/{id<\d+>}/facture.pdf', methods: ['GET'])]
+    public function facture(int $id, FactureService $factures): Response
+    {
+        $vente = $this->charger($id);
+        $pdf = $factures->pdf($vente, $this->utilisateur());
+
+        return new Response($pdf, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => HeaderUtils::makeDisposition(
+                HeaderUtils::DISPOSITION_ATTACHMENT,
+                $factures->nomFichier($vente),
+            ),
         ]);
     }
 

@@ -783,4 +783,18 @@ export const DICTIONNAIRE_EN: Record<string, string> = {
   "Si cela change": "If this changes",
   "Si nous devions un jour déposer un cookie — pour une mesure d'audience, par exemple — cette page serait mise à jour et votre consentement recueilli au préalable.":
     "Should we ever set a cookie — for analytics, say — this page would be updated and your consent obtained beforehand.",
+
+  // ── Facturation ──
+  "Télécharger la facture (PDF)": "Download invoice (PDF)",
+  "Préparation…": "Preparing…",
+  "Document introuvable.": "Document not found.",
+  "Le téléchargement a échoué.": "Download failed.",
+  "Régime de TVA": "VAT status",
+  "Non assujettie — TVA non applicable": "Not registered — VAT not applicable",
+  "Assujettie à la TVA": "Registered for VAT",
+  "Taux de TVA (%)": "VAT rate (%)",
+  "Détermine ce qu'affiche la facture PDF de vos ventes.":
+    "Determines what the PDF invoice of your sales shows.",
+  "18 % au Bénin. Les prix saisis restent des prix TTC : la base hors taxes est calculée à partir du total.":
+    "18% in Benin. The prices you enter stay tax-inclusive: the net base is derived from the total.",
 };

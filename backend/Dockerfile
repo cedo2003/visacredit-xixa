@@ -24,7 +24,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Extensions PHP requises par Symfony, Doctrine et l'API.
-RUN install-php-extensions pdo_mysql intl opcache gd zip bcmath
+# dom et mbstring sont exiges par dompdf (facture PDF). L'image officielle les
+# compile normalement d'office ; on les demande quand meme, car leur absence
+# ne se verrait qu'a l'echec de `composer install`, en plein build.
+RUN install-php-extensions pdo_mysql intl opcache gd zip bcmath dom mbstring
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 

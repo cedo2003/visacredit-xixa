@@ -79,6 +79,48 @@ async function requete<T>(chemin: string, options: Options = {}): Promise<T> {
   return donnees as T;
 }
 
+/**
+ * Télécharge un fichier servi par l'API.
+ *
+ * Un simple lien ne convient pas : le jeton voyage dans un en-tête
+ * `Authorization`, qu'un `<a href>` ne peut pas poser. On récupère donc le
+ * corps de la réponse, puis on déclenche l'enregistrement depuis le navigateur.
+ *
+ * Le nom du fichier vient de l'en-tête `Content-Disposition` s'il est lisible ;
+ * il ne l'est pas toujours, un proxy pouvant le retirer, d'où le repli.
+ */
+export async function telecharger(chemin: string, nomParDefaut: string): Promise<void> {
+  const token = lireToken();
+
+  const reponse = await fetch(`${BASE_URL}${chemin}`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+
+  if (!reponse.ok) {
+    throw new ApiError(
+      reponse.status === 404 ? "Document introuvable." : "Le téléchargement a échoué.",
+      reponse.status,
+    );
+  }
+
+  const disposition = reponse.headers.get("Content-Disposition") ?? "";
+  const trouve = /filename\*?=(?:UTF-8'')?"?([^";]+)"?/i.exec(disposition);
+  const nom = trouve ? decodeURIComponent(trouve[1]) : nomParDefaut;
+
+  const blob = await reponse.blob();
+  const url = URL.createObjectURL(blob);
+
+  const lien = document.createElement("a");
+  lien.href = url;
+  lien.download = nom;
+  document.body.appendChild(lien);
+  lien.click();
+  lien.remove();
+
+  // Sans cette libération, le blob reste en mémoire tant que l'onglet vit.
+  URL.revokeObjectURL(url);
+}
+
 export const api = {
   get: <T>(chemin: string) => requete<T>(chemin),
   post: <T>(chemin: string, body?: unknown) =>

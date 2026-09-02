@@ -3,7 +3,7 @@
 import { useT } from "@/lib/i18n";
 import { use, useEffect, useState } from "react";
 import Link from "next/link";
-import { api } from "@/lib/api";
+import { api, telecharger } from "@/lib/api";
 import { date, dateHeure, montant } from "@/lib/format";
 import type { Creance, User, Vente } from "@/lib/types";
 import { Alerte, Badge, Bouton, Carte, Chargement } from "@/components/ui";
@@ -24,6 +24,7 @@ export default function RecuVente({
   const { id } = use(params);
   const [recu, setRecu] = useState<Recu | null>(null);
   const [erreur, setErreur] = useState("");
+  const [enCours, setEnCours] = useState(false);
 
   useEffect(() => {
     api
@@ -31,6 +32,18 @@ export default function RecuVente({
       .then(setRecu)
       .catch((e) => setErreur(e.message));
   }, [id]);
+
+  async function telechargerFacture() {
+    setEnCours(true);
+    setErreur("");
+    try {
+      await telecharger(`/api/ventes/${id}/facture.pdf`, `Facture-${id}.pdf`);
+    } catch (e) {
+      setErreur(e instanceof Error ? e.message : String(e));
+    } finally {
+      setEnCours(false);
+    }
+  }
 
   if (erreur) return <Alerte>{erreur}</Alerte>;
   if (!recu) return <Chargement />;
@@ -43,7 +56,14 @@ export default function RecuVente({
         <Link href="/ventes" className="text-sm font-medium text-doux hover:underline">
           {t("← Retour aux ventes")}
         </Link>
-        <Bouton onClick={() => window.print()}>{t("Imprimer le reçu")}</Bouton>
+        <div className="flex flex-wrap gap-2">
+          <Bouton variante="neutre" onClick={() => window.print()}>
+            {t("Imprimer le reçu")}
+          </Bouton>
+          <Bouton onClick={telechargerFacture} disabled={enCours}>
+            {enCours ? t("Préparation…") : t("Télécharger la facture (PDF)")}
+          </Bouton>
+        </div>
       </div>
 
       <Carte className="print:shadow-none print:ring-0">

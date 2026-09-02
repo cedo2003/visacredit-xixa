@@ -26,6 +26,9 @@ interface Reponse {
   /** Restreint à « 1 jour » tant que le registre du commerce n'est pas déclaré. */
   frequences_autorisees: string[];
   solde: number;
+  /** Régime de TVA de la boutique : décide du contenu de la facture PDF. */
+  assujetti_tva: boolean;
+  taux_tva: number;
 }
 
 /** Port de pages/parametres/{index,update}.php + changement de mot de passe. */
@@ -53,6 +56,8 @@ export default function Parametres() {
           date_naissance: r.profil.date_naissance ?? "",
           adresse: r.profil.adresse ?? "",
           frequence_retrait: r.frequence_retrait,
+          assujetti_tva: r.assujetti_tva ? "1" : "0",
+          taux_tva: String(r.taux_tva),
         });
       })
       .catch((e) => setErreur(e.message));
@@ -69,7 +74,14 @@ export default function Parametres() {
     setEnvoi(true);
 
     try {
-      const profil = await api.put<User>("/api/parametres", form);
+      // Le formulaire ne manipule que des chaînes ; l'API attend un booléen et
+      // un nombre. On convertit ici plutôt que de compter sur la coercition de
+      // PHP, où « "0" » vaut faux mais « "non" » vaudrait vrai.
+      const profil = await api.put<User>("/api/parametres", {
+        ...form,
+        assujetti_tva: form.assujetti_tva === "1",
+        taux_tva: Number(form.taux_tva ?? 18),
+      });
       await rafraichir();
       // Renseigner son RCCM débloque les autres fréquences : la liste doit
       // refléter la nouvelle situation sans recharger la page.
@@ -200,6 +212,29 @@ export default function Parametres() {
               <p className="-mt-2 text-xs text-amber-700">
                 {t("Renseignez votre registre du commerce ci-dessus pour choisir une autre fréquence de retrait.")}
               </p>
+            )}
+
+            <ChampSelect
+              label={t("Régime de TVA")}
+              value={form.assujetti_tva ?? "0"}
+              onChange={(e) => maj("assujetti_tva", e.target.value)}
+              aide={t("Détermine ce qu'affiche la facture PDF de vos ventes.")}
+            >
+              <option value="0">{t("Non assujettie — TVA non applicable")}</option>
+              <option value="1">{t("Assujettie à la TVA")}</option>
+            </ChampSelect>
+
+            {form.assujetti_tva === "1" && (
+              <Champ
+                label={t("Taux de TVA (%)")}
+                type="number"
+                min={0}
+                max={100}
+                step="0.01"
+                value={form.taux_tva ?? "18"}
+                onChange={(e) => maj("taux_tva", e.target.value)}
+                aide={t("18 % au Bénin. Les prix saisis restent des prix TTC : la base hors taxes est calculée à partir du total.")}
+              />
             )}
 
             <Bouton type="submit" disabled={envoi} className="w-full">

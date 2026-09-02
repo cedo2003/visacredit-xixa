@@ -1,0 +1,227 @@
+{#
+  Facture PDF d'une vente.
+
+  Rendu par dompdf, dont le moteur CSS s'arrête à peu près à CSS 2.1 : pas de
+  flexbox ni de grille. La mise en page repose donc sur des tableaux, ce qui est
+  ici le bon outil plutôt qu'un pis-aller — une facture EST un tableau.
+
+  Les montants sont en francs CFA, sans décimale : la devise n'a pas de
+  subdivision en circulation.
+#}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<style>
+    @page { margin: 18mm 15mm; }
+
+    body {
+        font-family: "DejaVu Sans", sans-serif;
+        font-size: 10pt;
+        color: #1f2937;
+        line-height: 1.45;
+    }
+
+    .entete { width: 100%; border-bottom: 2px solid #F08E00; padding-bottom: 10px; }
+    .entete td { vertical-align: top; }
+
+    .boutique { font-size: 17pt; font-weight: bold; color: #0f2b37; }
+    .mentions { font-size: 8.5pt; color: #4b5563; margin-top: 4px; }
+
+    .titre { font-size: 21pt; font-weight: bold; color: #F08E00; text-align: right; }
+    .numero { font-family: "DejaVu Sans Mono", monospace; font-size: 11pt; font-weight: bold; text-align: right; }
+    .dates { font-size: 8.5pt; color: #4b5563; text-align: right; margin-top: 3px; }
+
+    .parties { width: 100%; margin-top: 18px; }
+    .parties td { vertical-align: top; width: 50%; }
+    .etiquette { font-size: 8pt; text-transform: uppercase; letter-spacing: 0.06em; color: #6b7280; }
+    .partie { margin-top: 3px; font-weight: bold; }
+
+    table.lignes { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    table.lignes th {
+        background: #FFF8ED;
+        border-bottom: 1px solid #FFD599;
+        padding: 7px 8px;
+        font-size: 8.5pt;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #845006;
+        text-align: left;
+    }
+    table.lignes td { padding: 7px 8px; border-bottom: 1px solid #e5e7eb; }
+    .droite { text-align: right; }
+    .centre { text-align: center; }
+
+    table.totaux { width: 47%; margin-left: 53%; margin-top: 14px; border-collapse: collapse; }
+    table.totaux td { padding: 4px 8px; }
+    table.totaux td.droite { text-align: right; }
+    tr.total td {
+        border-top: 2px solid #0f2b37;
+        font-size: 12pt;
+        font-weight: bold;
+        color: #0f2b37;
+        padding-top: 7px;
+    }
+    tr.reste td { color: #b91c1c; font-weight: bold; }
+
+    .lettres {
+        margin-top: 20px;
+        padding: 9px 11px;
+        background: #f9fafb;
+        border-left: 3px solid #F08E00;
+        font-size: 9.5pt;
+    }
+
+    .paiement { width: 100%; margin-top: 18px; font-size: 9pt; }
+    .paiement td { vertical-align: top; width: 50%; }
+
+    .legal { margin-top: 22px; font-size: 8pt; color: #6b7280; border-top: 1px solid #e5e7eb; padding-top: 9px; }
+</style>
+</head>
+<body>
+
+<table class="entete">
+    <tr>
+        <td>
+            <div class="boutique">{{ vendeur.nomBoutique }}</div>
+            <div class="mentions">
+                {% if vendeur.adresse %}{{ vendeur.adresse }}<br>{% endif %}
+                Tél. {{ vendeur.telephone }}{% if vendeur.email %} · {{ vendeur.email }}{% endif %}<br>
+                {#
+                  IFU et RCCM sont les mentions qu'un client professionnel exige
+                  pour passer la facture en charge. Elles restent facultatives
+                  dans l'application — une boutique en cours d'enregistrement
+                  peut vendre — d'où l'affichage conditionnel.
+                #}
+                {% if vendeur.ifu %}IFU : {{ vendeur.ifu }}{% endif %}
+                {% if vendeur.ifu and vendeur.registreCommerce %} · {% endif %}
+                {% if vendeur.registreCommerce %}RCCM : {{ vendeur.registreCommerce }}{% endif %}
+            </div>
+        </td>
+        <td>
+            <div class="titre">FACTURE</div>
+            <div class="numero">{{ vente.numeroFacture }}</div>
+            <div class="dates">
+                Date de vente : {{ vente.dateVente|date('d/m/Y à H:i') }}<br>
+                Éditée le {{ emise_le|date('d/m/Y') }}
+            </div>
+        </td>
+    </tr>
+</table>
+
+<table class="parties">
+    <tr>
+        <td>
+            <div class="etiquette">Facturé à</div>
+            <div class="partie">
+                {{ vente.client ? vente.client.nomComplet : 'Client de passage' }}
+            </div>
+            {% if vente.client and vente.client.telephone %}
+                <div>{{ vente.client.telephone }}</div>
+            {% elseif vente.telephoneClient %}
+                <div>{{ vente.telephoneClient }}</div>
+            {% endif %}
+            {% if vente.client and vente.client.adresse %}
+                <div>{{ vente.client.adresse }}</div>
+            {% endif %}
+        </td>
+        <td>
+            <div class="etiquette">Vendeur</div>
+            <div class="partie">{{ vendeur.prenom }} {{ vendeur.nom }}</div>
+        </td>
+    </tr>
+</table>
+
+<table class="lignes">
+    <thead>
+        <tr>
+            <th>Désignation</th>
+            <th class="centre">Qté</th>
+            <th class="droite">Prix unitaire</th>
+            <th class="droite">Montant</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ligne in lignes %}
+            <tr>
+                <td>{{ ligne.designation }}</td>
+                <td class="centre">{{ ligne.quantite }}</td>
+                <td class="droite">{{ ligne.prix_unitaire|number_format(0, ',', ' ') }}</td>
+                <td class="droite">{{ ligne.sous_total|number_format(0, ',', ' ') }}</td>
+            </tr>
+        {% else %}
+            <tr><td colspan="4">Aucun article.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<table class="totaux">
+    {% if assujetti_tva %}
+        <tr>
+            <td>Total hors taxes</td>
+            <td class="droite">{{ total_ht|number_format(0, ',', ' ') }}</td>
+        </tr>
+        <tr>
+            <td>TVA {{ taux_tva|number_format(taux_tva == taux_tva|round ? 0 : 2, ',', ' ') }} %</td>
+            <td class="droite">{{ montant_tva|number_format(0, ',', ' ') }}</td>
+        </tr>
+        <tr class="total">
+            <td>Total TTC</td>
+            <td class="droite">{{ total_ttc|number_format(0, ',', ' ') }} F</td>
+        </tr>
+    {% else %}
+        <tr class="total">
+            <td>Total à payer</td>
+            <td class="droite">{{ total_ttc|number_format(0, ',', ' ') }} F</td>
+        </tr>
+    {% endif %}
+    <tr>
+        <td>Déjà réglé</td>
+        <td class="droite">{{ montant_paye|number_format(0, ',', ' ') }}</td>
+    </tr>
+    {% if reste > 0 %}
+        <tr class="reste">
+            <td>Reste à payer</td>
+            <td class="droite">{{ reste|number_format(0, ',', ' ') }}</td>
+        </tr>
+    {% endif %}
+</table>
+
+<div class="lettres">
+    Arrêtée la présente facture à la somme de <strong>{{ total_en_lettres }}</strong>.
+</div>
+
+<table class="paiement">
+    <tr>
+        <td>
+            <div class="etiquette">Mode de règlement</div>
+            <div>
+                {% if vente.modePaiement == 'especes' %}Espèces
+                {% elseif vente.modePaiement == 'mobile_money' %}Mobile Money
+                {% elseif vente.modePaiement == 'fedapay' %}Mobile Money ou carte (agrégateur)
+                {% else %}{{ vente.modePaiement }}{% endif %}
+            </div>
+        </td>
+        <td>
+            <div class="etiquette">Statut</div>
+            <div>{{ vente.statutPaiement == 'paye' ? 'Encaissé' : 'En attente de confirmation' }}</div>
+        </td>
+    </tr>
+</table>
+
+<div class="legal">
+    {% if not assujetti_tva %}
+        {#
+          Mention obligatoire pour une entreprise non assujettie : sans elle, le
+          total pourrait être lu comme un montant taxes comprises et le client
+          tenterait d'en récupérer une TVA qui n'a jamais été facturée.
+        #}
+        TVA non applicable — la boutique n'est pas assujettie à la taxe sur la valeur ajoutée.<br>
+    {% endif %}
+    Les encaissements en mobile money sont détenus par l'agrégateur de paiement.
+    Visacredit XIXA ne conserve aucun fonds.<br>
+    Facture éditée par Visacredit XIXA.
+</div>
+
+</body>
+</html>

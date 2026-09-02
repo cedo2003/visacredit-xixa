@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\UserParam;
 use App\Exception\BusinessException;
 use App\Service\ApiPresenter;
@@ -41,6 +42,8 @@ class ParametreController extends AbstractApiController
                 ? [RetraitController::FREQUENCE_SANS_REGISTRE]
                 : RetraitController::FREQUENCES,
             'solde' => $this->solde->calculer($user),
+            'assujetti_tva' => (bool) $params?->isAssujettiTva(),
+            'taux_tva' => (float) ($params?->getTauxTva() ?? '18.00'),
         ]);
     }
 
@@ -106,20 +109,53 @@ class ParametreController extends AbstractApiController
                 throw new BusinessException('Fréquence de retrait inconnue.');
             }
 
-            $repo = $this->em->getRepository(UserParam::class);
-            $params = $repo->findOneBy(['user' => $user]);
-
-            if (!$params) {
-                $params = (new UserParam())->setUser($user);
-                $this->em->persist($params);
-            }
+            $params = $this->parametres($user);
 
             $params->setFrequenceRetrait($frequence);
+        }
+
+        // Régime de TVA — il décide du contenu légal de la facture PDF.
+        if (\array_key_exists('assujetti_tva', $data) || \array_key_exists('taux_tva', $data)) {
+            $params = $this->parametres($user);
+
+            if (\array_key_exists('assujetti_tva', $data)) {
+                $params->setAssujettiTva((bool) $data['assujetti_tva']);
+            }
+
+            if (\array_key_exists('taux_tva', $data)) {
+                $taux = (float) $data['taux_tva'];
+                // Borne haute large à dessein : le taux varie d'un pays à
+                // l'autre, et le brider au 18 % béninois interdirait tout
+                // déploiement ailleurs. Elle n'écarte que l'absurde.
+                if ($taux < 0 || $taux > 100) {
+                    throw new BusinessException('Le taux de TVA doit être compris entre 0 et 100 %.');
+                }
+                $params->setTauxTva(number_format($taux, 2, '.', ''));
+            }
         }
 
         $this->em->flush();
 
         return new JsonResponse($this->presenter->user($user));
+    }
+
+    /**
+     * Ligne `user_params` de l'utilisateur, créée à la volée.
+     *
+     * Les comptes antérieurs à cette table n'en ont pas, et l'inscription ne
+     * l'écrit pas systématiquement : la chercher sans la créer ferait échouer
+     * silencieusement le premier enregistrement d'une préférence.
+     */
+    private function parametres(User $user): UserParam
+    {
+        $params = $this->em->getRepository(UserParam::class)->findOneBy(['user' => $user]);
+
+        if (!$params) {
+            $params = (new UserParam())->setUser($user);
+            $this->em->persist($params);
+        }
+
+        return $params;
     }
 
     #[Route('/mot-de-passe', methods: ['POST'])]
