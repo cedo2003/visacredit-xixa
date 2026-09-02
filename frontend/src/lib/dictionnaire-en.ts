@@ -720,4 +720,389 @@ export const DICTIONNAIRE_EN: Record<string, string> = {
     "Determines what the PDF invoice of your sales shows.",
   "18 % au Bénin. Les prix saisis restent des prix TTC : la base hors taxes est calculée à partir du total.":
     "18% in Benin. The prices you enter stay tax-inclusive: the net base is derived from the total.",
+
+  // ── Documents légaux ──────────────────────────────────────────────────
+  //
+  // Ces traductions sont celles des versions officielles anglaises fournies
+  // par Visacredit, et non une traduction automatique du français : un texte
+  // qui engage l'éditeur ne se traduit pas à la volée.
+  //
+  // `scripts/verifier-i18n.mjs` ne voit pas ces chaînes — elles arrivent par
+  // des attributs JSX, pas des propriétés d'objet. Elles ne seront donc
+  // jamais signalées comme manquantes : à tenir à jour à la main.
+  "1. Objet": "1. Purpose",
+  "1. Préambule": "1. Introduction",
+  "1. Qu'est-ce qu'un cookie ?": "1. What Is a Cookie?",
+  "1. Éditeur et exploitant de la plateforme": "1. Publisher and Operator of the Platform",
+  "10. Obligations de l'Utilisateur": "10. User Obligations",
+  "10. Vos droits": "10. Your Rights",
+  "11. Cookies et traceurs": "11. Cookies and Trackers",
+  "11. Propriété intellectuelle": "11. Intellectual Property",
+  "12. Responsabilité et garanties": "12. Liability and Warranties",
+  "12. Utilisateurs mineurs": "12. Minors",
+  "13. Modification de la présente politique": "13. Changes to This Policy",
+  "13. Protection des données personnelles": "13. Personal Data Protection",
+  "14. Contact": "14. Contact",
+  "14. Durée, suspension et résiliation": "14. Term, Suspension and Termination",
+  "15. Modification des CGU": "15. Changes to These Terms",
+  "16. Droit applicable et juridiction compétente": "16. Governing Law and Jurisdiction",
+  "17. Contact": "17. Contact",
+  "2. Directeur de la publication": "2. Publication Director",
+  "2. Définitions": "2. Definitions",
+  "2. Les cookies que nous utilisons": "2. The Cookies We Use",
+  "2. Responsable du traitement": "2. Data Controller",
+  "2.1 Cookies strictement nécessaires": "2.1 Strictly necessary cookies",
+  "2.2 Cookies de préférence": "2.2 Preference cookies",
+  "2.3 Cookies de mesure d'audience": "2.3 Audience measurement cookies",
+  "2.4 Absence de cookies publicitaires tiers": "2.4 No third-party advertising cookies",
+  "3. Accès à la Plateforme et création de compte":
+    "3. Access to the Platform and Account Creation",
+  "3. Données que nous collectons": "3. Data We Collect",
+  "3. Durée de conservation des cookies": "3. Cookie Retention Period",
+  "3. Hébergement": "3. Hosting",
+  "3.1 Conditions d'éligibilité": "3.1 Eligibility",
+  "3.1 Données fournies directement par l'Utilisateur":
+    "3.1 Data provided directly by the User",
+  "3.2 Choix du rôle": "3.2 Choice of Role",
+  "3.2 Données collectées automatiquement": "3.2 Data collected automatically",
+  "3.3 Données de paiement": "3.3 Payment data",
+  "3.3 Renseignement de l'IFU (Identifiant fiscal)": "3.3 Providing the Tax ID (IFU)",
+  "3.4 Identifiants de connexion": "3.4 Login Credentials",
+  "31 août 2026": "August 31, 2026",
+  "4. Activité de la Plateforme": "4. Business Activity of the Platform",
+  "4. Finalités du traitement": "4. Purposes of Processing",
+  "4. Fonctionnalités de la Plateforme": "4. Platform Features",
+  "4. Gestion de votre consentement": "4. Managing Your Consent",
+  "5. Base légale des traitements": "5. Legal Basis for Processing",
+  "5. Comment désactiver les cookies depuis votre navigateur":
+    "5. How to Disable Cookies in Your Browser",
+  "5. Processus de commande entre Grossiste et Détaillant":
+    "5. Ordering Process Between Wholesaler and Retailer",
+  "5. Propriété intellectuelle": "5. Intellectual Property",
+  "6. Autorité de contrôle des données personnelles":
+    "6. Data Protection Supervisory Authority",
+  "6. Modification de la présente politique": "6. Changes to This Policy",
+  "6. Moyens de paiement": "6. Payment Methods",
+  "6. Partage des données": "6. Data Sharing",
+  "7. Contact": "7. Contact",
+  "7. Créances, crédits fournisseurs et recouvrement":
+    "7. Receivables, Supplier Credit and Collection",
+  "7. Signalement d'un contenu ou d'un dysfonctionnement":
+    "7. Reporting Content or a Malfunction",
+  "7. Transferts internationaux de données": "7. International Data Transfers",
+  "8. Durée de conservation": "8. Data Retention Period",
+  "8. Médiation et réclamations": "8. Mediation and Complaints",
+  "8. Notations et confiance entre Utilisateurs": "8. Ratings and Trust Between Users",
+  "9. Application mobile et fonctionnement hors ligne":
+    "9. Mobile Application and Offline Operation",
+  "9. Crédits": "9. Credits",
+  "9. Sécurité des données": "9. Data Security",
+  "Adresse : 10 rue de Penthièvre, 75008, Paris, France":
+    "Address: 10 rue de Penthièvre, 75008, Paris, France",
+  "Améliorer nos services et développer de nouvelles fonctionnalités":
+    "Improve our services and develop new features",
+  "Application mobile Visacredit XIXA — version 1.1.0 (Android). Développement et conception : équipes du groupe Visacredit, exploitation opérationnelle assurée par l'Entité Exploitante applicable à chaque pays.":
+    "Visacredit XIXA mobile application — version 1.1.0 (Android). Design and development: teams of the Visacredit group; operational management provided by the Operating Entity applicable to each country.",
+  "Assurer la sécurité de la Plateforme et prévenir la fraude":
+    "Ensure the security of the Platform and prevent fraud",
+  "Assurer le fonctionnement du système de notation et de confiance entre utilisateurs":
+    "Operate the rating and trust system between users",
+  "Aucune conservation, par Visacredit, des fonds ou des moyens de paiement des utilisateurs — ceux-ci sont détenus exclusivement par l'agrégateur de paiement":
+    "No holding of user funds or payment instruments by Visacredit — these are held exclusively by the payment aggregator",
+  "Authentification par numéro de téléphone et mot de passe chiffré en base de données":
+    "Authentication via phone number and password encrypted in our database",
+  "Bénin": "Benin",
+  "Calculer et afficher votre position de caisse, vos créances, vos crédits fournisseurs et vos statistiques de vente":
+    "Calculate and display your cash position, receivables, supplier credit and sales statistics",
+  "Ces cookies permettent de mémoriser vos choix afin de personnaliser votre expérience (langue d'affichage, boutique sélectionnée, préférences d'affichage du tableau de bord).":
+    "These cookies allow us to remember your choices in order to personalize your experience (display language, selected shop, dashboard display preferences).",
+  "Ces cookies sont indispensables au fonctionnement du site et de votre espace personnel. Ils ne peuvent pas être désactivés.":
+    "These cookies are essential to the operation of the website and your personal account. They cannot be disabled.",
+  "Cette liste est mise à jour au fur et à mesure de la création de nouvelles entités locales. Toutes les Entités Exploitantes sont des entités de Visacredit Tech Inc. (Delaware, États-Unis). Visacredit Tech Inc. n'exerce aucun rôle opérationnel dans l'exploitation de la Plateforme et n'est pas partie aux présentes CGU.":
+    "This list is updated as new local entities are created. All Operating Entities are entities of Visacredit Tech Inc. (Delaware, United States). Visacredit Tech Inc. has no operational role in the operation of the Platform and is not a party to these Terms.",
+  "Cette politique s'applique dans le respect de la loi applicable dans le pays de l'Entité Exploitante — notamment la loi béninoise n° 2017-20 portant Code du numérique pour les Utilisateurs relevant de Visacredit Tech Bénin SARL — et, pour les utilisateurs situés dans l'Union européenne, du Règlement général sur la protection des données (RGPD).":
+    "This policy applies in compliance with the law applicable in the country of the Operating Entity — in particular Beninese Law No. 2017-20 on the Digital Code for Users falling under Visacredit Tech Bénin SARL — and, for users located in the European Union, the General Data Protection Regulation (GDPR).",
+  "Chaque partie note l'autre à réception de la Commande":
+    "Each party rates the other upon receipt of the Order",
+  "Chiffrement des données stockées localement sur l'appareil mobile pour le fonctionnement hors ligne":
+    "Encryption of data stored locally on the mobile device to enable offline operation",
+  "Commandes B2B : recherche de produits, comparaison des Grossistes, passation, validation, livraison et réception des commandes entre Grossistes et Détaillants":
+    "B2B orders: searching for products, comparing Wholesalers, placing, validating, delivering and receiving orders between Wholesalers and Retailers",
+  "Conditions Générales d'Utilisation": "Terms of Use",
+  "Conformément à la réglementation applicable dans le pays de l'Entité Exploitante, vous disposez des droits suivants sur vos données à caractère personnel :":
+    "In accordance with the regulations applicable in the country of the Operating Entity, you have the following rights over your personal data:",
+  "Contact : +33 01 77 62 30 03": "Contact: +33 01 77 62 30 03",
+  "Cookies de session et d'authentification, associés à votre jeton de connexion signé":
+    "Session and authentication cookies, linked to your signed connection token",
+  "Cookies de sécurité, destinés à détecter et prévenir les tentatives de fraude ou d'usurpation":
+    "Security cookies, designed to detect and prevent fraud or identity theft attempts",
+  "Cookies techniques permettant la mémorisation de votre rôle (grossiste ou détaillant) au cours de votre session":
+    "Technical cookies used to remember your role (wholesaler or retailer) during your session",
+  "Courriel : contact@visacredit.info": "Email: contact@visacredit.info",
+  "Créances clients : suivi d'un échéancier par client, enregistrement des paiements partiels, signalement des créances en retard":
+    "Accounts receivable: tracking of a payment schedule per customer, recording of partial payments, flagging of overdue receivables",
+  "Crédits fournisseurs : suivi des sommes dues aux Grossistes et de leur règlement, en espèces, en mobile money ou sur le solde":
+    "Supplier credit: tracking of amounts owed to Wholesalers and their settlement, in cash, via mobile money, or against the balance",
+  "Créer, authentifier et gérer votre compte grossiste ou détaillant":
+    "Create, authenticate and manage your wholesaler or retailer account",
+  "Côte d'Ivoire": "Côte d'Ivoire",
+  "Données commerciales : catalogue de produits, prix d'achat et de vente, seuils d'alerte de stock":
+    "Commercial data: product catalog, purchase and sale prices, stock alert thresholds",
+  "Données d'identification : nom, prénom, numéro de téléphone, mot de passe (conservé sous forme chiffrée)":
+    "Identification data: last name, first name, phone number, password (stored in encrypted form)",
+  "Données de connexion et d'utilisation : jetons de session signés, historique de connexion, journaux techniques":
+    "Connection and usage data: signed session tokens, login history, technical logs",
+  "Données de gestion : ventes enregistrées, factures émises, créances clients et échéanciers, commandes B2B passées ou reçues, crédits fournisseurs, notations attribuées à vos partenaires commerciaux":
+    "Management data: recorded sales, issued invoices, accounts receivable and payment schedules, B2B orders placed or received, supplier credit, ratings given to your business partners",
+  "Données de l'appareil (application mobile) : identifiant technique de l'appareil, version de l'application, données stockées localement de façon chiffrée pour permettre le fonctionnement hors ligne":
+    "Device data (mobile application): technical device identifier, application version, data stored locally in encrypted form to enable offline operation",
+  "Données professionnelles : nom de la boutique, rôle choisi (grossiste ou détaillant), Identifiant Fiscal Unique (IFU) ou équivalent national lorsqu'il est renseigné — non obligatoire à l'inscription":
+    "Business data: shop name, chosen role (wholesaler or retailer), Unique Tax Identifier (IFU) or national equivalent when provided — not required at sign-up",
+  "Droit d'accès à vos données": "Right of access to your data",
+  "Droit d'opposition et de limitation du traitement":
+    "Right to object to and restrict processing",
+  "Droit de rectification des données inexactes ou incomplètes":
+    "Right to rectify inaccurate or incomplete data",
+  "Droit de retirer votre consentement à tout moment, lorsque le traitement repose sur celui-ci":
+    "Right to withdraw your consent at any time, where processing is based on it",
+  "Droit à l'effacement de vos données, dans les limites de nos obligations légales de conservation":
+    "Right to erasure of your data, within the limits of our legal retention obligations",
+  "Droit à la portabilité de vos données": "Right to data portability",
+  "En cas de litige, l'Utilisateur est invité à contacter en premier lieu le service client de Visacredit à l'adresse mentionnée ci-dessus. À défaut de résolution amiable, les dispositions relatives au droit applicable et à la juridiction compétente figurant dans les Conditions Générales d'Utilisation de XIXA trouveront à s'appliquer.":
+    "In the event of a dispute, the User is invited to first contact Visacredit's customer service at the address mentioned above. Failing an amicable resolution, the provisions relating to governing law and competent jurisdiction set out in XIXA's Terms of Use shall apply.",
+  "Entité applicable": "Applicable Entity",
+  "Entité en cours d'immatriculation en République de Côte d'Ivoire":
+    "Entity in the process of registration in the Republic of Côte d'Ivoire",
+  "Fournir des informations exactes, complètes et à jour lors de son inscription et de l'utilisation de la Plateforme":
+    "Provide accurate, complete and up-to-date information when signing up and using the Platform",
+  "Fournir une assistance et un support client": "Provide customer support and assistance",
+  "Google Chrome : Paramètres > Confidentialité et sécurité > Cookies":
+    "Google Chrome: Settings > Privacy and security > Cookies",
+  "Immatriculation": "Registration",
+  "Immatriculation RCCM :": "RCCM registration:",
+  "Immatriculation en cours": "Registration in progress",
+  "Immatriculation en cours — [RCCM à compléter]":
+    "Registration in progress — [RCCM number to be added]",
+  "Immatriculée au Registre du Commerce et du Crédit Mobilier (RCCM) de Cotonou sous le numéro RB/COT/25 B 40300":
+    "Registered with the Trade and Personal Property Credit Register (RCCM) of Cotonou under number RB/COT/25 B 40300",
+  "Jeton de session signé à chaque appel à nos serveurs":
+    "Signed session token on each call to our servers",
+  "L'Entité Exploitante applicable est déterminée selon le tableau suivant, également repris dans les Mentions Légales de XIXA :":
+    "The applicable Operating Entity is determined according to the following table, also set out in XIXA's Legal Notice:",
+  "L'Entité Exploitante applicable à l'Utilisateur est déterminée selon le tableau suivant :":
+    "The Operating Entity applicable to the User is determined according to the following table:",
+  "L'Entité Exploitante applicable à l'Utilisateur, telle qu'identifiée dans le tableau ci-dessus, est seule responsable du traitement de ses données, en sa qualité d'éditrice et d'exploitante opérationnelle de XIXA pour son pays.":
+    "The Operating Entity applicable to the User, as identified in the table above, is solely responsible for the processing of their data, as publisher and operational operator of XIXA for their country.",
+  "L'accès au compte s'effectue au moyen d'un numéro de téléphone et d'un mot de passe. L'Utilisateur est seul responsable de la confidentialité de ses identifiants et de toute activité réalisée depuis son compte. Il s'engage à informer Visacredit sans délai en cas de perte, de vol ou d'utilisation non autorisée de ses identifiants.":
+    "Account access is via a phone number and password. The User is solely responsible for keeping its credentials confidential and for any activity carried out from its account. The User agrees to inform Visacredit without delay in the event of loss, theft, or unauthorized use of its credentials.",
+  "L'application mobile XIXA fonctionne en mode hors ligne : les données de l'Utilisateur sont conservées, chiffrées, directement sur son terminal, et ne transitent vers les serveurs de Visacredit que lors des synchronisations.":
+    "The XIXA mobile application operates offline: User data is stored, encrypted, directly on the User's device, and only transmitted to Visacredit's servers during synchronization.",
+  "L'application mobile XIXA fonctionne hors ligne : les données de l'Utilisateur (stock, ventes, créances, commandes) sont conservées, chiffrées, directement sur son terminal, et synchronisées avec les serveurs de Visacredit dès que la connexion est rétablie. L'Utilisateur est responsable de la sécurité physique de son terminal et de la mise à jour de l'application afin de bénéficier des derniers correctifs de sécurité. Visacredit ne saurait être tenu responsable de la perte de données résultant de la perte, du vol, de la réinitialisation ou du dysfonctionnement du terminal de l'Utilisateur.":
+    "The XIXA mobile application operates offline: the User's data (inventory, sales, receivables, orders) is stored, encrypted, directly on the User's device, and synchronized with Visacredit's servers as soon as a connection is restored. The User is responsible for the physical security of its device and for updating the application to benefit from the latest security fixes. Visacredit shall not be held liable for any loss of data resulting from the loss, theft, reset, or malfunction of the User's device.",
+  "L'application mobile XIXA fonctionne majoritairement hors ligne et conserve les données sur l'appareil dans une base locale chiffrée plutôt que par des cookies au sens strict du navigateur. Les principes de transparence et de contrôle décrits ci-dessous s'appliquent néanmoins par analogie à ce stockage local.":
+    "The XIXA mobile application operates mostly offline and stores data on the device in a local encrypted database rather than through cookies in the strict browser sense. The principles of transparency and control described below nonetheless apply by analogy to this local storage.",
+  "L'exécution du contrat qui nous lie à vous (Conditions Générales d'Utilisation), pour la fourniture du service":
+    "Performance of the contract binding us to you (Terms of Use), for the provision of the service",
+  "L'identifiant fiscal est demandé lors de l'inscription mais n'est pas exigé pour la création du compte : une boutique déjà en activité peut ouvrir son compte le jour même et renseigner son IFU ultérieurement.":
+    "The tax ID is requested at sign-up but is not required in order to create an account: a shop already in operation may open its account the same day and provide its IFU at a later stage.",
+  "L'utilisation de cookies et technologies similaires sur le site web de XIXA fait l'objet d'une Politique de Cookies distincte, disponible séparément.":
+    "The use of cookies and similar technologies on the XIXA website is covered by a separate Cookie Policy.",
+  "LWS France": "LWS France",
+  "La Plateforme XIXA est réservée aux professionnels et commerçants majeurs, agissant dans le cadre de leur activité commerciale de vente en gros ou au détail. En créant un compte, l'Utilisateur déclare disposer de la capacité juridique nécessaire à l'exercice de son activité commerciale.":
+    "The XIXA Platform is reserved for adult professionals and merchants acting within the scope of their wholesale or retail business activity. By creating an account, the User represents that it has the legal capacity necessary to carry on its business activity.",
+  "La Plateforme XIXA est réservée aux professionnels et commerçants majeurs, agissant dans le cadre de leur activité commerciale. Elle n'est pas destinée aux mineurs.":
+    "The XIXA Platform is reserved for adult professionals and merchants acting in the course of their business activity. It is not intended for minors.",
+  "La Plateforme constitue un outil de suivi des Créances et des Crédits fournisseurs entre Utilisateurs. Visacredit n'intervient pas dans le recouvrement de ces sommes et ne garantit ni le paiement des Créances d'un Utilisateur envers ses clients, ni le règlement des Crédits fournisseurs d'un Détaillant envers un Grossiste. Chaque Utilisateur demeure seul responsable de la gestion commerciale de ses relations clients et fournisseurs.":
+    "The Platform is a tool for tracking Receivables and Supplier Credit between Users. Visacredit does not participate in the collection of these amounts and does not guarantee either the payment of a User's Receivables from its customers, or the settlement of a Retailer's Supplier Credit owed to a Wholesaler. Each User remains solely responsible for managing its own customer and supplier relationships.",
+  "La Plateforme, sa structure, ses fonctionnalités, ses contenus, ses marques et logos demeurent la propriété exclusive de Visacredit. L'Utilisateur bénéficie d'un droit d'usage personnel, non exclusif et non transférable de la Plateforme, pour la durée de son compte et dans le strict cadre des présentes CGU. L'Utilisateur conserve la propriété des données commerciales qu'il saisit (catalogue, ventes, créances) ; il concède à Visacredit le droit de les traiter dans la seule mesure nécessaire à la fourniture du service.":
+    "The Platform, its structure, features, content, trademarks and logos remain the exclusive property of Visacredit. The User is granted a personal, non-exclusive, non-transferable right to use the Platform, for the duration of its account and strictly within the scope of these Terms. The User retains ownership of the business data it enters (catalog, sales, receivables); it grants Visacredit the right to process such data only to the extent necessary to provide the service.",
+  "La Position de caisse affichée sur la Plateforme est une valeur calculée à titre informatif à partir des mouvements enregistrés par l'Utilisateur (ventes encaissées, dépenses, retraits, versements) ; elle ne constitue pas un solde bancaire ni un dépôt de fonds auprès de Visacredit.":
+    "The Cash Position displayed on the Platform is a value calculated for information purposes based on movements recorded by the User (collected sales, expenses, withdrawals, deposits); it does not constitute a bank balance or a deposit of funds with Visacredit.",
+  "La plateforme « Visacredit XIXA » (ci-après « XIXA », « la Plateforme ») est éditée par le groupe Visacredit. Elle est exploitée, à l'égard de chaque Utilisateur, par l'entité du groupe Visacredit légalement établie dans le pays d'enregistrement de l'Utilisateur (ci-après l'« Entité Exploitante »), conformément au tableau ci-dessous :":
+    "The 'Visacredit XIXA' platform (\"XIXA\", \"the Platform\") is published by the Visacredit group. It is operated, in relation to each User, by the group entity legally established in the User's country of registration (the \"Operating Entity\"), in accordance with the table below:",
+  "La présente Politique de Confidentialité décrit la manière dont l'entité du groupe Visacredit légalement établie dans le pays d'enregistrement de l'Utilisateur (ci-après l'« Entité Exploitante », « Visacredit », « nous »), éditrice et exploitante de la plateforme Visacredit XIXA (« XIXA », « la Plateforme ») pour ce pays, collecte, utilise, partage et protège les données à caractère personnel des utilisateurs grossistes et détaillants (« vous », « l'Utilisateur »).":
+    "This Privacy Policy describes how the group entity legally established in the User's country of registration (the \"Operating Entity\", \"Visacredit\", \"we\"), publisher and operator of the Visacredit XIXA platform (\"XIXA\", \"the Platform\") for that country, collects, uses, shares and protects the personal data of wholesale and retail users (\"you\", \"the User\").",
+  "La responsabilité de Visacredit, si elle venait à être retenue, est limitée aux dommages directs et prévisibles résultant d'un manquement avéré à ses obligations au titre des présentes CGU.":
+    "Visacredit's liability, should it be established, is limited to direct and foreseeable damages resulting from a proven breach of its obligations under these Terms.",
+  "Le Détaillant recherche un produit parmi les catalogues des Grossistes référencés sur la Plateforme, compare les offres, puis passe commande ; un numéro « CMD- » est attribué à la Commande":
+    "The Retailer searches for a product among the catalogs of Wholesalers listed on the Platform, compares offers, and places an Order; a 'CMD-' number is assigned to the Order",
+  "Le Grossiste reçoit la Commande, la valide, procède à la livraison et se fait régler comptant, en mobile money, ou accorde un Crédit fournisseur au Détaillant":
+    "The Wholesaler receives the Order, validates it, delivers it, and is paid in cash, via mobile money, or grants Supplier Credit to the Retailer",
+  "Le cas échéant, des cookies de mesure d'audience peuvent être utilisés afin de comprendre la manière dont les visiteurs utilisent le site (pages consultées, parcours de navigation) et d'améliorer nos services. Ces cookies sont utilisés sous une forme respectant votre vie privée et, lorsque la réglementation l'exige, ne sont déposés qu'avec votre consentement.":
+    "Where applicable, audience measurement cookies may be used to understand how visitors use the website (pages viewed, browsing paths) and to improve our services. These cookies are used in a manner that respects your privacy and, where required by law, are only placed with your consent.",
+  "Le directeur de la publication de la Plateforme XIXA est M. Justin Hadegbe, en sa qualité de gérant de Visacredit Tech Bénin SARL.":
+    "The publication director of the XIXA Platform is Mr. Justin Hadegbe, in his capacity as manager of Visacredit Tech Bénin SARL.",
+  "Le respect d'une obligation légale, notamment en matière fiscale ou de vigilance commerciale":
+    "Compliance with a legal obligation, in particular for tax or due-diligence purposes",
+  "Le site internet et les infrastructures serveur de la Plateforme XIXA sont hébergés par :":
+    "The website and server infrastructure of the XIXA Platform are hosted by:",
+  "Le stock, la Position de caisse, les Créances et les Crédits fournisseurs des deux parties sont mis à jour automatiquement":
+    "Inventory, Cash Position, Receivables and Supplier Credit for both parties are updated automatically",
+  "Le système de notation permet à chaque partie à une Commande d'évaluer, de bonne foi et sur la base de son expérience réelle, l'autre partie. L'Utilisateur s'engage à ne publier que des notations sincères et à ne pas détourner cette fonctionnalité à des fins de dénigrement ou de concurrence déloyale. Visacredit se réserve le droit de retirer toute notation manifestement abusive, diffamatoire ou sans rapport avec une Commande réellement exécutée.":
+    "The rating system allows each party to an Order to evaluate, in good faith and based on its actual experience, the other party. The User agrees to post only honest ratings and not to misuse this feature for purposes of disparagement or unfair competition. Visacredit reserves the right to remove any rating that is manifestly abusive, defamatory, or unrelated to an Order that was actually carried out.",
+  "Le traitement des données à caractère personnel des Utilisateurs est décrit dans la Politique de Confidentialité de XIXA, qui fait partie intégrante des présentes CGU. L'utilisation de cookies sur le site web de XIXA est décrite dans la Politique de Cookies de XIXA.":
+    "The processing of Users' personal data is described in XIXA's Privacy Policy, which forms an integral part of these Terms. The use of cookies on the XIXA website is described in XIXA's Cookie Policy.",
+  "Les agrégateurs de paiement (FedaPay ou autres) pour le traitement des encaissements et décaissements":
+    "Payment aggregators (FedaPay and others) for processing payments and payouts",
+  "Les autorités administratives ou judiciaires compétentes, lorsque la loi nous y oblige":
+    "Competent administrative or judicial authorities, where required by law",
+  "Les cookies déposés sur votre terminal ont une durée de conservation qui n'excède pas treize (13) mois à compter de leur premier dépôt, sauf pour les cookies strictement nécessaires à la sécurité et à l'authentification, dont la durée est limitée à votre session de connexion.":
+    "Cookies placed on your device are retained for no longer than thirteen (13) months from the date they are first placed, except for cookies strictly necessary for security and authentication, which are limited to the duration of your login session.",
+  "Les encaissements par mobile money (FedaPay) ou par carte via agrégateur sont traités directement par ces prestataires de paiement tiers agréés. Visacredit XIXA ne collecte ni ne conserve les numéros de carte bancaire ni les identifiants mobile money de l'Utilisateur ; nous recevons uniquement la confirmation et le montant de la transaction nécessaires à la mise à jour de la position de caisse et des créances.":
+    "Mobile money (FedaPay) or card payments are processed directly by these licensed third-party payment providers. Visacredit XIXA does not collect or store the User's card numbers or mobile money credentials; we only receive confirmation and the transaction amount necessary to update the cash position and receivables.",
+  "Les encaissements réalisés sur la Plateforme peuvent s'effectuer selon les modalités suivantes : espèces, mobile money (via l'agrégateur FedaPay), mobile money et carte via agrégateur de paiement, prélèvement sur le solde, ou vente à crédit.":
+    "Payments collected on the Platform may be made using the following methods: cash, mobile money (via the FedaPay aggregator), mobile money and card via payment aggregator, deduction from balance, or credit sale.",
+  "Les entités opérationnelles ci-dessus sont des filiales du groupe Visacredit, dont la société holding est :":
+    "The operating entities above are subsidiaries of Visacredit Tech Inc.:",
+  "Les fonds encaissés par mobile money ou par carte sont détenus par l'Agrégateur de paiement partenaire, et non par Visacredit : à aucun moment Visacredit ne conserve les fonds des Utilisateurs. Des frais, pouvant aller de 0 à 1,8 %, peuvent être appliqués sur les transactions par mobile money ; ces frais sont fixés et perçus par l'Agrégateur, et non par Visacredit. Le vendeur et l'acheteur ont la possibilité de se partager les frais.":
+    "Funds collected via mobile money or card are held by the partner Payment Aggregator, not by Visacredit: at no point does Visacredit hold User funds. Fees, which may range from 0 to 1.8%, may be charged on mobile money transactions; these fees are set and collected by the Aggregator, not by Visacredit. The seller and the buyer may choose to share these fees between them.",
+  "Les marques, dénominations et signes distinctifs du groupe Visacredit, y compris la dénomination « Visacredit XIXA » et les logos associés, sont détenus par Visacredit Tech Inc., et sont concédés en licence à chaque Entité Exploitante pour les besoins de l'exploitation de la Plateforme dans son pays. Les autres éléments composant la Plateforme XIXA (structure, textes, graphismes, icônes, bases de données, logiciels, code source, application mobile) sont la propriété exclusive de l'Entité Exploitante applicable, ou font l'objet d'une licence d'utilisation, et sont protégés par les législations nationales concernées ainsi que par le droit international de la propriété intellectuelle.":
+    "The trademarks, names and distinctive signs of the Visacredit group, including the name 'Visacredit XIXA' and the associated logos, are held by Visacredit Tech Inc. and are licensed to each Operating Entity for the purposes of operating the Platform in its country. The other elements comprising the XIXA Platform (structure, text, graphics, icons, databases, software, source code, mobile application) are the exclusive property of the applicable Operating Entity, or are used under license, and are protected under the relevant national laws as well as international intellectual property law.",
+  "Les présentes CGU s'appliquent pendant toute la durée d'utilisation de la Plateforme par l'Utilisateur. Visacredit peut suspendre ou résilier, à tout moment et sans préavis, l'accès d'un Utilisateur en cas de manquement grave aux présentes CGU, notamment en cas de fraude avérée, d'usage frauduleux du système de notation, ou de non-respect des obligations légales applicables. L'Utilisateur peut à tout moment demander la clôture de son compte en contactant le service client de Visacredit.":
+    "These Terms apply for the entire duration of the User's use of the Platform. Visacredit may suspend or terminate a User's access at any time and without notice in the event of a serious breach of these Terms, in particular in the event of proven fraud, misuse of the rating system, or non-compliance with applicable legal obligations. The User may request the closure of its account at any time by contacting Visacredit's customer service.",
+  "Les présentes CGU sont soumises au droit du pays de l'Entité Exploitante applicable à l'Utilisateur, tel qu'identifié dans le tableau figurant à l'article 1 (à titre d'exemple, le droit de la République du Bénin pour les Utilisateurs relevant de Visacredit Tech Bénin SARL). Tout différend relatif à la validité, à l'interprétation ou à l'exécution des présentes CGU qui n'aurait pu être résolu à l'amiable sera soumis aux tribunaux compétents du siège de l'Entité Exploitante concernée, sous réserve des dispositions d'ordre public éventuellement applicables à l'Utilisateur en fonction de sa qualité ou de sa localisation.":
+    "These Terms are governed by the law of the country of the Operating Entity applicable to the User, as identified in the table set out in Article 1 (for example, the law of the Republic of Benin for Users falling under Visacredit Tech Bénin SARL). Any dispute relating to the validity, interpretation or performance of these Terms that cannot be resolved amicably shall be submitted to the competent courts of the registered seat of the Operating Entity concerned, subject to any mandatory public-order provisions applicable to the User depending on its status or location.",
+  "Les présentes Conditions Générales d'Utilisation (« CGU ») ont pour objet de définir les modalités et conditions dans lesquelles l'entité du groupe Visacredit légalement établie dans le pays d'enregistrement de l'Utilisateur (ci-après l'« Entité Exploitante », « Visacredit », « nous »), éditrice et exploitante de la plateforme de gestion commerciale « Visacredit XIXA » (« XIXA », « la Plateforme ») pour ce pays, met celle-ci à disposition des grossistes et détaillants (« l'Utilisateur », « vous ») et régit l'utilisation de ses fonctionnalités.":
+    "These Terms of Use (\"Terms\") set out the terms and conditions under which the group entity legally established in the User's country of registration (the \"Operating Entity\", \"Visacredit\", \"we\"), publisher and operator of the business management platform \"Visacredit XIXA\" (\"XIXA\", \"the Platform\") for that country, makes it available to wholesalers and retailers (\"the User\", \"you\") and governs the use of its features.",
+  "Lors de son inscription, l'Utilisateur choisit son rôle sur la Plateforme : Grossiste ou Détaillant. Ce choix détermine les fonctionnalités auxquelles il a accès : le Grossiste reçoit et valide les commandes des Détaillants, tandis que le Détaillant recherche des produits, compare les Grossistes référencés et passe commande. Chaque Utilisateur, quel que soit son rôle, peut par ailleurs enregistrer ses propres ventes à ses clients finaux.":
+    "When signing up, the User chooses its role on the Platform: Wholesaler or Retailer. This choice determines the features the User has access to: the Wholesaler receives and validates Retailers' orders, while the Retailer searches for products, compares listed Wholesalers, and places orders. Regardless of role, each User may also record its own sales to its end customers.",
+  "Lors de votre première visite sur le site web de XIXA, un bandeau d'information vous permet d'accepter ou de refuser le dépôt des cookies non strictement nécessaires. Vous pouvez à tout moment modifier vos préférences via les paramètres de gestion des cookies accessibles depuis le site.":
+    "On your first visit to the XIXA website, a banner allows you to accept or refuse the placement of non-essential cookies. You may change your preferences at any time via the cookie management settings available on the website.",
+  "Lorsqu'aucune entité du groupe n'est établie dans le pays d'enregistrement de l'Utilisateur, Visacredit Tech Bénin SARL agit en qualité d'Entité Exploitante par défaut. Cette liste est mise à jour au fur et à mesure de la création de nouvelles entités locales du groupe, sans que cela nécessite une modification des présentes mentions légales autre que la mise à jour du tableau ci-dessus.":
+    "Where no group entity is established in the User's country of registration, Visacredit Tech Bénin SARL acts as the default Operating Entity. This list is updated as new local group entities are created, without requiring any amendment to this Legal Notice other than an update to the table above.",
+  "Mentions Légales": "Legal Notice",
+  "Microsoft Edge : Paramètres > Cookies et autorisations de site":
+    "Microsoft Edge: Settings > Cookies and site permissions",
+  "Mozilla Firefox : Paramètres > Vie privée et sécurité > Cookies et données de sites":
+    "Mozilla Firefox: Settings > Privacy & Security > Cookies and Site Data",
+  "Ne pas utiliser la Plateforme à des fins frauduleuses, notamment pour enregistrer des transactions fictives ou fausser le système de notation":
+    "Not use the Platform for fraudulent purposes, in particular to record fictitious transactions or manipulate the rating system",
+  "Nos prestataires techniques (hébergement, maintenance, sécurité), tenus à des obligations de confidentialité":
+    "Our technical service providers (hosting, maintenance, security), who are bound by confidentiality obligations",
+  "Notations & confiance : possibilité, pour chaque partie à une Commande, de noter l'autre partie après exécution de celle-ci":
+    "Ratings & trust: the ability for each party to an Order to rate the other party after the Order has been completed",
+  "Notre intérêt légitime, pour la sécurité de la Plateforme, la prévention de la fraude et l'amélioration de nos services":
+    "Our legitimate interest, for the security of the Platform, fraud prevention and service improvement",
+  "Numéro d'immatriculation : EIN (IRS) : 32-0842131 — File Number : 10277308":
+    "Registration number: EIN (IRS): 32-0842131 — File Number: 10277308",
+  "Pays / zone": "Country / zone",
+  "Permettre la mise en relation, la commande, la validation et le suivi des livraisons entre grossistes et détaillants":
+    "Enable the matching, ordering, validation and delivery tracking process between wholesalers and retailers",
+  "Politique de Confidentialité": "Privacy Policy",
+  "Politique de Cookies": "Cookie Policy",
+  "Pour exercer ces droits, contactez-nous à l'adresse visa.credit.africa@gmail.com. Vous disposez également du droit d'introduire une réclamation auprès de l'autorité de protection des données du pays de l'Entité Exploitante applicable (par exemple, l'Autorité de Protection des Données Personnelles — APDP — du Bénin pour les Utilisateurs relevant de Visacredit Tech Bénin SARL) ou, le cas échéant, de l'autorité de contrôle compétente de votre pays de résidence.":
+    "To exercise these rights, contact us at visa.credit.africa@gmail.com. You also have the right to lodge a complaint with the data protection authority of the country of the applicable Operating Entity (for example, the Data Protection Authority (APDP) of Benin for Users falling under Visacredit Tech Bénin SARL) or, where applicable, the competent supervisory authority of your country of residence.",
+  "Pour les traitements de données réalisés dans le cadre de l'exploitation de la Plateforme, l'autorité de contrôle compétente est celle du pays de l'Entité Exploitante applicable à l'Utilisateur (par exemple, l'Autorité de Protection des Données Personnelles — APDP — de la République du Bénin pour les Utilisateurs relevant de Visacredit Tech Bénin SARL). Pour les utilisateurs situés dans l'Union européenne, l'autorité de contrôle compétente est celle de leur État de résidence. Pour plus de détails, se reporter à la Politique de Confidentialité de XIXA.":
+    "For data processing carried out in connection with the operation of the Platform, the competent supervisory authority is that of the country of the Operating Entity applicable to the User (for example, the Data Protection Authority (APDP) of the Republic of Benin for Users falling under Visacredit Tech Bénin SARL). For users located in the European Union, the competent supervisory authority is that of their State of residence. For further details, please refer to XIXA's Privacy Policy.",
+  "Pour toute question relative aux présentes Conditions Générales d'Utilisation, l'Utilisateur peut contacter Visacredit à l'adresse : contact@visacredit.info, ou par téléphone/whatsapp au +229 01 40 50 22 50.":
+    "For any question relating to these Terms of Use, the User may contact Visacredit at: contact@visacredit.info, or by phone/WhatsApp at +229 01 40 50 22 50.",
+  "Pour toute question relative à cette politique ou à l'exercice de vos droits, vous pouvez contacter Visacredit à l'adresse : contact@visacredit.info.":
+    "For any question relating to this policy or to exercise your rights, you may contact Visacredit at: contact@visacredit.info.",
+  "Pour toute question relative à l'utilisation des cookies sur la Plateforme XIXA, vous pouvez nous contacter à l'adresse : contact@visacredit.info.":
+    "For any question relating to the use of cookies on the XIXA Platform, you may contact us at: contact@visacredit.info.",
+  "Pour toute question relative à la présente Politique de Confidentialité ou à la protection de vos données personnelles, vous pouvez nous contacter à l'adresse : contact@visacredit.info.":
+    "For any question relating to this Privacy Policy or to the protection of your personal data, you may contact us at: contact@visacredit.info.",
+  "Préserver la confidentialité de ses identifiants de connexion":
+    "Keep its login credentials confidential",
+  "RCCM Cotonou RB/COT/25 B 40300": "RCCM Cotonou RB/COT/25 B 40300",
+  "Représentée par son gérant, M. Justin Hadegbe":
+    "Represented by its manager, Mr. Justin Hadegbe",
+  "Respecter les droits des autres Utilisateurs et des tiers":
+    "Respect the rights of other Users and of third parties",
+  "Respecter nos obligations légales et réglementaires, notamment en matière de lutte contre le blanchiment de capitaux et le financement du terrorisme, le cas échéant":
+    "Comply with our legal and regulatory obligations, including anti-money laundering and counter-terrorist financing requirements, where applicable",
+  "Safari : Réglages > Confidentialité > Gérer les données de site":
+    "Safari: Preferences > Privacy > Manage Website Data",
+  "Sauf mention contraire, toute référence à « Visacredit », « nous », « notre », « nos » dans les présentes mentions légales et dans les documents associés (Conditions Générales d'Utilisation, Politique de Confidentialité, Politique de Cookies) désigne l'Entité Exploitante applicable à l'Utilisateur concerné, en sa qualité d'éditeur et d'exploitant opérationnel de la Plateforme XIXA pour son pays.":
+    "Unless stated otherwise, any reference to 'Visacredit', 'we', 'us', 'our' in this Legal Notice and in the related documents (Terms of Use, Privacy Policy, Cookie Policy) refers to the Operating Entity applicable to the User concerned, as publisher and operational operator of the XIXA Platform for its country.",
+  "Se conformer à ses propres obligations légales, fiscales et réglementaires liées à son activité commerciale":
+    "Comply with its own legal, tax and regulatory obligations related to its business activity",
+  "Selon son rôle, l'Utilisateur a accès à tout ou partie des fonctionnalités suivantes :":
+    "Depending on its role, the User has access to some or all of the following features:",
+  "Siège social :": "Registered office:",
+  "Siège social : Ilot 211, Quartier Fifatin, Parcelle K, 2ème étage, Cotonou, République du Bénin":
+    "Registered office: Ilot 211, Quartier Fifatin, Parcelle K, 2nd floor, Cotonou, Republic of Benin",
+  "Société holding du groupe": "Group Holding Company",
+  "Société à responsabilité limitée (SARL) de droit béninois, au capital social de 5 000 000 FCFA":
+    "Limited liability company (SARL) under the laws of Benin, with a share capital of 5,000,000 FCFA",
+  "Stock & produits : gestion du catalogue, des prix d'achat et de vente, et des seuils d'alerte de réapprovisionnement":
+    "Inventory & products: catalog management, purchase and sale prices, and restocking alert thresholds",
+  "Tant que Visacredit Tech Côte d'Ivoire n'est pas formellement immatriculée, Visacredit Tech Bénin SARL demeure l'Entité Exploitante par défaut pour les Utilisateurs ivoiriens, conformément au tableau ci-dessus.":
+    "As long as Visacredit Tech Côte d'Ivoire is not formally registered, Visacredit Tech Bénin SARL remains the default Operating Entity for Ivorian Users, in accordance with the table above.",
+  "Tout autre pays sans entité locale établie":
+    "Any other country with no local entity established",
+  "Toute personne souhaitant signaler un contenu illicite, un dysfonctionnement technique ou toute autre difficulté rencontrée sur la Plateforme peut contacter Visacredit à l'adresse suivante : contact@visacredit.info.":
+    "Anyone wishing to report unlawful content, a technical malfunction, or any other issue encountered on the Platform may contact Visacredit at: contact@visacredit.info.",
+  "Toute reproduction, représentation, modification, publication, transmission ou dénaturation, totale ou partielle, de la Plateforme ou de son contenu, par quelque procédé que ce soit, sans autorisation écrite préalable, est strictement interdite et constitutive de contrefaçon. Toute utilisation non autorisée des marques du groupe est susceptible d'engager la responsabilité de son auteur.":
+    "Any reproduction, representation, modification, publication, transmission or alteration, in whole or in part, of the Platform or its content, by any means whatsoever, without prior written authorization, is strictly prohibited and constitutes an infringement. Any unauthorized use of the group's trademarks may give rise to liability on the part of its author.",
+  "Toutes les Entités Exploitantes sont des entités de Visacredit Tech Inc. (Delaware, États-Unis), qui n'exerce aucun rôle opérationnel dans l'exploitation de la Plateforme.":
+    "All Operating Entities are entities of Visacredit Tech Inc. (Delaware, United States), which has no operational role in the operation of the Platform.",
+  "Toutes les Entités Exploitantes sont des entités de Visacredit Tech Inc. (Delaware, États-Unis). Visacredit Tech Inc. n'a aucun rôle opérationnel dans l'exploitation de la Plateforme et ne traite pas, à titre opérationnel, les données des Utilisateurs de XIXA, quel que soit leur pays.":
+    "All Operating Entities are entities of Visacredit Tech Inc. (Delaware, United States). Visacredit Tech Inc. has no operational role in the operation of the Platform and does not process XIXA Users' data for operational purposes, regardless of their country.",
+  "Téléphone / Whatsapp : +229 40 50 22 50": "Phone / WhatsApp: +229 40 50 22 50",
+  "Un cookie est un petit fichier texte déposé sur votre ordinateur, votre tablette ou votre smartphone lors de la consultation du site web de Visacredit XIXA (« XIXA », « la Plateforme »), édité par le groupe Visacredit et exploité localement par l'entité établie dans votre pays d'enregistrement (l'« Entité Exploitante », « Visacredit », « nous » — voir la liste des Entités Exploitantes dans les Mentions Légales de XIXA). Visacredit Tech Inc. (États-Unis) n'a aucun rôle opérationnel dans l'exploitation de la Plateforme. Un cookie permet, entre autres, de reconnaître votre terminal lors de vos visites ultérieures et de faciliter votre navigation.":
+    "A cookie is a small text file placed on your computer, tablet or smartphone when you visit the Visacredit XIXA website (\"XIXA\", \"the Platform\"), published by the Visacredit group and operated locally by the entity established in your country of registration (the \"Operating Entity\", \"Visacredit\", \"we\" — see the list of Operating Entities in XIXA's Legal Notice). Visacredit Tech Inc. (United States) has no operational role in the operation of the Platform. A cookie allows, among other things, your device to be recognized on subsequent visits and facilitates your browsing experience.",
+  "Utiliser la Plateforme conformément à sa destination, dans le cadre d'une activité commerciale licite":
+    "Use the Platform in accordance with its intended purpose, within the scope of a lawful business activity",
+  "Ventes & factures : enregistrement des ventes au comptant ou à crédit, génération de factures numérotées, encaissement en espèces ou en mobile money":
+    "Sales & invoices: recording of cash or credit sales, generation of numbered invoices, collection in cash or via mobile money",
+  "Visacredit Tech Bénin SARL": "Visacredit Tech Bénin SARL",
+  "Visacredit Tech Bénin SARL (par défaut)": "Visacredit Tech Bénin SARL (default)",
+  "Visacredit Tech Côte d'Ivoire": "Visacredit Tech Côte d'Ivoire",
+  "Visacredit Tech Côte d'Ivoire SARL": "Visacredit Tech Côte d'Ivoire SARL",
+  "Visacredit Tech Inc. n'exerce aucun rôle opérationnel dans l'exploitation de la Plateforme XIXA, quel que soit le pays de l'Utilisateur. Elle n'intervient pas dans la fourniture du service, ne gère pas la relation client, et ne traite pas les données des Utilisateurs à titre opérationnel. Ces activités relèvent exclusivement de l'Entité Exploitante applicable.":
+    "Visacredit Tech Inc. has no operational role in the operation of the XIXA Platform, regardless of the User's country. It does not take part in providing the service, does not manage the customer relationship, and does not process Users' data for operational purposes. These activities are the exclusive responsibility of the applicable Operating Entity.",
+  "Visacredit Tech Inc., société de droit américain constituée dans l'État du Delaware (États-Unis d'Amérique)":
+    "Visacredit Tech Inc., a company incorporated under the laws of the State of Delaware, United States of America",
+  "Visacredit Tech Inc., société holding du groupe, peut recevoir des données agrégées ou anonymisées à des fins de gouvernance et de consolidation de groupe, mais n'a pas accès, dans le cadre de son rôle de holding, à vos données à caractère personnel identifiables pour un usage opérationnel.":
+    "Visacredit Tech Inc., the group's holding company, may receive aggregated or anonymized data for group governance and consolidation purposes, but does not, in its capacity as a holding company, have access to your identifiable personal data for operational use.",
+  "Visacredit XIXA est une plateforme de gestion commerciale à destination des grossistes et détaillants, permettant notamment la gestion des stocks, des ventes, des factures, des créances clients, des commandes interentreprises (B2B) et des crédits fournisseurs. XIXA n'est ni un établissement de paiement, ni un établissement de crédit, ni un teneur de compte : les encaissements par mobile money ou par carte sont opérés et détenus par des agrégateurs de paiement tiers agréés (notamment FedaPay), et non par Visacredit.":
+    "Visacredit XIXA is a business management platform for wholesalers and retailers, enabling in particular the management of inventory, sales, invoices, accounts receivable, business-to-business (B2B) orders, and supplier credit. XIXA is neither a payment institution, nor a credit institution, nor an account custodian: mobile money or card payments are processed and held by licensed third-party payment aggregators (including FedaPay), and not by Visacredit.",
+  "Visacredit XIXA n'utilise pas de cookies à des fins de publicité ciblée ou de revente de données de navigation à des tiers annonceurs.":
+    "Visacredit XIXA does not use cookies for targeted advertising purposes or to resell browsing data to third-party advertisers.",
+  "Visacredit met en œuvre des moyens raisonnables pour assurer la disponibilité, la sécurité et le bon fonctionnement de la Plateforme, sans toutefois garantir une disponibilité continue ou une absence totale d'erreurs. Visacredit ne saurait être tenu responsable des dommages résultant : d'une utilisation non conforme de la Plateforme par l'Utilisateur ; d'un différend commercial entre un Grossiste et un Détaillant ; d'un défaut de paiement d'une Créance ou d'un Crédit fournisseur entre Utilisateurs ; d'une interruption ou d'une indisponibilité de l'Agrégateur de paiement ; ou d'un cas de force majeure.":
+    "Visacredit uses reasonable efforts to ensure the availability, security and proper functioning of the Platform, without however guaranteeing continuous availability or the total absence of errors. Visacredit shall not be held liable for damages resulting from: non-compliant use of the Platform by the User; a commercial dispute between a Wholesaler and a Retailer; a default in payment of a Receivable or Supplier Credit between Users; an interruption or unavailability of the Payment Aggregator; or an event of force majeure.",
+  "Visacredit met à disposition l'outil technique permettant cette mise en relation et ce suivi, mais n'est pas partie au contrat de vente conclu entre le Grossiste et le Détaillant. La négociation des prix, des délais de livraison et des conditions de paiement relève de la seule responsabilité des Utilisateurs concernés.":
+    "Visacredit provides the technical tool enabling this matching and tracking process but is not a party to the sales contract entered into between the Wholesaler and the Retailer. The negotiation of prices, delivery terms and payment conditions is the sole responsibility of the Users concerned.",
+  "Visacredit ne vend ni ne loue vos données personnelles à des tiers à des fins commerciales ou publicitaires.":
+    "Visacredit does not sell or rent your personal data to third parties for commercial or advertising purposes.",
+  "Visacredit peut modifier la présente Politique de Cookies à tout moment, notamment pour tenir compte de l'évolution de la réglementation ou des technologies utilisées sur la Plateforme. La version en vigueur est celle publiée sur le site XIXA, avec mention de sa date de dernière mise à jour.":
+    "Visacredit may amend this Cookie Policy at any time, in particular to reflect changes in regulation or in the technologies used on the Platform. The version in force is the one published on the XIXA website, indicating its last update date.",
+  "Visacredit peut être amené à modifier la présente Politique de Confidentialité, notamment pour se conformer à toute évolution légale, réglementaire, technique ou fonctionnelle de la Plateforme, ou pour mettre à jour la liste des Entités Exploitantes du groupe. La version en vigueur est celle publiée sur le site et dans l'application XIXA, avec mention de sa date de dernière mise à jour.":
+    "Visacredit may amend this Privacy Policy from time to time, in particular to comply with any legal, regulatory, technical or functional change to the Platform, or to update the list of the group's Operating Entities. The version in force is the one published on the XIXA website and application, indicating its last update date.",
+  "Visacredit se réserve le droit de modifier les présentes CGU à tout moment, notamment pour tenir compte de l'évolution de la Plateforme, de la réglementation applicable ou de ses conditions d'exploitation. Toute modification substantielle sera portée à la connaissance des Utilisateurs par tout moyen approprié (notification dans l'application, courriel ou affichage sur le site). La poursuite de l'utilisation de la Plateforme après entrée en vigueur des modifications vaut acceptation de celles-ci.":
+    "Visacredit reserves the right to amend these Terms at any time, in particular to reflect changes to the Platform, applicable regulations, or its operating conditions. Any material change will be brought to the attention of Users by appropriate means (in-app notification, email, or notice on the website). Continued use of the Platform after such changes take effect constitutes acceptance of them.",
+  "Vos données peuvent être partagées avec :": "Your data may be shared with:",
+  "Vos données sont conservées pendant toute la durée de votre compte actif sur la Plateforme. À la clôture de votre compte, vos données sont conservées pendant une durée supplémentaire nécessaire au respect des obligations légales, comptables et fiscales applicables dans le pays de l'Entité Exploitante (notamment en matière de lutte contre le blanchiment de capitaux le cas échéant), puis archivées ou supprimées.":
+    "Your data is retained for the entire duration of your active account on the Platform. Upon closure of your account, your data is retained for an additional period necessary to comply with the legal, accounting and tax obligations applicable in the country of the Operating Entity (including anti-money laundering obligations where applicable), after which it is archived or deleted.",
+  "Vos données sont traitées et hébergées dans le cadre de l'exploitation de la Plateforme par l'Entité Exploitante applicable à votre pays. Dans la mesure où le groupe Visacredit dispose d'une société holding aux États-Unis (Visacredit Tech Inc.) et de plusieurs Entités Exploitantes réparties dans différents pays, un transfert ponctuel de données agrégées ou anonymisées à des fins de gouvernance de groupe est possible ; il est, le cas échéant, encadré par des garanties appropriées (clauses contractuelles types ou mécanismes équivalents) destinées à assurer un niveau de protection adéquat de vos données.":
+    "Your data is processed and hosted in connection with the operation of the Platform by the Operating Entity applicable to your country. Because the Visacredit group has a holding company in the United States (Visacredit Tech Inc.) and several Operating Entities located in different countries, an occasional transfer of aggregated or anonymized data may occur for group governance purposes; where applicable, it is governed by appropriate safeguards (standard contractual clauses or equivalent mechanisms) designed to ensure an adequate level of protection for your data.",
+  "Votre consentement, notamment pour certains cookies non essentiels (voir notre Politique de Cookies)":
+    "Your consent, in particular for certain non-essential cookies (see our Cookie Policy)",
+  "Votre partenaire commercial direct dans le cadre d'une commande B2B (par exemple, le grossiste voit le nom de la boutique du détaillant qui commande, et réciproquement), ainsi que les notations échangées entre vous, dans la mesure nécessaire au fonctionnement de la mise en relation grossiste/détaillant":
+    "Your direct business partner in connection with a B2B order (for example, the wholesaler sees the shop name of the retailer placing the order, and vice versa), as well as the ratings exchanged between you, to the extent necessary for the wholesaler/retailer matching functionality",
+  "Vous pouvez également configurer votre navigateur pour refuser tout ou partie des cookies, ou être averti avant leur dépôt. La désactivation des cookies strictement nécessaires peut toutefois empêcher le bon fonctionnement de votre espace personnel sur XIXA.":
+    "You may also configure your browser to refuse all or some cookies, or to be notified before they are placed. Disabling strictly necessary cookies may, however, prevent your personal account on XIXA from functioning properly.",
+  "XIXA a pour vocation de réunir, en un seul endroit, la gestion du stock, des ventes, des créances et des commandes interentreprises entre grossistes et détaillants. Toute création de compte sur la Plateforme emporte acceptation pleine et entière des présentes CGU.":
+    "XIXA is designed to bring together, in a single place, the management of inventory, sales, receivables and business-to-business orders between wholesalers and retailers. Creating an account on the Platform constitutes full and unconditional acceptance of these Terms.",
+  "« Agrégateur de paiement » : prestataire de paiement tiers (notamment FedaPay) permettant l'encaissement par mobile money ou par carte sur la Plateforme.":
+    "\"Payment Aggregator\": a third-party payment provider (including FedaPay) enabling mobile money or card payment collection on the Platform.",
+  "« Commande » : commande interentreprises passée par un Détaillant auprès d'un Grossiste via la Plateforme, identifiée par un numéro au format « CMD- ».":
+    "\"Order\": a business-to-business order placed by a Retailer with a Wholesaler via the Platform, identified by a number in the format \"CMD-\".",
+  "« Créance » : somme due à l'Utilisateur par l'un de ses propres clients, à la suite d'une vente à crédit enregistrée sur la Plateforme.":
+    "\"Receivable\": an amount owed to the User by one of its own customers, following a credit sale recorded on the Platform.",
+  "« Crédit fournisseur » : somme due par un Détaillant à un Grossiste à la suite d'une Commande livrée et non intégralement réglée.":
+    "\"Supplier Credit\": an amount owed by a Retailer to a Wholesaler following an Order that has been delivered and not fully paid.",
+  "« Détaillant » : Utilisateur professionnel qui recherche des produits auprès des grossistes référencés sur la Plateforme, passe commande et revend à ses propres clients.":
+    "\"Retailer\": a business User who searches for products from wholesalers listed on the Platform, places orders, and resells to its own customers.",
+  "« Facture » : document généré lors d'une vente enregistrée sur la Plateforme, identifié par un numéro au format « BOU- ».":
+    "\"Invoice\": a document generated when a sale is recorded on the Platform, identified by a number in the format \"BOU-\".",
+  "« Grossiste » : Utilisateur professionnel qui propose ses produits à la vente à des détaillants via la Plateforme, reçoit et valide leurs commandes.":
+    "\"Wholesaler\": a business User who offers products for sale to retailers via the Platform, and who receives and validates their orders.",
+  "« IFU » : Identifiant Fiscal Unique délivré par l'administration fiscale béninoise.":
+    "\"IFU\": the Unique Tax Identifier issued by the Beninese tax administration.",
+  "« Position de caisse » : solde calculé automatiquement par la Plateforme à partir des ventes encaissées, diminué des dépenses et retraits, et augmenté des versements enregistrés.":
+    "\"Cash Position\": a balance automatically calculated by the Platform based on collected sales, minus expenses and withdrawals, plus recorded deposits.",
+  "Édité par le groupe Visacredit — exploité localement par l'entité applicable à chaque pays":
+    "Published by the Visacredit group — operated locally by the entity applicable to each country",
 };
