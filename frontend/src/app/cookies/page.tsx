@@ -1,52 +1,73 @@
 import type { Metadata } from "next";
 
-import { Liste, P, PageLegale, Puce, SectionLegale } from "@/components/PageLegale";
+import { Liste, Note, P, PageLegale, Puce, SectionLegale, SousSection } from "@/components/PageLegale";
 
 export const metadata: Metadata = {
-  title: "Politique de cookies — Visacredit XIXA",
+  title: "Politique de Cookies — Visacredit XIXA",
   description:
-    "Visacredit XIXA ne dépose aucun cookie. Le site utilise le stockage local du navigateur pour la session, le thème et la langue.",
+    "Cookies et technologies similaires utilisés sur le site web de Visacredit XIXA : catégories, durées et gestion du consentement.",
 };
 
 /**
- * Politique de cookies.
+ * Politique de Cookies.
  *
- * Le site n'en pose aucun : la session tient dans un jeton rangé en
- * `localStorage`, et les deux préférences d'affichage aussi. La page le dit
- * plutôt que de recopier un texte générique sur des cookies inexistants — et
- * c'est aussi ce qui justifie l'absence de bandeau de consentement.
+ * Reproduction du document officiel du 31 août 2026 fourni par Visacredit.
  */
 export default function Cookies() {
   return (
-    <PageLegale titre="Politique de cookies" miseAJour="1er septembre 2026">
-      <SectionLegale titre="Nous ne déposons aucun cookie">
-        <P texte="Visacredit XIXA ne pose aucun cookie sur votre appareil : ni cookie publicitaire, ni cookie de mesure d'audience, ni cookie de session. Aucun traceur tiers n'est chargé. C'est la raison pour laquelle vous ne voyez pas de bandeau de consentement : il n'y a rien à consentir." />
+    <PageLegale titre="Politique de Cookies" miseAJour="31 août 2026">
+      <SectionLegale titre="1. Qu'est-ce qu'un cookie ?">
+        <P texte="Un cookie est un petit fichier texte déposé sur votre ordinateur, votre tablette ou votre smartphone lors de la consultation du site web de Visacredit XIXA (« XIXA », « la Plateforme »), édité par le groupe Visacredit et exploité localement par l'entité établie dans votre pays d'enregistrement (l'« Entité Exploitante », « Visacredit », « nous » — voir la liste des Entités Exploitantes dans les Mentions Légales de XIXA). Visacredit Tech Inc. (États-Unis) n'a aucun rôle opérationnel dans l'exploitation de la Plateforme. Un cookie permet, entre autres, de reconnaître votre terminal lors de vos visites ultérieures et de faciliter votre navigation." />
+        <Note texte="L'application mobile XIXA fonctionne majoritairement hors ligne et conserve les données sur l'appareil dans une base locale chiffrée plutôt que par des cookies au sens strict du navigateur. Les principes de transparence et de contrôle décrits ci-dessous s'appliquent néanmoins par analogie à ce stockage local." />
       </SectionLegale>
 
-      <SectionLegale titre="Ce que nous rangeons dans votre navigateur">
-        <P texte="Le site utilise le stockage local (localStorage), qui reste sur votre appareil et n'est jamais envoyé automatiquement à nos serveurs — contrairement à un cookie, joint à chaque requête. Trois entrées seulement :" />
+      <SectionLegale titre="2. Les cookies que nous utilisons">
+        <SousSection titre="2.1 Cookies strictement nécessaires">
+          <P texte="Ces cookies sont indispensables au fonctionnement du site et de votre espace personnel. Ils ne peuvent pas être désactivés." />
+          <Liste>
+            <Puce texte="Cookies de session et d'authentification, associés à votre jeton de connexion signé" />
+            <Puce texte="Cookies de sécurité, destinés à détecter et prévenir les tentatives de fraude ou d'usurpation" />
+            <Puce texte="Cookies techniques permettant la mémorisation de votre rôle (grossiste ou détaillant) au cours de votre session" />
+          </Liste>
+        </SousSection>
+
+        <SousSection titre="2.2 Cookies de préférence">
+          <P texte="Ces cookies permettent de mémoriser vos choix afin de personnaliser votre expérience (langue d'affichage, boutique sélectionnée, préférences d'affichage du tableau de bord)." />
+        </SousSection>
+
+        <SousSection titre="2.3 Cookies de mesure d'audience">
+          <P texte="Le cas échéant, des cookies de mesure d'audience peuvent être utilisés afin de comprendre la manière dont les visiteurs utilisent le site (pages consultées, parcours de navigation) et d'améliorer nos services. Ces cookies sont utilisés sous une forme respectant votre vie privée et, lorsque la réglementation l'exige, ne sont déposés qu'avec votre consentement." />
+        </SousSection>
+
+        <SousSection titre="2.4 Absence de cookies publicitaires tiers">
+          <P texte="Visacredit XIXA n'utilise pas de cookies à des fins de publicité ciblée ou de revente de données de navigation à des tiers annonceurs." />
+        </SousSection>
+      </SectionLegale>
+
+      <SectionLegale titre="3. Durée de conservation des cookies">
+        <P texte="Les cookies déposés sur votre terminal ont une durée de conservation qui n'excède pas treize (13) mois à compter de leur premier dépôt, sauf pour les cookies strictement nécessaires à la sécurité et à l'authentification, dont la durée est limitée à votre session de connexion." />
+      </SectionLegale>
+
+      <SectionLegale titre="4. Gestion de votre consentement">
+        <P texte="Lors de votre première visite sur le site web de XIXA, un bandeau d'information vous permet d'accepter ou de refuser le dépôt des cookies non strictement nécessaires. Vous pouvez à tout moment modifier vos préférences via les paramètres de gestion des cookies accessibles depuis le site." />
+      </SectionLegale>
+
+      <SectionLegale titre="5. Comment désactiver les cookies depuis votre navigateur">
+        <P texte="Vous pouvez également configurer votre navigateur pour refuser tout ou partie des cookies, ou être averti avant leur dépôt. La désactivation des cookies strictement nécessaires peut toutefois empêcher le bon fonctionnement de votre espace personnel sur XIXA." />
         <Liste>
-          <Puce texte="visacredit_xixa_token — le jeton qui vous garde connecté. Effacé à la déconnexion et lorsqu'il expire." />
-          <Puce texte="xixa_theme — votre choix d'apparence : système, clair ou sombre." />
-          <Puce texte="xixa_langue — votre choix de langue : français ou anglais." />
+          <Puce texte="Google Chrome : Paramètres > Confidentialité et sécurité > Cookies" />
+          <Puce texte="Mozilla Firefox : Paramètres > Vie privée et sécurité > Cookies et données de sites" />
+          <Puce texte="Safari : Réglages > Confidentialité > Gérer les données de site" />
+          <Puce texte="Microsoft Edge : Paramètres > Cookies et autorisations de site" />
         </Liste>
-        <P texte="Les deux derniers sont propres à l'appareil, non au compte : votre thème sur l'ordinateur du magasin ne suit pas votre téléphone." />
       </SectionLegale>
 
-      <SectionLegale titre="À quoi elles servent">
-        <P texte="Ces trois entrées sont strictement nécessaires au fonctionnement du service. Sans le jeton, il faudrait ressaisir son mot de passe à chaque page. Sans les deux préférences, le site reviendrait à ses réglages par défaut à chaque visite, avec un changement d'apparence visible au chargement." />
+      <SectionLegale titre="6. Modification de la présente politique">
+        <P texte="Visacredit peut modifier la présente Politique de Cookies à tout moment, notamment pour tenir compte de l'évolution de la réglementation ou des technologies utilisées sur la Plateforme. La version en vigueur est celle publiée sur le site XIXA, avec mention de sa date de dernière mise à jour." />
       </SectionLegale>
 
-      <SectionLegale titre="Les supprimer">
-        <P texte="Vous pouvez les effacer à tout moment en vidant les données de site de votre navigateur, ou plus simplement en vous déconnectant pour le jeton de session. Les effacer vous déconnecte et remet l'apparence et la langue par défaut ; aucune donnée de votre boutique n'est perdue, elle vit sur nos serveurs." />
-      </SectionLegale>
-
-      <SectionLegale titre="L'application mobile">
-        <P texte="L'application Android fonctionne hors ligne, avec sa propre base de données sur le téléphone. Elle n'utilise ni cookie ni traceur." />
-      </SectionLegale>
-
-      <SectionLegale titre="Si cela change">
-        <P texte="Si nous devions un jour déposer un cookie — pour une mesure d'audience, par exemple — cette page serait mise à jour et votre consentement recueilli au préalable." />
+      <SectionLegale titre="7. Contact">
+        <P texte="Pour toute question relative à l'utilisation des cookies sur la Plateforme XIXA, vous pouvez nous contacter à l'adresse : contact@visacredit.info." />
       </SectionLegale>
     </PageLegale>
   );

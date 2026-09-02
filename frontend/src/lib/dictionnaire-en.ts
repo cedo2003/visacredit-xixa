@@ -699,90 +699,13 @@ export const DICTIONNAIRE_EN: Record<string, string> = {
     "The shop and store management platform connecting wholesalers, retailers and customers. Your shop, kept clear.",
   "Dernière mise à jour": "Last updated",
   "Retour à l'accueil": "Back to home",
-  "1er septembre 2026": "1 September 2026",
 
   // ── Politique de confidentialité ──
-  "Politique de confidentialité": "Privacy policy",
-  "En résumé": "In short",
-  "Visacredit XIXA collecte les informations nécessaires à la tenue de votre boutique et à l'identification de votre compte. Ces données ne sont ni vendues, ni louées, ni transmises à des tiers à des fins publicitaires. La plateforme ne conserve aucun fonds : les encaissements en mobile money sont détenus par l'agrégateur de paiement.":
-    "Visacredit XIXA collects the information needed to run your shop and identify your account. This data is never sold, rented, or passed to third parties for advertising. The platform holds no funds: mobile money payments are held by the payment aggregator.",
-  "Qui traite vos données": "Who processes your data",
-  "Visacredit Tech Inc, éditeur de la plateforme Visacredit XIXA, est responsable du traitement des données décrites ici.":
-    "Visacredit Tech Inc, publisher of the Visacredit XIXA platform, is the controller of the data described here.",
-  "Quelles données nous collectons": "What data we collect",
-  "Les données que vous saisissez vous-même :": "The data you enter yourself:",
-  "Identité et contact : nom, prénom, numéro de téléphone, adresse e-mail.":
-    "Identity and contact: last name, first name, phone number, email address.",
-  "Informations professionnelles : nom de la boutique, type d'activité (grossiste ou détaillant), numéro IFU, registre du commerce (RCCM), adresse.":
-    "Business details: shop name, type of activity (wholesaler or retailer), tax ID (IFU), trade register (RCCM), address.",
-  "Date de naissance, lorsque vous la renseignez.": "Date of birth, when you provide it.",
-  "Données d'exploitation : produits, stocks, ventes, clients, créances, commandes, crédits fournisseurs, dépenses et retraits.":
-    "Operating data: products, stock, sales, customers, receivables, orders, supplier credit, expenses and withdrawals.",
-  "L'IFU et le registre du commerce restent facultatifs à l'inscription : une boutique en cours d'enregistrement peut ouvrir son compte et les renseigner ensuite. En leur absence, la fréquence de retrait est limitée à un jour.":
-    "The tax ID and trade register stay optional at sign-up: a shop still being registered can open its account and fill them in later. Without them, the withdrawal frequency is limited to one day.",
-  "Pourquoi nous les collectons": "Why we collect it",
-  "Vous authentifier et sécuriser l'accès à votre compte.":
-    "To authenticate you and secure access to your account.",
-  "Faire fonctionner la gestion de votre boutique : stock, ventes, créances, commandes entre grossistes et détaillants.":
-    "To run your shop management: stock, sales, receivables, orders between wholesalers and retailers.",
-  "Exécuter les paiements que vous initiez, par l'intermédiaire des passerelles.":
-    "To carry out the payments you initiate, through the gateways.",
-  "Respecter nos obligations légales et comptables.":
-    "To meet our legal and accounting obligations.",
-  "Votre mot de passe": "Your password",
-  "Il n'est jamais stocké en clair. Seule une empreinte chiffrée irréversible est conservée : nous sommes dans l'incapacité technique de retrouver votre mot de passe, et aucun membre de l'équipe ne peut le lire.":
-    "It is never stored in plain text. Only an irreversible cryptographic hash is kept: we are technically unable to recover your password, and no one on the team can read it.",
   "Paiements": "Payments",
-  "Les paiements en mobile money et par carte passent par KkiaPay et par notre agrégateur de paiement. Vos identifiants de paiement sont saisis chez eux et ne transitent pas par nos serveurs. Nous conservons uniquement la trace de la transaction : montant, moyen, date et statut.":
-    "Mobile money and card payments go through KkiaPay and our payment aggregator. Your payment credentials are entered on their side and never pass through our servers. We keep only the transaction record: amount, method, date and status.",
-  "Visacredit XIXA ne détient à aucun moment vos fonds. Le solde affiché dans l'application est une position de caisse calculée, non un compte que nous tiendrions pour vous.":
-    "Visacredit XIXA never holds your funds. The balance shown in the app is a calculated cash position, not an account we keep on your behalf.",
-  "Partage avec des tiers": "Sharing with third parties",
-  "Vos données ne sont transmises qu'aux prestataires indispensables au service — les passerelles de paiement et l'hébergeur — et uniquement dans la mesure nécessaire. Elles ne sont ni vendues, ni louées, ni utilisées à des fins publicitaires.":
-    "Your data is passed only to the providers essential to the service — the payment gateways and the host — and only as far as necessary. It is never sold, rented, or used for advertising.",
-  "Certaines informations sont visibles de vos partenaires commerciaux sur la plateforme : lorsqu'un détaillant passe commande chez un grossiste, chacun voit le nom de la boutique de l'autre et le détail de la commande. C'est le principe même de la mise en relation.":
-    "Some information is visible to your trading partners on the platform: when a retailer orders from a wholesaler, each sees the other's shop name and the order details. That is the very point of connecting them.",
-  "Combien de temps nous les conservons": "How long we keep it",
-  "Vos données d'exploitation sont conservées tant que votre compte est actif. Après fermeture, elles sont supprimées, à l'exception de ce que la loi impose de conserver — notamment les pièces comptables et les traces de transactions.":
-    "Your operating data is kept for as long as your account is active. After closure it is deleted, except for what the law requires us to keep — in particular accounting records and transaction trails.",
   "Vos droits": "Your rights",
-  "Vous pouvez accéder à vos données, les corriger, en demander la suppression, ou vous opposer à leur traitement. La plupart des informations de votre compte se modifient directement dans Paramètres. Pour les autres demandes, écrivez-nous.":
-    "You may access your data, correct it, request its deletion, or object to its processing. Most of your account details can be changed directly in Settings. For anything else, write to us.",
-  "Cookies et stockage local": "Cookies and local storage",
-  "Le site ne dépose aucun cookie. Il utilise le stockage local de votre navigateur pour trois choses seulement, détaillées dans la politique de cookies.":
-    "The site sets no cookies. It uses your browser's local storage for three things only, detailed in the cookie policy.",
-  "Nous contacter": "Contact us",
-  "Pour toute question sur cette politique ou sur vos données, contactez Visacredit Tech Inc.":
-    "For any question about this policy or your data, contact Visacredit Tech Inc.",
 
   // ── Politique de cookies ──
-  "Politique de cookies": "Cookie policy",
-  "Nous ne déposons aucun cookie": "We set no cookies",
-  "Visacredit XIXA ne pose aucun cookie sur votre appareil : ni cookie publicitaire, ni cookie de mesure d'audience, ni cookie de session. Aucun traceur tiers n'est chargé. C'est la raison pour laquelle vous ne voyez pas de bandeau de consentement : il n'y a rien à consentir.":
-    "Visacredit XIXA places no cookie on your device: no advertising cookie, no analytics cookie, no session cookie. No third-party tracker is loaded. That is why you see no consent banner: there is nothing to consent to.",
-  "Ce que nous rangeons dans votre navigateur": "What we store in your browser",
-  "Le site utilise le stockage local (localStorage), qui reste sur votre appareil et n'est jamais envoyé automatiquement à nos serveurs — contrairement à un cookie, joint à chaque requête. Trois entrées seulement :":
-    "The site uses local storage (localStorage), which stays on your device and is never sent to our servers automatically — unlike a cookie, attached to every request. Three entries only:",
-  "visacredit_xixa_token — le jeton qui vous garde connecté. Effacé à la déconnexion et lorsqu'il expire.":
-    "visacredit_xixa_token — the token that keeps you signed in. Cleared on sign-out and when it expires.",
-  "xixa_theme — votre choix d'apparence : système, clair ou sombre.":
-    "xixa_theme — your appearance choice: system, light or dark.",
-  "xixa_langue — votre choix de langue : français ou anglais.":
-    "xixa_langue — your language choice: French or English.",
-  "Les deux derniers sont propres à l'appareil, non au compte : votre thème sur l'ordinateur du magasin ne suit pas votre téléphone.":
-    "The last two belong to the device, not the account: your theme on the shop computer does not follow your phone.",
-  "À quoi elles servent": "What they are for",
-  "Ces trois entrées sont strictement nécessaires au fonctionnement du service. Sans le jeton, il faudrait ressaisir son mot de passe à chaque page. Sans les deux préférences, le site reviendrait à ses réglages par défaut à chaque visite, avec un changement d'apparence visible au chargement.":
-    "These three entries are strictly necessary for the service to work. Without the token, you would have to retype your password on every page. Without the two preferences, the site would revert to its defaults on each visit, with a visible flash of the wrong appearance on load.",
-  "Les supprimer": "Deleting them",
-  "Vous pouvez les effacer à tout moment en vidant les données de site de votre navigateur, ou plus simplement en vous déconnectant pour le jeton de session. Les effacer vous déconnecte et remet l'apparence et la langue par défaut ; aucune donnée de votre boutique n'est perdue, elle vit sur nos serveurs.":
-    "You can clear them at any time by clearing your browser's site data, or more simply by signing out for the session token. Clearing them signs you out and resets appearance and language to their defaults; no shop data is lost, it lives on our servers.",
   "L'application mobile": "The mobile app",
-  "L'application Android fonctionne hors ligne, avec sa propre base de données sur le téléphone. Elle n'utilise ni cookie ni traceur.":
-    "The Android app works offline, with its own database on the phone. It uses no cookie and no tracker.",
-  "Si cela change": "If this changes",
-  "Si nous devions un jour déposer un cookie — pour une mesure d'audience, par exemple — cette page serait mise à jour et votre consentement recueilli au préalable.":
-    "Should we ever set a cookie — for analytics, say — this page would be updated and your consent obtained beforehand.",
 
   // ── Facturation ──
   "Télécharger la facture (PDF)": "Download invoice (PDF)",

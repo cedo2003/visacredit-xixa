@@ -792,8 +792,10 @@ function PiedDePage() {
           <ColonnePied
             titre={t("Légal")}
             liens={[
-              ["Politique de confidentialité", "/confidentialite"],
-              ["Politique de cookies", "/cookies"],
+              ["Conditions Générales d'Utilisation", "/cgu"],
+              ["Mentions Légales", "/mentions-legales"],
+              ["Politique de Confidentialité", "/confidentialite"],
+              ["Politique de Cookies", "/cookies"],
             ]}
           />
         </div>
