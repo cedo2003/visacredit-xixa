@@ -42,6 +42,10 @@ class ApiExceptionListener
             $payload['trace'] = array_slice(explode("\n", $exception->getTraceAsString()), 0, 10);
         }
 
-        $event->setResponse(new JsonResponse($payload, $status));
+        // Les en-têtes portés par l'exception (Retry-After d'un 429…) font partie
+        // de la réponse : le client s'en sert pour savoir quand réessayer.
+        $headers = $exception instanceof HttpExceptionInterface ? $exception->getHeaders() : [];
+
+        $event->setResponse(new JsonResponse($payload, $status, $headers));
     }
 }

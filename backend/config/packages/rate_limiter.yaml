@@ -1,0 +1,24 @@
+# Sans verrou (`lock_factory: null`) : deux requêtes strictement simultanées
+# peuvent dépasser une limite d'une unité, ce qui ne change rien à ce qu'elles
+# protègent, et évite d'ajouter le composant Lock.
+framework:
+    rate_limiter:
+        # Appels d'une application partenaire à /api/partenaires/*, par
+        # identifiant client. Large : un partenaire qui ouvre la session de
+        # ses commerçants au fil de l'eau n'en approche pas ; une boucle folle
+        # chez lui, si.
+        partenaire_appels:
+            policy: sliding_window
+            limit: 300
+            interval: '1 minute'
+            lock_factory: null
+
+        # Liaison d'un compte existant, par couple partenaire + téléphone : c'est
+        # la seule route partenaire qui vérifie un mot de passe de commerçant.
+        # Cinq essais par quart d'heure suffisent à une faute de frappe, pas à
+        # deviner un mot de passe.
+        partenaire_liaison:
+            policy: fixed_window
+            limit: 5
+            interval: '15 minutes'
+            lock_factory: null

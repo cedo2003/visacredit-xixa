@@ -27,6 +27,15 @@ security:
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
+        # Applications partenaires : authentifiées par leur identifiant et leur
+        # secret (Authorization: Basic), vérifiés dans PartenaireController.
+        # Elles n'ont pas de JWT à présenter, puisque c'est ici qu'elles
+        # viennent en chercher un.
+        partenaires:
+            pattern: ^/api/partenaires/
+            stateless: true
+            security: false
+
         api:
             pattern: ^/api
             stateless: true
@@ -37,6 +46,7 @@ security:
         - { path: ^/api/auth/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/auth/register, roles: PUBLIC_ACCESS }
         - { path: ^/api/paiements/webhook, roles: PUBLIC_ACCESS }
+        - { path: ^/api/partenaires/, roles: PUBLIC_ACCESS }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:

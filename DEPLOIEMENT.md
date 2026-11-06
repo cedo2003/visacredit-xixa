@@ -195,6 +195,43 @@ CORS à régler.
 
 ---
 
+## 7. Ouvrir l'accès à une application partenaire
+
+D'autres applications peuvent proposer XIXA à leurs propres clients par l'API
+(guide à leur remettre : [API-PARTENAIRES.md](API-PARTENAIRES.md)). L'accès
+d'une application se gère en ligne de commande, dans le conteneur `backend`
+(Dokploy → service `backend` → *Terminal*) :
+
+```bash
+# Enregistrer une application : affiche son client_id et son secret, une seule fois.
+php bin/console xixa:partenaire:creer "Nom de l'application"
+
+# Voir les applications, le nombre de boutiques liées, le dernier appel.
+php bin/console xixa:partenaire:lister
+
+# Couper l'accès sur-le-champ (les jetons en cours tombent aussi), puis le rétablir.
+php bin/console xixa:partenaire:modifier <client_id> --desactiver
+php bin/console xixa:partenaire:modifier <client_id> --reactiver
+
+# Secret perdu ou divulgué : en émettre un nouveau, l'ancien cesse aussitôt.
+php bin/console xixa:partenaire:modifier <client_id> --nouveau-secret
+```
+
+Transmettez le secret par un canal sûr, jamais par e-mail en clair ni dans un
+ticket.
+
+**Pas de secret à un partenaire réel avant le passage en HTTPS (§ 6).** En HTTP
+simple, le secret circule en clair à chaque appel : quiconque l'intercepte agit
+au nom de toutes les boutiques liées à ce partenaire.
+
+Les partenaires appellent l'API par la même adresse que le navigateur
+(`…/api/partenaires/…`) : le proxy `/api` du frontend les relaie comme le
+reste, il n'y a rien d'autre à ouvrir. Le CORS n'entre en jeu que si un
+partenaire appelle l'API depuis du JavaScript servi par **son** domaine : il
+faut alors ajouter ce domaine à `CORS_ALLOW_ORIGIN`.
+
+---
+
 ## Rappel de sécurité
 
 `backend/.env` contient les clés privées KkiaPay et FedaPay. Il ne doit **pas**
