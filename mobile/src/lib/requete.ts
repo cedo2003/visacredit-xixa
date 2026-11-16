@@ -94,12 +94,16 @@ export function useRequete<T>(
     }, [charger, rechargerAuFocus]),
   );
 
+  // Stable d'un rendu à l'autre : un écran peut s'en servir comme dépendance
+  // (écouteur de push…) sans se réabonner à chaque rendu.
+  const recharger = useCallback(() => charger(true), [charger]);
+
   return {
     donnees,
     chargement,
     rafraichissement,
     erreur,
-    recharger: () => charger(true),
+    recharger,
     definir: setDonnees,
   };
 }

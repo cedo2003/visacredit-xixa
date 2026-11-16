@@ -273,9 +273,22 @@ export const DICTIONNAIRE_EN: Record<string, string> = {
   Rôle: "Role",
   Coordonnées: "Contact details",
   "Profil, boutique et sécurité": "Profile, shop and security",
+  Serveur: "Server",
+  "Téléphone ou mot de passe incorrect.": "Incorrect phone number or password.",
+  "Session expirée, veuillez vous reconnecter.": "Session expired, please sign in again.",
+  "Notifications push": "Push notifications",
+  "Vérification…": "Checking…",
+  "Activation…": "Turning on…",
+  "Activer les notifications": "Turn on notifications",
+  "Ouvrir les réglages": "Open settings",
+  "Activées : vous êtes prévenu de chaque commande, paiement ou livraison, même application fermée.":
+    "On: you are alerted to every order, payment or delivery, even with the app closed.",
+  "Vous avez refusé les notifications. Autorisez-les dans les réglages du téléphone pour être prévenu.":
+    "You turned notifications down. Allow them in your phone settings to be alerted.",
+  "Pas encore activées sur ce téléphone.": "Not turned on for this phone yet.",
+  "Serveur injoignable. Vérifiez votre connexion Internet, puis réessayez.":
+    "Server unreachable. Check your Internet connection, then try again.",
   "Gérez votre boutique depuis votre téléphone": "Manage your shop from your phone",
-  "Données de l'application": "App data",
-  Stockage: "Storage",
 
   // Connexion et inscription
   Connexion: "Sign in",
@@ -323,13 +336,6 @@ export const DICTIONNAIRE_EN: Record<string, string> = {
   "Les notifications non lues sont conservées.": "Unread notifications are kept.",
   "Y compris celles que vous n'avez pas encore consultées.":
     "Including those you have not opened yet.",
-  Réinitialiser: "Reset",
-  "Réinitialiser les données ?": "Reset the data?",
-  "Réinitialiser les données de démonstration": "Reset the demonstration data",
-  "Tout ce que vous avez saisi sera effacé et remplacé par le jeu de démonstration d'origine. Cette action est irréversible.":
-    "Everything you have entered will be erased and replaced by the original demonstration set. This action cannot be undone.",
-  "Visacredit XIXA fonctionne hors ligne : vos produits, ventes, clients et commandes sont enregistrés sur cet appareil, et nulle part ailleurs. Pensez donc à ne pas désinstaller l'application sans précaution.":
-    "Visacredit XIXA works offline: your products, sales, customers and orders are stored on this device, and nowhere else. So take care before uninstalling the app.",
   "📞 Appeler": "📞 Call",
   "💬 SMS": "💬 Text",
 
@@ -465,8 +471,6 @@ export const DICTIONNAIRE_EN: Record<string, string> = {
   "Service KkiaPay inaccessible.": "KkiaPay service unreachable.",
   "Service de paiement inaccessible.": "Payment service unreachable.",
   "Impossible de charger la page de paiement.": "Could not load the payment page.",
-  "Le paiement mobile money exige une vérification auprès de la passerelle, impossible hors ligne. Enregistrez le règlement en espèces.":
-    "Mobile money payment requires verification with the gateway, which is impossible offline. Record the settlement in cash.",
   "⏳ Paiement en cours de confirmation": "⏳ Payment being confirmed",
   "⏳ Paiement mobile money en attente de confirmation":
     "⏳ Mobile money payment awaiting confirmation",

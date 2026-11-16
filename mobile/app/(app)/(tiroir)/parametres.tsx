@@ -1,15 +1,16 @@
 /**
  * Paramètres — port de frontend/src/app/(app)/parametres/page.tsx.
  *
- * Trois blocs indépendants : profil de la boutique, mot de passe, et
- * informations techniques utiles au dépannage (l'adresse d'API réellement
- * utilisée, que l'utilisateur ne peut deviner autrement sur mobile).
+ * Blocs indépendants : profil de la boutique, mot de passe, notifications
+ * push, préférences de l'appareil, et l'adresse du serveur réellement utilisée
+ * — que l'utilisateur ne peut deviner autrement sur mobile, et qui sert au
+ * dépannage.
  */
 
 import { useT } from "@/i18n";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { Linking, StyleSheet, Text } from "react-native";
 import { Ecran } from "@/components/Ecran";
 import {
   Alerte,
@@ -25,9 +26,9 @@ import {
   TitreSection,
 } from "@/components/ui";
 import { BASE_URL, api, messageErreur } from "@/lib/api";
-import { reinitialiser } from "@/local/base";
 import { useAuth } from "@/lib/auth";
 import { useRequete } from "@/lib/requete";
+import { enregistrerAppareil, etatPush, type EtatPush } from "@/lib/push";
 import { montant } from "@/lib/format";
 import type { User } from "@/lib/types";
 import { couleurs, espacement, type Palette } from "@/theme";
@@ -80,8 +81,6 @@ export default function Parametres() {
   const [envoiMdp, setEnvoiMdp] = useState(false);
 
   const [deconnexionVisible, setDeconnexionVisible] = useState(false);
-  const [reinitVisible, setReinitVisible] = useState(false);
-  const [reinitEnCours, setReinitEnCours] = useState(false);
 
   useEffect(() => {
     if (!donnees) return;
@@ -292,50 +291,20 @@ export default function Parametres() {
           </Bouton>
         </Carte>
 
+        <CartePush />
+
         <ChoixLangue />
 
         <ChoixTheme />
 
         <Carte>
-          <TitreSection>{t("Données de l'application")}</TitreSection>
-
-          <Text style={styles.aide}>
-            {t("Visacredit XIXA fonctionne hors ligne : vos produits, ventes, clients et commandes sont enregistrés sur cet appareil, et nulle part ailleurs. Pensez donc à ne pas désinstaller l'application sans précaution.")}
-          </Text>
-
-          <LigneInfo libelle={t("Stockage")}>{BASE_URL}</LigneInfo>
-
-          <View style={styles.actionDonnees}>
-            <Bouton variante="danger" pleineLargeur onPress={() => setReinitVisible(true)}>
-              {t("Réinitialiser les données de démonstration")}
-            </Bouton>
-          </View>
+          <LigneInfo libelle={t("Serveur")}>{BASE_URL}</LigneInfo>
         </Carte>
 
         <Bouton variante="neutre" pleineLargeur onPress={() => setDeconnexionVisible(true)}>
           {t("Se déconnecter")}
         </Bouton>
       </Ecran>
-
-      <ModaleConfirmation
-        visible={reinitVisible}
-        titre={t("Réinitialiser les données ?")}
-        message={t("Tout ce que vous avez saisi sera effacé et remplacé par le jeu de démonstration d'origine. Cette action est irréversible.")}
-        libelleConfirmer={t("Réinitialiser")}
-        enCours={reinitEnCours}
-        onAnnuler={() => setReinitVisible(false)}
-        onConfirmer={async () => {
-          setReinitEnCours(true);
-          try {
-            await reinitialiser();
-            await deconnexion();
-            router.replace("/connexion");
-          } finally {
-            setReinitEnCours(false);
-            setReinitVisible(false);
-          }
-        }}
-      />
 
       <ModaleConfirmation
         visible={deconnexionVisible}
@@ -350,6 +319,62 @@ export default function Parametres() {
         }}
       />
     </>
+  );
+}
+
+/**
+ * Notifications push de ce téléphone.
+ *
+ * L'abonnement se fait de lui-même à la connexion (voir lib/auth) ; cette
+ * carte dit où l'on en est, et propose la seule action utile selon le cas :
+ * réessayer, ou ouvrir les réglages du téléphone quand la permission a été
+ * refusée — l'application ne peut plus la redemander elle-même.
+ */
+function CartePush() {
+  const t = useT();
+  const styles = useStyles(creerStyles);
+  const [etat, setEtat] = useState<EtatPush | null>(null);
+  const [enCours, setEnCours] = useState(false);
+
+  const actualiser = useCallback(() => {
+    etatPush().then(setEtat, () => setEtat("indisponible"));
+  }, []);
+
+  useEffect(actualiser, [actualiser]);
+
+  async function activer() {
+    setEnCours(true);
+    try {
+      setEtat(await enregistrerAppareil());
+    } finally {
+      setEnCours(false);
+    }
+  }
+
+  const explication: Record<EtatPush, string> = {
+    actif: "Activées : vous êtes prévenu de chaque commande, paiement ou livraison, même application fermée.",
+    refuse: "Vous avez refusé les notifications. Autorisez-les dans les réglages du téléphone pour être prévenu.",
+    indisponible: "Pas encore activées sur ce téléphone.",
+  };
+
+  return (
+    <Carte>
+      <TitreSection>{t("Notifications push")}</TitreSection>
+
+      <Text style={styles.aide}>{etat ? t(explication[etat]) : t("Vérification…")}</Text>
+
+      {etat === "refuse" && (
+        <Bouton variante="neutre" pleineLargeur onPress={() => void Linking.openSettings()}>
+          {t("Ouvrir les réglages")}
+        </Bouton>
+      )}
+
+      {etat === "indisponible" && (
+        <Bouton pleineLargeur onPress={activer} disabled={enCours}>
+          {enCours ? t("Activation…") : t("Activer les notifications")}
+        </Bouton>
+      )}
+    </Carte>
   );
 }
 
@@ -424,9 +449,6 @@ function ChoixTheme() {
 
 const creerStyles = (couleurs: Palette) =>
   StyleSheet.create({
-  actionDonnees: {
-    marginTop: espacement.md,
-  },
   aide: {
     marginBottom: espacement.sm,
     fontSize: 12,

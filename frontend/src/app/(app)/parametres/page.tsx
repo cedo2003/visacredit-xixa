@@ -6,10 +6,13 @@ import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { LIBELLES_THEME, useTheme, type ModeTheme } from "@/lib/theme";
 import { LANGUES, LIBELLES_LANGUE, useLangue, type Langue } from "@/lib/i18n";
-import { montant } from "@/lib/format";
+import { date, montant } from "@/lib/format";
 import type { User } from "@/lib/types";
+import ModaleConfirmation, { type DemandeConfirmation } from "@/components/ModaleConfirmation";
+import { CartePush } from "@/components/ActivationPush";
 import {
   Alerte,
+  Badge,
   Bouton,
   Carte,
   Champ,
@@ -245,12 +248,131 @@ export default function Parametres() {
 
         {/* Colonne de droite : les réglages courts, les uns sous les autres. */}
         <div className="space-y-6">
+          <CartePush />
           <FormulaireMotDePasse />
+          <ApplicationsLiees />
           <ChoixLangue />
           <ChoixApparence />
         </div>
       </div>
     </div>
+  );
+}
+
+interface ApplicationLiee {
+  id: number;
+  application: string;
+  /** Faux quand Visacredit a suspendu l'application : elle n'a plus accès, liée ou non. */
+  active: boolean;
+  liee_le: string;
+}
+
+/**
+ * Applications partenaires qui ont accès à la boutique.
+ *
+ * Une autre application peut proposer XIXA à ses utilisateurs et agir au nom
+ * de la boutique (voir API-PARTENAIRES.md). Le commerçant doit pouvoir le voir
+ * et y mettre fin lui-même : retirer l'accès coupe aussitôt l'application, même
+ * pendant une session ouverte chez elle.
+ */
+function ApplicationsLiees() {
+  const t = useT();
+  const [liste, setListe] = useState<ApplicationLiee[] | null>(null);
+  const [erreur, setErreur] = useState("");
+  const [succes, setSucces] = useState("");
+  const [demande, setDemande] = useState<DemandeConfirmation | null>(null);
+  const [enCours, setEnCours] = useState(false);
+
+  useEffect(() => {
+    api
+      .get<ApplicationLiee[]>("/api/parametres/applications")
+      .then(setListe)
+      .catch((e) => setErreur(e instanceof Error ? t(e.message) : t("Chargement impossible.")));
+  }, [t]);
+
+  function confirmerRetrait(lien: ApplicationLiee) {
+    setDemande({
+      titre: t("Retirer l'accès à {application} ?", { application: lien.application }),
+      message: t("Cette application ne pourra plus consulter ni modifier votre boutique."),
+      avertissement: t(
+        "La coupure est immédiate. Pour rétablir l'accès, il faudra relier à nouveau votre boutique depuis cette application.",
+      ),
+      libelleConfirmer: "Retirer l'accès",
+      onConfirmer: async () => {
+        setErreur("");
+        setSucces("");
+        setEnCours(true);
+        try {
+          await api.delete(`/api/parametres/applications/${lien.id}`);
+          setListe((l) => l?.filter((a) => a.id !== lien.id) ?? l);
+          setSucces(t("Accès retiré à {application}.", { application: lien.application }));
+        } catch (e) {
+          setErreur(e instanceof Error ? t(e.message) : t("Modification impossible."));
+        } finally {
+          setEnCours(false);
+          setDemande(null);
+        }
+      },
+    });
+  }
+
+  return (
+    <Carte>
+      <h2 className="mb-1 text-lg font-bold">{t("Applications liées")}</h2>
+      <p className="mb-4 text-sm text-faible">
+        {t("Les applications partenaires qui peuvent gérer votre boutique en votre nom.")}
+      </p>
+
+      {erreur && <Alerte>{erreur}</Alerte>}
+      {succes && <Alerte type="succes">{succes}</Alerte>}
+
+      {!liste && !erreur && <Chargement />}
+
+      {liste && liste.length === 0 && (
+        <p className="rounded-2xl bg-surface-douce px-4 py-3 text-sm text-faible">
+          {t("Aucune application n'a accès à votre boutique.")}
+        </p>
+      )}
+
+      {liste && liste.length > 0 && (
+        <ul className="divide-y divide-bordure">
+          {liste.map((lien) => (
+            <li
+              key={lien.id}
+              className="flex flex-wrap items-center justify-between gap-3 py-3 first:pt-0 last:pb-0"
+            >
+              <div className="min-w-0">
+                <p className="truncate text-sm font-semibold text-titre">{lien.application}</p>
+                <p className="text-xs text-faible">
+                  {t("Liée le {date}", { date: date(lien.liee_le) })}
+                </p>
+                {!lien.active && (
+                  <Badge classe="mt-1 bg-amber-100 text-amber-800">
+                    {t("Suspendue par Visacredit")}
+                  </Badge>
+                )}
+              </div>
+              <Bouton
+                type="button"
+                variante="neutre"
+                className="shrink-0"
+                onClick={() => confirmerRetrait(lien)}
+              >
+                {t("Retirer l'accès")}
+              </Bouton>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {demande && (
+        <ModaleConfirmation
+          demande={demande}
+          enCours={enCours}
+          onAnnuler={() => setDemande(null)}
+        />
+      )}
+    </Carte>
   );
 }
 

@@ -2,25 +2,26 @@
 
 Application mobile React Native (Expo SDK 54) de la plateforme Visacredit XIXA.
 
-**Application autonome** : elle fonctionne entièrement hors ligne, sans serveur.
-Les données vivent dans une base SQLite sur le téléphone, et les règles métier du
-backend Symfony ont été portées en TypeScript.
-
-Le dossier `backend/` reste la référence : c'est de lui que viennent le schéma,
-les règles et le jeu de données de démonstration.
+**Application connectée** : elle utilise la même API Symfony que le site web.
+Mêmes comptes, mêmes données, et les commandes B2B circulent réellement d'un
+téléphone à l'autre. Elle reçoit les notifications de la boutique en **push**.
 
 ---
 
 ## Démarrage rapide
 
+Lancez **`demarrer-mobile.bat`** à la racine du dépôt : il démarre l'API
+Symfony (accessible depuis le réseau local) et le serveur Expo.
+
 ```bash
-cd mobile
-npm install     # la première fois seulement
-npx expo start
+# ou, à la main :
+cd backend && php -S 0.0.0.0:8000 -t public bin/routeur-dev.php
+cd mobile  && npm install && npx expo start
 ```
 
-Puis scannez le QR code avec **Expo Go**. Aucun backend à lancer, aucun réseau
-partagé à configurer : l'application se suffit à elle-même.
+Le téléphone doit être sur le même réseau Wi-Fi que le PC. L'adresse de l'API
+est déduite de celle du serveur Expo (port 8000) ; pour en viser une autre,
+voir `.env.example`.
 
 Comptes de démonstration (voir `readme.md` à la racine) :
 
@@ -29,72 +30,33 @@ Comptes de démonstration (voir `readme.md` à la racine) :
 | Grossiste | `0190000001` | `grossiste2026` |
 | Détaillant | `0190000002` | `detaillant2026` |
 
+> **Expo Go ne reçoit pas les notifications push sur Android** (depuis le
+> SDK 53). Tout le reste y fonctionne ; pour le push, il faut un build — voir
+> « Notifications push » plus bas.
+
 ---
 
-## Architecture : application autonome
-
-**L'application ne dépend d'aucun serveur.** Toutes les données vivent dans une
-base SQLite sur le téléphone (`visacredit.db`), et toute la logique métier —
-ventes, stock, échéanciers, commandes B2B, crédits, solde — a été portée du
-backend Symfony vers TypeScript.
-
-### Le contrat d'API a été conservé
-
-Les 25 écrans n'ont pas été réécrits. Ils appellent toujours
-`api.get("/api/ventes")`, mais `src/lib/api.ts` n'envoie plus de requête HTTP :
-il aiguille vers un **routeur local** qui rejoue les mêmes routes sur SQLite.
+## Architecture
 
 ```
-écran  →  api.get("/api/ventes")  →  routeur local  →  SQLite
-                                     (src/local/)
+écran  →  api.get("/api/ventes")  →  HTTP  →  API Symfony  →  MariaDB
+          (src/lib/api.ts)
 ```
 
-Ce choix a deux mérites : aucun écran à modifier, et un éventuel retour vers une
-API distante ne toucherait qu'un seul fichier.
+`src/lib/api.ts` est le pendant de `frontend/src/lib/api.ts` : JWT dans le
+stockage sécurisé du téléphone, `401` qui renvoie à la connexion, message clair
+quand le serveur est injoignable. Les écrans appellent les mêmes routes que le
+web.
 
-```
-src/local/
-├── schema.ts        Schéma SQLite, transposé de boutiq.sql
-├── amorcage.ts      Données de départ (généré depuis MySQL)
-├── base.ts          Ouverture, amorçage, helpers, transactions
-├── presentateur.ts  Mise en forme JSON — pendant d'ApiPresenter
-├── routeur.ts       Table de routage — pendant des Controllers
-└── modules/
-    ├── auth.ts      Connexion, inscription, profil, mot de passe
-    ├── solde.ts     Position de caisse et tableau de bord
-    ├── catalogue.ts Produits, catégories, recherche
-    ├── commerce.ts  Clients, ventes, créances
-    ├── b2b.ts       Commandes, crédits fournisseurs, notations
-    └── divers.ts    Dépenses, retraits, notifications, paiements
-```
+L'adresse de l'API est résolue dans cet ordre :
 
-### Amorçage
+1. `EXPO_PUBLIC_API_URL` (fichier `mobile/.env`), figée au build ;
+2. en développement, la machine qui sert Metro, port 8000 ;
+3. à défaut, la production (`http://13.140.134.229:8090`).
 
-Au **tout premier lancement**, la base est créée et remplie avec le jeu de
-démonstration (deux comptes liés, produits, ventes, commandes…). Ensuite, elle
-appartient à l'utilisateur : une mise à jour de l'application ne la réamorce
-jamais. Un bouton **Paramètres → Réinitialiser** permet de revenir à l'état
-d'origine.
-
-### Ce qui change par rapport à la version connectée
-
-| Sujet | Version connectée | Version autonome |
-|---|---|---|
-| Données | MySQL sur le serveur | SQLite sur le téléphone |
-| Mot de passe | bcrypt (Symfony) | SHA-256 salé par le téléphone |
-| Commandes B2B | entre deux appareils | entre les deux comptes du **même** appareil |
-| Paiement mobile money | vérifié par le serveur | **indisponible** — voir ci-dessous |
-
-**Le paiement mobile money est désactivé, volontairement.** Sa sécurité reposait
-sur le serveur, qui revérifiait chaque transaction auprès de la passerelle avec
-la clé privée avant de l'imputer. Hors ligne, cette vérification est impossible :
-l'application le dit clairement plutôt que de faire croire à un encaissement.
-Les règlements se saisissent en espèces.
-
-**Le B2B fonctionne réellement**, mais sur un seul appareil : une commande
-passée depuis le compte détaillant est visible par le compte grossiste après
-changement de compte. C'est ce qui permet de dérouler le cycle complet
-— commande, validation, livraison, réception, règlement, notation — sans serveur.
+> Jusqu'à la version 1.1, l'application fonctionnait hors ligne, sur une base
+> SQLite embarquée. Ce mode a été retiré pour permettre le push et les échanges
+> B2B entre téléphones ; il reste dans l'historique git (`src/local/`).
 
 ## Français / anglais
 
@@ -115,8 +77,8 @@ Trois conséquences :
 - retoucher une phrase française oblige à retoucher l'entrée correspondante de
   `src/dictionnaire-en.ts` — `npm run i18n` liste les entrées orphelines et les
   phrases sans traduction ;
-- les messages d'erreur du moteur local traversent le même dictionnaire, sans
-  table de correspondance séparée.
+- les messages d'erreur de l'API traversent le même dictionnaire, sans table
+  de correspondance séparée.
 
 Les **tables de module** (rubriques du tiroir, filtres, badges de `format.ts`)
 gardent leur libellé français : un hook ne s'appelle pas hors composant. C'est
@@ -208,22 +170,44 @@ qui est le bon geste pour un écran dont on ressort là d'où l'on vient.
 
 ---
 
+## Notifications push
+
+Toutes les notifications de la boutique (nouvelle commande, validation,
+livraison, demande de paiement, marchandage…) arrivent aussi en push,
+application ouverte, en arrière-plan ou fermée. Un appui ouvre l'écran concerné
+et marque la notification comme lue.
+
+**Fonctionnement** (`src/lib/push.ts`) : à chaque connexion, le téléphone
+demande la permission (une seule fois), obtient un jeton Expo et le remet à
+l'API (`/api/push/abonnements`). Le serveur envoie ensuite chaque notification
+au service push d'Expo, qui relaie vers Firebase (Android) ou APNs (iOS). À la
+déconnexion, le téléphone est retiré de la boutique.
+
+**Mise en place, une fois** :
+
+1. **Firebase (Android)** — créer un projet sur console.firebase.google.com,
+   y ajouter une application Android de package `com.visacredit.xixa`, et
+   télécharger `google-services.json` dans `mobile/`. `app.config.js` le
+   branche automatiquement (ou via la variable de fichier EAS
+   `GOOGLE_SERVICES_JSON`).
+2. **Clé de service FCM chez Expo** — dans Firebase, *Paramètres du projet →
+   Comptes de service → Générer une clé privée*, puis
+   `npx eas credentials` → Android → *Google Service Account* → *FCM V1*, et
+   fournir ce fichier JSON. C'est ce qui autorise Expo à envoyer en votre nom.
+3. **Construire** un APK (voir plus bas) : le push ne fonctionne pas dans Expo Go.
+
+Sans Firebase, l'application fonctionne normalement ; seul le push manque, et
+Paramètres l'indique.
+
+---
+
 ## Paiement mobile money
 
-**Indisponible dans la version autonome, et c'est délibéré.**
-
-KkiaPay et FedaPay n'offrent qu'un widget web, chargé dans une `WebView`. Ce
-widget ne fait qu'encaisser : la sécurité reposait entièrement sur le serveur,
-qui revérifiait chaque transaction auprès de la passerelle avec la clé privée
-avant de l'imputer. Sans serveur, cette vérification est impossible.
-
-Une application hors ligne qui « confirmerait » un paiement ne ferait que croire
-le widget sur parole — donc n'importe qui pourrait déclarer un règlement qui n'a
-pas eu lieu. L'écran affiche donc un message explicite et invite à enregistrer le
-règlement en espèces.
-
-Le code du widget (`src/components/PaiementMobile.tsx`) est conservé : il
-redeviendra fonctionnel tel quel le jour où l'application sera reliée à une API.
+KkiaPay et FedaPay n'offrent qu'un widget web, chargé dans une `WebView`
+(`src/components/PaiementMobile.tsx`). Comme sur le web, ce widget ne fait
+qu'encaisser : c'est `/api/paiements/confirmer` qui revérifie chaque transaction
+auprès de la passerelle avec la clé privée avant de l'imputer. Une page
+manipulée ne peut donc pas déclarer un paiement qui n'a pas eu lieu.
 
 ---
 
@@ -243,12 +227,12 @@ mobile/
 │       └── …                   Fiches et formulaires (hors menu)
 └── src/
     ├── lib/
-    │   ├── api.ts              Aiguillage vers le routeur local (ex-client HTTP)
+    │   ├── api.ts              Client HTTP de l'API Symfony
     │   ├── auth.tsx            Contexte de session
+    │   ├── push.ts             Notifications push (jeton Expo, ouverture)
     │   ├── requete.ts          Hook de chargement (focus + pull-to-refresh)
     │   ├── types.ts            Types partagés avec le backend
     │   └── format.ts           Montants, dates, badges de statut
-    ├── local/                  Base SQLite, routeur et logique métier portée
     ├── components/             Briques d'UI et composants métier partagés
     ├── marque.ts               Nom et logo de la plateforme
     └── theme.ts                Palette et espacements
@@ -293,8 +277,10 @@ avant `npm run typecheck`.
 
 ## Build d'un APK
 
-L'application étant autonome, il n'y a **aucune adresse d'API à configurer**
-avant de construire.
+Vérifiez d'abord l'adresse de l'API que l'APK utilisera : sans
+`EXPO_PUBLIC_API_URL` dans `mobile/.env`, c'est la production
+(`http://13.140.134.229:8090`). Et, pour le push, que `google-services.json`
+est en place (voir « Notifications push »).
 
 ```bash
 cd mobile
@@ -311,8 +297,8 @@ Profils disponibles dans `eas.json` :
 |---|---|---|
 | `apk` | `.apk` | Installation directe, partage par lien |
 | `production` | `.aab` | Dépôt sur le Play Store |
-| `developpement` | `.apk` | Build de debug relié à un Metro local |
+| `developpement` | `.apk` | Build de debug relié à un Metro local — reçoit le push |
 
-> Le plugin `expo-build-properties` autorise encore le trafic HTTP en clair dans
-> `app.json`. Devenu inutile hors ligne, il ne gêne pas et resservira le jour où
-> l'application sera reliée à une API.
+> `expo-build-properties` autorise le trafic HTTP en clair (`app.json`) : la
+> production est encore servie en HTTP sur une adresse IP. Une fois le domaine
+> en HTTPS, pointez `EXPO_PUBLIC_API_URL` dessus et retirez cette autorisation.

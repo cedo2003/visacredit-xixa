@@ -9,6 +9,11 @@ REM ============================================================
 
 cd /d "%~dp0"
 
+REM --- OpenSSL de XAMPP : sans son fichier de configuration, PHP ne sait pas
+REM     creer de cle EC, et le chiffrement des notifications push web echoue.
+REM     Herite par les fenetres ouvertes avec `start` ci-dessous.
+if not defined OPENSSL_CONF set "OPENSSL_CONF=C:\xampp\php\extras\ssl\openssl.cnf"
+
 echo.
 echo   Visacredit XIXA mobile - demarrage
 echo   ---------------------------------
@@ -41,7 +46,7 @@ echo   Adresse(s) IP de cette machine :
 for /f "tokens=2 delims=:" %%a in ('ipconfig ^| findstr /c:"IPv4"') do echo      %%a
 
 REM --- API Symfony, accessible depuis le reseau local ---
-start "Visacredit XIXA - API Symfony (0.0.0.0:8000)" cmd /k "cd /d %~dp0backend && php -S 0.0.0.0:8000 -t public"
+start "Visacredit XIXA - API Symfony (0.0.0.0:8000)" cmd /k "cd /d %~dp0backend && php -S 0.0.0.0:8000 -t public bin/routeur-dev.php"
 echo.
 echo   [ok] API Symfony      -^> port 8000, accessible depuis le reseau local
 

@@ -7,8 +7,8 @@
  */
 
 import { useT } from "@/i18n";
-import { useState } from "react";
-import { useRouter, type Href } from "expo-router";
+import { useCallback, useState } from "react";
+import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Ecran } from "@/components/Ecran";
 import {
@@ -22,6 +22,7 @@ import {
 } from "@/components/ui";
 import { api, messageErreur } from "@/lib/api";
 import { useRequete } from "@/lib/requete";
+import { useSurPush, versRouteMobile } from "@/lib/push";
 import { dateHeure } from "@/lib/format";
 import type { NotificationItem } from "@/lib/types";
 import { couleurs, espacement, rayons, type Palette } from "@/theme";
@@ -32,35 +33,6 @@ interface Reponse {
   non_lues: number;
 }
 
-/**
- * Les chemins servis par l'API sont ceux du frontend web (« /commandes/12 »).
- * Le routeur mobile utilise les mêmes — les groupes (app) et (tiroir)
- * n'apparaissent pas dans les URL — mais tous les écrans du web n'ont pas leur
- * équivalent ici. Un lien non reconnu n'est donc pas ouvert, plutôt que de
- * risquer un écran « route introuvable ».
- */
-const ROUTES_CONNUES = [
-  "/commandes",
-  "/ventes",
-  "/creances",
-  "/credits",
-  "/notations",
-  "/tableau-de-bord",
-];
-
-function versRouteMobile(lien: string | null): Href | null {
-  if (!lien) return null;
-
-  // Le reçu de commande du web n'a pas d'écran dédié ici : la fiche le porte.
-  const chemin = lien.replace(/\/recu$/, "");
-
-  if (!ROUTES_CONNUES.some((route) => chemin === route || chemin.startsWith(`${route}/`))) {
-    return null;
-  }
-
-  return chemin as Href;
-}
-
 export default function Notifications() {
   const t = useT();
   const styles = useStyles(creerStyles);
@@ -69,6 +41,9 @@ export default function Notifications() {
 
   const { donnees, chargement, rafraichissement, erreur, recharger } =
     useRequete<Reponse>("/api/notifications");
+
+  // Une notification poussée pendant que la liste est affichée y apparaît aussitôt.
+  useSurPush(useCallback(() => void recharger(), [recharger]));
 
   const [erreurAction, setErreurAction] = useState("");
   const [suppressionVisible, setSuppressionVisible] = useState<"lues" | "toutes" | null>(null);

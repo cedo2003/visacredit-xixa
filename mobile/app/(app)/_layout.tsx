@@ -14,6 +14,7 @@
 import { Redirect, Stack } from "expo-router";
 import { ActivityIndicator, View } from "react-native";
 import { useAuth } from "@/lib/auth";
+import { useOuvertureNotifications } from "@/lib/push";
 import { useCouleurs } from "@/theme-contexte";
 
 export default function LayoutApplication() {
@@ -33,31 +34,43 @@ export default function LayoutApplication() {
   }
 
   return (
-    <Stack
-      screenOptions={{
-        headerStyle: { backgroundColor: couleurs.surface },
-        headerTintColor: couleurs.primaire,
-        headerTitleStyle: { color: couleurs.texte, fontWeight: "700", fontSize: 17 },
-        headerShadowVisible: false,
-        headerBackButtonDisplayMode: "minimal",
-        contentStyle: { backgroundColor: couleurs.fond },
-      }}
-    >
-      <Stack.Screen name="(tiroir)" options={{ headerShown: false }} />
+    <>
+      <OuvertureNotifications />
+      <Stack
+        screenOptions={{
+          headerStyle: { backgroundColor: couleurs.surface },
+          headerTintColor: couleurs.primaire,
+          headerTitleStyle: { color: couleurs.texte, fontWeight: "700", fontSize: 17 },
+          headerShadowVisible: false,
+          headerBackButtonDisplayMode: "minimal",
+          contentStyle: { backgroundColor: couleurs.fond },
+        }}
+      >
+        <Stack.Screen name="(tiroir)" options={{ headerShown: false }} />
 
-      <Stack.Screen name="produits/nouveau" options={{ title: "Nouveau produit" }} />
-      <Stack.Screen name="produits/[id]" options={{ title: "Produit" }} />
+        <Stack.Screen name="produits/nouveau" options={{ title: "Nouveau produit" }} />
+        <Stack.Screen name="produits/[id]" options={{ title: "Produit" }} />
 
-      <Stack.Screen name="ventes/nouvelle" options={{ title: "Nouvelle vente" }} />
-      <Stack.Screen name="ventes/[id]" options={{ title: "Reçu de vente" }} />
+        <Stack.Screen name="ventes/nouvelle" options={{ title: "Nouvelle vente" }} />
+        <Stack.Screen name="ventes/[id]" options={{ title: "Reçu de vente" }} />
 
-      <Stack.Screen name="commandes/nouvelle" options={{ title: "Nouvelle commande" }} />
-      <Stack.Screen name="commandes/[id]" options={{ title: "Commande" }} />
+        <Stack.Screen name="commandes/nouvelle" options={{ title: "Nouvelle commande" }} />
+        <Stack.Screen name="commandes/[id]" options={{ title: "Commande" }} />
 
-      <Stack.Screen name="clients/nouveau" options={{ title: "Nouveau client" }} />
-      <Stack.Screen name="clients/[id]" options={{ title: "Client" }} />
+        <Stack.Screen name="clients/nouveau" options={{ title: "Nouveau client" }} />
+        <Stack.Screen name="clients/[id]" options={{ title: "Client" }} />
 
-      <Stack.Screen name="notations/[type]/[id]" options={{ title: "Profil de notation" }} />
-    </Stack>
+        <Stack.Screen name="notations/[type]/[id]" options={{ title: "Profil de notation" }} />
+      </Stack>
+    </>
   );
+}
+
+/**
+ * Appui sur une notification push → l'écran concerné. Monté ici, une fois la
+ * session établie : ouvrir une commande sans être connecté n'aurait pas de sens.
+ */
+function OuvertureNotifications() {
+  useOuvertureNotifications();
+  return null;
 }

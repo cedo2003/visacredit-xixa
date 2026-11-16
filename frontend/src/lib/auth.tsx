@@ -19,6 +19,7 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import { api, ecrireToken, effacerToken, lireToken } from "./api";
+import { oublierAppareil, synchroniserPush } from "./push";
 import type { User } from "./types";
 
 interface ContexteAuth {
@@ -28,7 +29,7 @@ interface ContexteAuth {
   estDetaillant: boolean;
   connexion: (telephone: string, password: string) => Promise<void>;
   inscription: (donnees: DonneesInscription) => Promise<void>;
-  deconnexion: () => void;
+  deconnexion: () => Promise<void>;
   rafraichir: () => Promise<void>;
 }
 
@@ -89,7 +90,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(reponse.user);
   }, []);
 
-  const deconnexion = useCallback(() => {
+  // Chaque session ouverte récupère l'abonnement push de ce navigateur, si la
+  // permission a déjà été accordée — sans rien redemander.
+  const idUser = user?.id;
+  useEffect(() => {
+    if (idUser) void synchroniserPush();
+  }, [idUser]);
+
+  const deconnexion = useCallback(async () => {
+    // Avant d'effacer le jeton : c'est lui qui autorise le désabonnement.
+    await oublierAppareil();
     effacerToken();
     setUser(null);
     router.push("/connexion");

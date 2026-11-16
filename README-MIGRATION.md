@@ -23,7 +23,7 @@ C:\xampp\mysql\bin\mysqld.exe
 
 # 2. API Symfony
 cd backend
-php -S 127.0.0.1:8000 -t public
+php -S 127.0.0.1:8000 -t public bin/routeur-dev.php
 
 # 3. Frontend Next.js
 cd frontend

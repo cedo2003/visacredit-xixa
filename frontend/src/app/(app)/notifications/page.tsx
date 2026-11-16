@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { api } from "@/lib/api";
 import { dateHeure } from "@/lib/format";
+import { useSurPush } from "@/lib/push";
 import type { NotificationItem } from "@/lib/types";
 import {
   Alerte,
@@ -55,6 +56,9 @@ export default function Notifications() {
   useEffect(() => {
     void charger();
   }, [charger]);
+
+  // Une notification poussée pendant que la liste est affichée y apparaît aussitôt.
+  useSurPush(useCallback(() => void charger(), [charger]));
 
   async function toutMarquer() {
     await api.post("/api/notifications/tout-lu");

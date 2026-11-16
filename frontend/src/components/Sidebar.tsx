@@ -12,9 +12,10 @@ import Image from "next/image";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth";
 import { api } from "@/lib/api";
+import { useSurPush } from "@/lib/push";
 
 interface Lien {
   href: string;
@@ -50,12 +51,18 @@ export default function Sidebar({
   const chemin = usePathname();
   const [nonLues, setNonLues] = useState(0);
 
-  useEffect(() => {
+  const compter = useCallback(() => {
     api
       .get<{ non_lues: number }>("/api/notifications/non-lues")
       .then((r) => setNonLues(r.non_lues))
       .catch(() => setNonLues(0));
-  }, [chemin]);
+  }, []);
+
+  useEffect(compter, [chemin, compter]);
+
+  // Un push arrivé pendant que l'onglet est ouvert met le compteur à jour sans
+  // attendre le prochain changement de page.
+  useSurPush(compter);
 
   const liens = LIENS.filter(
     (l) => !l.reserve || (l.reserve === "detaillant" && estDetaillant),

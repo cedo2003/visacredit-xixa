@@ -7,6 +7,11 @@ REM ============================================================
 
 cd /d "%~dp0"
 
+REM --- OpenSSL de XAMPP : sans son fichier de configuration, PHP ne sait pas
+REM     creer de cle EC, et le chiffrement des notifications push web echoue.
+REM     Herite par les fenetres ouvertes avec `start` ci-dessous.
+if not defined OPENSSL_CONF set "OPENSSL_CONF=C:\xampp\php\extras\ssl\openssl.cnf"
+
 echo.
 echo   Visacredit XIXA - demarrage
 echo   ---------------------------
@@ -34,7 +39,7 @@ if not exist "frontend\node_modules" (
 )
 
 REM --- API Symfony sur le port 8000 ---
-start "Visacredit XIXA - API Symfony (port 8000)" cmd /k "cd /d %~dp0backend && php -S 127.0.0.1:8000 -t public"
+start "Visacredit XIXA - API Symfony (port 8000)" cmd /k "cd /d %~dp0backend && php -S 127.0.0.1:8000 -t public bin/routeur-dev.php"
 echo   [ok] API Symfony      -^> http://127.0.0.1:8000
 
 REM --- Frontend Next.js sur le port 3000 ---

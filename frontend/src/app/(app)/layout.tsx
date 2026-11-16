@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
+import { BandeauPush } from "@/components/ActivationPush";
 import { useAuth } from "@/lib/auth";
 import { Chargement } from "@/components/ui";
 
@@ -77,6 +78,8 @@ export default function LayoutApplication({
             </p>
           </Link>
         )}
+
+        <BandeauPush />
 
         <main className="flex-1 p-5 sm:p-8">{children}</main>
       </div>

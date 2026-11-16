@@ -25,6 +25,7 @@ import {
   lireToken,
   surSessionExpiree,
 } from "./api";
+import { enregistrerAppareil, oublierAppareil } from "./push";
 import type { User } from "./types";
 
 interface ContexteAuth {
@@ -107,7 +108,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(reponse.user);
   }, []);
 
+  // Chaque session ouverte abonne ce téléphone au push de la boutique. La
+  // permission n'est demandée qu'une fois ; ensuite, cela se fait sans bruit.
+  const idUser = user?.id;
+  useEffect(() => {
+    if (idUser) void enregistrerAppareil();
+  }, [idUser]);
+
   const deconnexion = useCallback(async () => {
+    // Avant d'effacer le jeton : c'est lui qui autorise le désabonnement.
+    await oublierAppareil();
     await effacerToken();
     setUser(null);
   }, []);

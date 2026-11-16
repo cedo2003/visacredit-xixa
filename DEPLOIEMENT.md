@@ -6,8 +6,9 @@ installe à côté, sans rien toucher à l'existant.
 **Ce qu'on déploie : le web, et lui seul.** Trois conteneurs — le frontend
 Next.js, l'API Symfony, la base MariaDB — dont un seul est exposé.
 
-L'application mobile n'a rien à faire ici : elle est autonome, avec sa propre
-base SQLite embarquée, et ne joint aucun serveur (voir `mobile/src/lib/api.ts`).
+L'application mobile ne se déploie pas ici (elle se distribue en APK, voir
+`mobile/README.md`), mais elle **utilise cette API** : par défaut, un APK vise
+`http://13.140.134.229:8090`.
 
 ---
 
@@ -229,6 +230,34 @@ Les partenaires appellent l'API par la même adresse que le navigateur
 reste, il n'y a rien d'autre à ouvrir. Le CORS n'entre en jeu que si un
 partenaire appelle l'API depuis du JavaScript servi par **son** domaine : il
 faut alors ajouter ce domaine à `CORS_ALLOW_ORIGIN`.
+
+---
+
+## 8. Notifications push
+
+Chaque notification de la plateforme part aussi en push, vers les navigateurs
+et les téléphones abonnés. Deux mises en place, indépendantes :
+
+**Web — clés VAPID, une fois.** Dans le terminal du conteneur `backend` :
+
+```bash
+php bin/console xixa:push:generer-cles
+```
+
+Recopiez les trois lignes `VAPID_*` affichées dans l'onglet *Environment* de
+Dokploy, puis *Restart*. Ne régénérez plus ces clés ensuite : chaque navigateur
+devrait se réabonner. Sans elles, le site fonctionne, sans push web.
+
+> ⚠️ **Le push web exige HTTPS.** Les navigateurs ne l'autorisent que sur une
+> connexion sécurisée (ou `localhost`). Sur `http://13.140.134.229:8090`,
+> Paramètres affichera « connexion sécurisée requise » : le push web ne
+> fonctionnera qu'après le passage au domaine en HTTPS (§ 6).
+
+**Mobile — Firebase, côté build.** Rien à faire sur le serveur : il envoie au
+service push d'Expo, qui relaie vers Firebase. La mise en place (projet
+Firebase, `google-services.json`, clé FCM chez Expo) est décrite dans
+`mobile/README.md`, section « Notifications push ». Elle fonctionne dès
+aujourd'hui, HTTP compris.
 
 ---
 

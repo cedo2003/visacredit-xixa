@@ -510,6 +510,43 @@ export const DICTIONNAIRE_EN: Record<string, string> = {
     "This choice is saved on this device only.",
   "Changer le mot de passe": "Change password",
   "Votre compte": "Your account",
+  "Notifications push": "Push notifications",
+  "Vérification…": "Checking…",
+  "Patientez…": "Please wait…",
+  "Activer sur cet appareil": "Turn on for this device",
+  "Désactiver sur cet appareil": "Turn off for this device",
+  "Activées sur cet appareil : vous êtes prévenu de chaque notification, même XIXA fermé.":
+    "On for this device: you are alerted to every notification, even with XIXA closed.",
+  "Désactivées sur cet appareil. Activez-les pour être prévenu de chaque commande, paiement ou livraison.":
+    "Off for this device. Turn them on to be alerted to every order, payment or delivery.",
+  "Vous avez bloqué les notifications pour ce site. Autorisez-les dans les réglages du navigateur (icône à gauche de l'adresse), puis rechargez la page.":
+    "You have blocked notifications for this site. Allow them in your browser settings (the icon left of the address), then reload the page.",
+  "Les notifications push ne sont pas encore configurées sur le serveur.":
+    "Push notifications are not set up on the server yet.",
+  "Votre navigateur n'autorise les notifications push que sur une connexion sécurisée (HTTPS).":
+    "Your browser only allows push notifications over a secure connection (HTTPS).",
+  "Ce navigateur ne prend pas en charge les notifications push.":
+    "This browser does not support push notifications.",
+  "Ce réglage vaut pour ce navigateur : activez-le sur chaque appareil où vous voulez être prévenu.":
+    "This setting applies to this browser: turn it on on every device where you want to be alerted.",
+  "Recevez vos notifications en direct": "Get your notifications instantly",
+  "Commandes, paiements, livraisons : soyez prévenu sur cet appareil, même quand XIXA est fermé.":
+    "Orders, payments, deliveries: be alerted on this device, even when XIXA is closed.",
+  Activer: "Turn on",
+  "Activation…": "Turning on…",
+  "Applications liées": "Connected apps",
+  "Les applications partenaires qui peuvent gérer votre boutique en votre nom.":
+    "Partner apps that can manage your shop on your behalf.",
+  "Aucune application n'a accès à votre boutique.": "No app has access to your shop.",
+  "Liée le {date}": "Connected on {date}",
+  "Suspendue par Visacredit": "Suspended by Visacredit",
+  "Retirer l'accès": "Remove access",
+  "Retirer l'accès à {application} ?": "Remove {application}'s access?",
+  "Cette application ne pourra plus consulter ni modifier votre boutique.":
+    "This app will no longer be able to view or change your shop.",
+  "La coupure est immédiate. Pour rétablir l'accès, il faudra relier à nouveau votre boutique depuis cette application.":
+    "Access ends immediately. To restore it, you will need to connect your shop again from that app.",
+  "Accès retiré à {application}.": "{application}'s access has been removed.",
 
   // ── Vitrine publique ───────────────────────────────────────────────────
   "Plateforme B2B de gestion de boutiques et magasins":
